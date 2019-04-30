@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/bgWhite"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/send_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="@string/send_message"
+        android:textSize="14sp" />
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal"
+    android:gravity="start">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Amount: "
+        android:textSize="16sp"
+        android:paddingEnd="5dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/valuePivx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="230 Pivs"
+        android:textSize="16sp"
+        />
+
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="start">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Fee:"
+            android:textSize="16sp"
+            android:paddingEnd="5dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0.0002 Pivs"
+            android:textSize="14sp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="start">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Address:"
+            android:textSize="16sp"
+            android:paddingEnd="5dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="ae123123531areeeeasdawadawqeqwdas"
+            android:textSize="14sp"
+            />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/valueAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/save_message"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/edit_contact_name"
+        android:ellipsize="start"
+        android:gravity="center"
+        android:layout_width = "match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:background="@drawable/transaction_inputs"
+        android:hint="@string/add_name"
+        android:text = ""
+        android:textColor = "#434343"
+        android:textSize = "18sp"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        android:text="@string/confirm"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:gravity="center"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

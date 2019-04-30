@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/bgWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="20dp"
+    android:gravity="left"
+    tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
+
+
+    <TextView
+        android:text = "@string/host"
+        style="@style/Subtitles"/>
+
+    <EditText
+        android:id="@+id/hostText"
+        android:hint="@string/hint_host"
+        android:text = ""
+        android:inputType="text"
+        style="@style/Inputs"/>
+
+    <TextView
+        android:text = "@string/tcp_port"
+        style="@style/Subtitles"/>
+
+    <EditText
+        android:id="@+id/tcpText"
+        android:hint="@string/hint_tcp_port"
+        android:text = ""
+        android:inputType="number"
+        android:maxLength="10"
+        style="@style/Inputs"/>
+    <TextView
+        android:text = "@string/ssl_port"
+        android:visibility="gone"
+        style="@style/Subtitles"/>
+
+    <EditText
+        android:id="@+id/sslText"
+        android:visibility="gone"
+        android:hint="@string/hint_ssl_port"
+        android:text = ""
+        android:inputType="number"
+        style="@style/Inputs"/>
+
+
+
+</LinearLayout>

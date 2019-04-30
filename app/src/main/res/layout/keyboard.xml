@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout android:layout_below="@+id/editText_enter_mpin"
+    android:id="@+id/anti_theft_t9_grid"
+    android:paddingTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:divider="@android:color/darker_gray"
+    android:orientation="vertical"
+    android:showDividers="middle|beginning|end"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/darker_gray"
+        android:gravity="center"
+        android:background="@color/transparent"
+        android:showDividers="middle" >
+
+        <TextView
+            android:id="@+id/key_1"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:textColor="@color/mainText"
+            android:textSize="24sp"
+            android:text="@string/number_one"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/key_2"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:background="@color/transparent"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:textColor="@color/mainText"
+            android:textSize="24sp"
+            android:text="@string/number_two"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/key_3"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:textColor="@color/mainText"
+            android:textSize="24sp"
+            android:text="@string/number_three"
+            android:textIsSelectable="false" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/darker_gray"
+        android:gravity="center"
+        android:background="@color/transparent"
+        android:showDividers="middle" >
+
+        <TextView
+            android:id="@+id/key_4"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:textColor="@color/mainText"
+            android:textSize="24sp"
+            android:text="@string/number_four"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/key_5"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:background="@color/transparent"
+            android:scaleType="centerInside"
+            android:textColor="@color/mainText"
+            android:textSize="24sp"
+            android:text="@string/number_five"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/key_6"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:textColor="@color/mainText"
+            android:textSize="24sp"
+            android:text="@string/number_six"
+            android:textIsSelectable="false" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/darker_gray"
+        android:gravity="center"
+        android:background="@color/transparent"
+        android:showDividers="middle" >
+
+        <TextView
+            android:id="@+id/key_7"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:textColor="@color/mainText"
+            android:textSize="24sp"
+            android:text="@string/number_seven"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/key_8"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:paddingBottom="18dp"
+            android:paddingTop="18dp"
+            android:scaleType="centerInside"
+            android:text="@string/number_eight"
+            android:textColor="@color/mainText"
+            android:textIsSelectable="false"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/key_9"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:textColor="@color/mainText"
+            android:textSize="24sp"
+            android:text="@string/number_nine"
+            android:textIsSelectable="false" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/darker_gray"
+        android:gravity="center"
+        android:background="@color/transparent"
+        android:showDividers="middle" >
+
+        <ImageView
+            android:id="@+id/key_clear"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_keyboard_clear"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/key_0"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:background="@color/transparent"
+            android:scaleType="centerInside"
+            android:textColor="@color/mainText"
+            android:textSize="24sp"
+            android:text="@string/number_zero"
+            android:textIsSelectable="false" />
+        <ImageView
+            android:id="@+id/key_backspace"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_keyboard_back"
+            android:textIsSelectable="false" />
+
+
+    </TableRow>
+
+</TableLayout>

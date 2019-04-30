@@ -1,0 +1,232 @@
+package pivx.org.pivxwallet.ui.wallet_activity;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import org.pivxj.core.Coin;
+import org.pivxj.utils.MonetaryFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
+import global.wrappers.TransactionWrapper;
+import pivx.org.pivxwallet.R;
+import global.PivxRate;
+import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
+import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
+import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
+import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActivity;
+import pivx.org.pivxwallet.utils.DapsController;
+import wf.bitcoin.javabitcoindrpcclient.BitcoindRpcClient;
+
+import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
+import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
+import static pivx.org.pivxwallet.utils.TxUtils.getAddressOrContact;
+
+/**
+ * Created by furszy on 6/29/17.
+ */
+
+public class TransactionsFragmentBase extends BaseRecyclerFragment<Map> {
+
+    private static final Logger logger = LoggerFactory.getLogger(TransactionsFragmentBase.class);
+
+    private PivxRate pivxRate;
+    private MonetaryFormat coinFormat = MonetaryFormat.BTC;
+    private DapsController daps = null;
+    private int scale = 3;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        setEmptyView(R.drawable.img_transaction_empty);
+        setEmptyText(getString(R.string.no_transactions));
+        setEmptyTextColor(Color.parseColor("#cccccc"));
+        if (daps == null)
+            daps = new DapsController();
+        return view;
+    }
+
+    @Override
+    protected List<Map> onLoading() {
+//        List<TransactionWrapper> list = pivxModule.listTx();
+        List<Map> list = (List<Map>) daps.callRPC("listTransactions");
+//        Collections.sort(list, new Comparator<TransactionWrapper>(){
+//            public int compare(TransactionWrapper o1, TransactionWrapper o2){
+//                if(o1.getTransaction().getUpdateTime().getTime() == o2.getTransaction().getUpdateTime().getTime())
+//                    return 0;
+//                return o1.getTransaction().getUpdateTime().getTime() > o2.getTransaction().getUpdateTime().getTime() ? -1 : 1;
+//            }
+//        });
+
+        Collections.sort(list, new Comparator<Map>(){
+            public int compare(Map o1, Map o2){
+                Long value1 = Long.parseLong(o1.get("time").toString());
+                Long value2 = Long.parseLong(o2.get("time").toString());
+                if( value1 == value2)
+                    return 0;
+                return value1 > value2 ? -1 : 1;
+            }
+        });
+        return list;
+    }
+
+    @Override
+    protected BaseRecyclerAdapter<Map, ? extends BaseRecyclerViewHolder> initAdapter() {
+        BaseRecyclerAdapter<Map, TransactionViewHolderBase> adapter = new BaseRecyclerAdapter<Map, TransactionViewHolderBase>(getActivity()) {
+            @Override
+            protected TransactionViewHolderBase createHolder(View itemView, int type) {
+                return new TransactionViewHolderBase(itemView);
+            }
+
+            @Override
+            protected int getCardViewResource(int type) {
+                return R.layout.transaction_row;
+            }
+
+            @Override
+            protected void bindHolder(TransactionViewHolderBase holder, Map data, int position) {
+//                String amount = data.getAmount().toFriendlyString();
+                Coin amountValue = Coin.valueOf(new BigDecimal(data.get("amount").toString()).longValue());
+                String amount = amountValue.toFriendlyString().replace("PIV", "DAPS");
+                if (amount.length()<=10){
+                    holder.txt_scale.setVisibility(View.GONE);
+                    holder.amount.setText(amount);
+                }else {
+                    // format amount
+                    holder.txt_scale.setVisibility(View.VISIBLE);
+                    holder.amount.setText(parseToCoinWith4Decimals(amountValue.toPlainString()).toFriendlyString().replace("PIV", "DAPS"));
+                }
+
+                String localCurrency = null;
+                if (pivxRate!=null) {
+                    localCurrency = pivxApplication.getCentralFormats().format(
+                                    new BigDecimal(Double.parseDouble(data.get("amount").toString()) * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                                    )
+                                    + " " + pivxRate.getCode();
+                    holder.amountLocal.setText(localCurrency);
+                    holder.amountLocal.setVisibility(View.VISIBLE);
+                }else {
+                    holder.amountLocal.setVisibility(View.INVISIBLE);
+                }
+
+
+//                holder.description.setText(data.get("comment").toString());
+                holder.description.setText("");
+
+                if (data.get("category").toString().compareTo("send") == 0){
+                    //holder.cv.setBackgroundColor(Color.RED);Color.GREEN
+                    holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
+                    holder.amount.setTextColor(ContextCompat.getColor(context, R.color.red));
+//                }else if (data.isZcSpend()) {
+//                    holder.imageView.setImageResource(R.drawable.ic_transaction_incognito);
+//                    holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
+//                } else if (!data.isStake()){
+//                    holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);
+//                    holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
+                } else {
+                    holder.imageView.setImageResource(R.drawable.ic_transaction_mining);
+                    holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
+                }
+//                holder.title.setText(getAddressOrContact(pivxModule,data));
+                holder.title.setText(data.get("address").toString());
+
+                /*if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
+                    AddressLabel contact = data.getOutputLabels().get(0);
+                    if (contact!=null) {
+                        if (contact.getName() != null)
+                            holder.title.setText(contact.getName());
+                        else
+                            holder.title.setText(contact.getAddresses().get(0));
+                    }else {
+                        holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58());
+                    }
+                }else {
+                    holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58());
+                }*/
+//                String memo = data.get("comment").toString();
+//                holder.description.setText(memo!=null?memo:"No description");
+            }
+        };
+        adapter.setListEventListener(new ListItemListeners<Map>() {
+            @Override
+            public void onItemClickListener(Map data, int position) {
+//                Intent intent = new Intent(getActivity(), TransactionDetailActivity.class);
+//                Bundle bundle = new Bundle();
+////                bundle.putSerializable(TX_WRAPPER,data);
+////                bundle.putParcelable(TX_WRAPPER, (Parcelable) data);
+//                for (Object entry: data.entrySet()) {
+//                    bundle.putString(((Map.Entry)entry).getKey().toString(), ((Map.Entry)entry).getValue().toString());
+//                }
+//                bundle.putBoolean(IS_DETAIL,true);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+            }
+
+            @Override
+            public void onLongItemClickListener(Map data, int position) {
+
+            }
+        });
+        return adapter;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+    }
+
+    /**
+     * Converts to a coin with max. 4 decimal places. Last place gets rounded.
+     * 0.01234 -> 0.0123
+     * 0.01235 -> 0.0124
+     *
+     * @param input
+     * @return
+     */
+    public Coin parseToCoinWith4Decimals(String input) {
+        try {
+            return Coin.valueOf(new BigDecimal(parseToCoin(cleanInput(input)).value).setScale(-scale - 1,
+                    BigDecimal.ROUND_HALF_UP).setScale(scale + 1).toBigInteger().longValue());
+        } catch (Throwable t) {
+            if (input != null && input.length() > 0)
+                logger.warn("Exception at parseToCoinWith4Decimals: " + t.toString());
+            return Coin.ZERO;
+        }
+    }
+
+    public  Coin parseToCoin(String input) {
+        if (input != null && input.length() > 0) {
+            try {
+                return coinFormat.parse(cleanInput(input));
+            } catch (Throwable t) {
+                logger.warn("Exception at parseToBtc: " + t.toString());
+                return Coin.ZERO;
+            }
+        } else {
+            return Coin.ZERO;
+        }
+    }
+
+    private  String cleanInput(String input) {
+        input = input.replace(",", ".");
+        // don't use String.valueOf(Double.parseDouble(input)) as return value as it gives scientific
+        // notation (1.0E-6) which screw up coinFormat.parse
+        //noinspection ResultOfMethodCallIgnored
+        Double.parseDouble(input);
+        return input;
+    }
+}
