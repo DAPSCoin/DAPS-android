@@ -106,10 +106,16 @@ public class WalletActivity extends BaseDrawerActivity {
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable(){
         public void run() {
-            WalletActivity.this.updateBalance();
+            WalletActivity.this.updateWallet();
         }
     };
 
+    private void updateWallet() {
+        updateBalance();
+        txsFragment.refresh();
+        handler.postDelayed(runnable, interval);
+
+    }
     @Override
     protected void beforeCreate(){
         /*
@@ -494,8 +500,6 @@ public class WalletActivity extends BaseDrawerActivity {
         }else {
             txt_local_currency.setText("0");
         }
-
-        handler.postDelayed(runnable, interval);
     }
 
     @Override
