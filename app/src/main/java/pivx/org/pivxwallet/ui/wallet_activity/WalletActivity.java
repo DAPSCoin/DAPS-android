@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
@@ -101,6 +102,14 @@ public class WalletActivity extends BaseDrawerActivity {
         }
     };
 
+    private final int interval = 15000; // 15 Second
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable(){
+        public void run() {
+            WalletActivity.this.updateBalance();
+        }
+    };
+
     @Override
     protected void beforeCreate(){
         /*
@@ -158,6 +167,7 @@ public class WalletActivity extends BaseDrawerActivity {
         });
 
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
+        handler.postDelayed(runnable, interval);
 
     }
 
@@ -484,6 +494,8 @@ public class WalletActivity extends BaseDrawerActivity {
         }else {
             txt_local_currency.setText("0");
         }
+
+        handler.postDelayed(runnable, interval);
     }
 
     @Override
