@@ -177,4 +177,5 @@
     <string name="donation_title">Ich werde spenden</string>
     <string name="btn_donate">Spende</string>
     <string name="donation_thanks">Sende die Spende.. Vielen Dank für deine Unterstützung!</string>
+    <string name="copy_uri" />
 </resources>

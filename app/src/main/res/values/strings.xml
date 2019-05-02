@@ -37,7 +37,7 @@
     <string name="set_name">Add name</string>
     <string name="set_description">Add a description</string>
     <string name="btn_send">Send</string>
-    <string name="btn_request">Request</string>
+    <string name="btn_request">Submit</string>
     <string name="payment_request">Payment Request</string>
     <string name="settings_subtitle_security">Security</string>
     <string name="backup_wallet_message">Your backup will be encrypted with\nthe password you choose and saved\nto an external storage drive.</string>
@@ -146,6 +146,7 @@
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="copy_message">Address copied to the clipboard</string>
+    <string name="copy_uri">URI copied to the clipboard</string>
     <string name="security_message">Please write this in a safe place and in horizontal order, you\'ll need them to restore your wallet.\n\nDon\'t share this words to anybody. Be careful, whoever has this words is the owner of the coins!</string>
     <string name="security_message_confirmation">You have to confirm in the next screen</string>
     <string name="confirmation_message">Verify your security words</string>
@@ -215,7 +216,8 @@
     <string name="txt_detail_confirmations">Confirmations amount</string>
     <string name="tx_detail_no_memo">No description</string>
     <string name="tx_detail_addresses">Outputs</string>
-    <string name="custom_fee">Custom fee</string>
+    <string name="custom_fee">Transaction Fee: 0.0001 DAPS</string>
+    <string name="amount_desc">Note uDAPS and mDAPS are thousandths or millionths of a DAPS, respectively, and used to make smaller micropayments easier to understand.</string>
     <string name="coin_selection">Coin selection</string>
     <string name="set_default">Set default</string>
     <string name="delete_addresses">DELETE ADDRESSES</string>

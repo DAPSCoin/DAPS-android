@@ -1,117 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@android:color/transparent" >
 
-    <ViewFlipper android:id="@+id/viewFlipper"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:background="@android:color/transparent"
-            android:gravity="center_horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/qrcode"
+            android:background="@color/transparent" />
 
-            <TextView
-                android:id = "@+id/titleAmount"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:text = "@string/title_amount"
-                android:layout_marginBottom="10dp"
-                android:textColor = "#757575"
-                android:textSize = "14sp" />
+        <ExpandableListView
+            android:id = "@+id/edit_address"
+            android:layout_marginLeft="15dp"
+            android:layout_width = "match_parent"
+            android:layout_height = "30dp"
+            android:background="@drawable/rounded_border"
+            android:groupIndicator="@drawable/custom_indicator"
+            android:textColor = "@color/white"
+            android:childDivider="@drawable/list_divider"
+            android:dividerHeight="0.5dp" />
 
-            <EditText
-                android:id = "@+id/edit_amount"
-                android:ellipsize="start"
-                android:gravity="center_horizontal"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:padding="8dp"
-                android:paddingBottom="11dp"
-                android:paddingTop="11dp"
-                android:inputType="numberDecimal"
-                android:background="@drawable/transaction_inputs"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:layout_marginBottom="10dp"
-                android:maxLines="1"
-                android:maxLength="8"
-                android:hint="@string/set_amount_piv"
-                android:text = ""
-                android:textColor = "#434343"
-                android:textSize = "20sp" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
 
-            <TextView
-                android:id = "@+id/txt_local_currency"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:text = "0"
-                android:textColor = "#858585"
-                android:textSize = "16sp" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/wallet"
+            android:background="@color/transparent" />
+        <ExpandableListView
+            android:id = "@+id/edit_amount"
+            android:layout_marginLeft="15dp"
+            android:layout_width = "match_parent"
+            android:layout_height = "30dp"
+            android:background="@drawable/rounded_border"
+            android:groupIndicator="@drawable/custom_indicator"
+            android:textColor = "@color/white"
+            android:childDivider="@drawable/list_divider"
+            android:dividerHeight="0.5dp" />
 
-        </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:background="@android:color/transparent"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:id="@+id/txt_currency_amount"
-                android:text = "@string/title_amount"
-                android:layout_marginBottom="10dp"
-                android:textColor = "#757575"
-                android:textSize = "14sp" />
-
-            <EditText
-                android:id = "@+id/edit_amount_currency"
-                android:ellipsize="start"
-                android:gravity="center_horizontal"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:padding="8dp"
-                android:paddingBottom="11dp"
-                android:paddingTop="11dp"
-                android:inputType="numberDecimal"
-                android:background="@drawable/transaction_inputs"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:layout_marginBottom="10dp"
-                android:maxLines="1"
-                android:maxLength="8"
-                android:hint="@string/set_amount_usd"
-                android:text = ""
-                android:textColor = "#434343"
-                android:textSize = "20sp" />
-
-
-            <TextView
-                android:id = "@+id/txt_show_piv"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:text = "0 PIV"
-                android:textColor = "#858585"
-                android:textSize = "16sp" />
-
-        </LinearLayout>
-    </ViewFlipper>
-
-    <ImageButton
-        android:id="@+id/btn_swap"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:background="@color/transparent"
-        android:layout_margin="20dp"
-        android:src="@drawable/ic_swap"/>
-
-</RelativeLayout>
+</LinearLayout>

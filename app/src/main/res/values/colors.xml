@@ -6,6 +6,8 @@
     <color name="colorAccent">#009688</color>
     <color name="bgPurple">#55476c</color>
     <color name="green">#009688</color>
+    <color name="item_selected">#30002c</color>
+    <color name="item_text_selected">#70fbff</color>
     <color name="lightGreen1">#36c6a5</color>
     <color name="mainGreen">#63ece0</color>
     <color name="sync_green">#B7FFF9</color>
@@ -31,6 +33,7 @@
     <color name="warning">#d74759</color>
 
     <color name="gray_87_text">#dd000000</color>
+    <color name="hinttext">#a0a0a0</color>
 
     <!-- scanner -->
     <color name="scan_mask">#60000000</color>

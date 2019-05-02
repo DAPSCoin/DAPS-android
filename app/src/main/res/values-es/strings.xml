@@ -177,4 +177,5 @@
     <string name="donation_title">Voy a hacer una donación</string>
     <string name="btn_donate">Donar</string>
     <string name="donation_thanks">Enviando donación.. ¡Gracias por su ayuda!</string>
+    <string name="copy_uri" />
 </resources>

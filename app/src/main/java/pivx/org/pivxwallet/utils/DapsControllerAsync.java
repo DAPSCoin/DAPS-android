@@ -18,7 +18,7 @@ import wf.bitcoin.javabitcoindrpcclient.BitcoinJSONRPCClient;
 public class DapsControllerAsync extends AsyncTask<String, Void, Object> {
     private final String user = "admin";
     private final String password = "admin123";
-    private final String host = "35.227.81.1";
+    private final String host = "35.243.195.143";
     private final String port = "53573";
     private BitcoinJSONRPCClient rpcClient = null;
 

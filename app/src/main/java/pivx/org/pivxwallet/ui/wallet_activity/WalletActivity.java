@@ -74,13 +74,11 @@ public class WalletActivity extends BaseDrawerActivity {
     private View container_txs;
 
     private TextView txt_value;
-    private TextView txt_unnavailable;
-    private TextView txt_local_currency;
-    private TextView txt_watch_only;
-    private View view_background;
-    private View container_syncing;
+//    private TextView txt_unnavailable;
+//    private View view_background;
+//    private View container_syncing;
     private PivxRate pivxRate;
-    private TransactionsFragmentBase txsFragment;
+//    private TransactionsFragmentBase txsFragment;
 
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
@@ -95,7 +93,7 @@ public class WalletActivity extends BaseDrawerActivity {
                     // Check if the app is on foreground to update the view.
                     if (!isOnForeground)return;
                     updateBalance();
-                    txsFragment.refresh();
+//                    txsFragment.refresh();
                 }
             }
 
@@ -112,7 +110,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private void updateWallet() {
         updateBalance();
-        txsFragment.refresh();
+//        txsFragment.refresh();
         handler.postDelayed(runnable, interval);
 
     }
@@ -131,48 +129,45 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        setTitle(R.string.my_wallet);
+        setTitle("DAPS COIN");
         root = getLayoutInflater().inflate(R.layout.fragment_wallet, container);
-        View containerHeader = getLayoutInflater().inflate(R.layout.fragment_pivx_amount,header_container);
+//        View containerHeader = getLayoutInflater().inflate(R.layout.fragment_pivx_amount,header_container);
         header_container.setVisibility(View.VISIBLE);
-        txt_value = (TextView) containerHeader.findViewById(R.id.pivValue);
-        txt_unnavailable = (TextView) containerHeader.findViewById(R.id.txt_unnavailable);
+        txt_value = (TextView) root.findViewById(R.id.pivValue);
         container_txs = root.findViewById(R.id.container_txs);
-        txt_local_currency = (TextView) containerHeader.findViewById(R.id.txt_local_currency);
-        txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
-        view_background = root.findViewById(R.id.view_background);
-        container_syncing = root.findViewById(R.id.container_syncing);
+//        view_background = root.findViewById(R.id.view_background);
+//        container_syncing = root.findViewById(R.id.container_syncing);
         // Open Send
-        root.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (pivxModule.isWalletWatchOnly()){
-                    Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                startActivity(new Intent(v.getContext(), SendActivity.class));
-            }
-        });
-        root.findViewById(R.id.fab_request).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), RequestActivity.class));
-            }
-        });
+//        root.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (pivxModule.isWalletWatchOnly()){
+//                    Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                startActivity(new Intent(v.getContext(), SendActivity.class));
+//            }
+//        });
+//        root.findViewById(R.id.fab_request).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(v.getContext(), RequestActivity.class));
+//            }
+//        });
 
-        FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
-        floatingActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
-            @Override
-            public void onMenuToggle(boolean opened) {
-                if (opened){
-                    AnimationUtils.fadeInView(view_background,200);
-                }else {
-                    AnimationUtils.fadeOutGoneView(view_background,200);
-                }
-            }
-        });
+//        FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
+//        floatingActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+//            @Override
+//            public void onMenuToggle(boolean opened) {
+//                if (opened){
+//                    AnimationUtils.fadeInView(view_background,200);
+//                }else {
+//                    AnimationUtils.fadeOutGoneView(view_background,200);
+//                }
+//            }
+//        });
 
-        txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
+//        txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
         handler.postDelayed(runnable, interval);
 
     }
@@ -217,7 +212,7 @@ public class WalletActivity extends BaseDrawerActivity {
     }
 
     private void updateState() {
-        txt_watch_only.setVisibility(pivxModule.isWalletWatchOnly()?View.VISIBLE:View.GONE);
+//        txt_watch_only.setVisibility(pivxModule.isWalletWatchOnly()?View.VISIBLE:View.GONE);
     }
 
     private void init() {
@@ -264,7 +259,7 @@ public class WalletActivity extends BaseDrawerActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+//        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -485,31 +480,31 @@ public class WalletActivity extends BaseDrawerActivity {
         if (availableBalance == null)
             availableBalance = "0";
         Coin availableBalanceCoin = Coin.valueOf(new BigDecimal(availableBalance).longValue());
-        txt_value.setText(!availableBalanceCoin.isZero()?availableBalanceCoin.toFriendlyString():"0 Daps");
+        txt_value.setText(!availableBalanceCoin.isZero()?availableBalanceCoin.toFriendlyString():"0 DAPS");
         txt_value.setText(txt_value.getText().toString().replace("PIV", "DAPS"));
-        txt_unnavailable.setText("0 Daps");
+//        txt_unnavailable.setText("0 Daps");
         if (pivxRate == null)
             pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
-        if (pivxRate!=null) {
-            txt_local_currency.setText(
-                    pivxApplication.getCentralFormats().format(
-                            new BigDecimal(Double.parseDouble(availableBalance) * pivxRate.getRate().doubleValue()).movePointLeft(8)
-                    )
-                            + " "+pivxRate.getCode()
-            );
-        }else {
-            txt_local_currency.setText("0");
-        }
+//        if (pivxRate!=null) {
+//            txt_local_currency.setText(
+//                    pivxApplication.getCentralFormats().format(
+//                            new BigDecimal(Double.parseDouble(availableBalance) * pivxRate.getRate().doubleValue()).movePointLeft(8)
+//                    )
+//                            + " "+pivxRate.getCode()
+//            );
+//        }else {
+//            txt_local_currency.setText("0");
+//        }
     }
 
     @Override
     protected void onBlockchainStateChange(){
-        if (blockchainState == BlockchainState.SYNCING){
-            AnimationUtils.fadeInView(container_syncing,500);
-        }else if (blockchainState == BlockchainState.SYNC){
-            AnimationUtils.fadeOutGoneView(container_syncing,500);
-        }else if (blockchainState == BlockchainState.NOT_CONNECTION){
-            AnimationUtils.fadeInView(container_syncing,500);
-        }
+//        if (blockchainState == BlockchainState.SYNCING){
+//            AnimationUtils.fadeInView(container_syncing,500);
+//        }else if (blockchainState == BlockchainState.SYNC){
+//            AnimationUtils.fadeOutGoneView(container_syncing,500);
+//        }else if (blockchainState == BlockchainState.NOT_CONNECTION){
+//            AnimationUtils.fadeInView(container_syncing,500);
+//        }
     }
 }

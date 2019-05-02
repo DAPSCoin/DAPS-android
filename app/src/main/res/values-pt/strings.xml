@@ -191,4 +191,5 @@ Você tem certeza?</string>
     <string name="donation_title">Eu irei doar</string>
     <string name="btn_donate">Doação</string>
     <string name="donation_thanks">Enviando doação.. Obrigado pela sua ajuda!</string>
+    <string name="copy_uri" />
 </resources>

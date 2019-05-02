@@ -2,6 +2,7 @@ package pivx.org.pivxwallet.ui.transaction_send_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,6 +14,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -20,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +46,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import pivx.org.pivxwallet.R;
@@ -51,6 +55,7 @@ import global.exceptions.NoPeerConnectedException;
 import global.PivxRate;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.ChangeAddressActivity;
@@ -61,9 +66,13 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActi
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity;
 import global.wrappers.TransactionWrapper;
+import pivx.org.pivxwallet.utils.AddressAdapter;
+import pivx.org.pivxwallet.utils.AmountAdapter;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
+import pivx.org.pivxwallet.utils.FeeAdapter;
 import pivx.org.pivxwallet.utils.NavigationUtils;
+import pivx.org.pivxwallet.utils.RingAdapter;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
@@ -90,7 +99,7 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
  * Created by Neoperol on 5/4/17.
  */
 
-public class SendActivity extends BaseActivity implements View.OnClickListener {
+public class SendActivity extends BaseDrawerActivity implements View.OnClickListener {
 
     private Logger logger = LoggerFactory.getLogger(SendActivity.class);
 
@@ -108,18 +117,22 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private View root;
     private Button buttonSend, addAllPiv;
-    private AutoCompleteTextView edit_address;
-    private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txt_change_address, txtShowPiv;
-    private TextView txt_multiple_outputs, txt_currency_amount;
-    private View container_address;
-    private EditText edit_amount, editCurrency;
+    private EditText edit_address;
+    private TextView txt_custom_fee;
+//    private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txt_change_address, txtShowPiv;
+//    private TextView txt_multiple_outputs, txt_currency_amount;
+//    private View container_address;
+    private ExpandableListView edit_amount, edit_fee, edit_ring/*, editCurrency*/;
     private EditText edit_memo;
-    private MyFilterableAdapter filterableAdapter;
+    private AddressAdapter addressAdapter;
+    private AmountAdapter amountAdapter;
+    private RingAdapter ringAdapter;
+    private FeeAdapter feeAdapter;
     private String addressStr;
     private PivxRate pivxRate;
     private SimpleTextDialog errorDialog;
-    private ImageButton btnSwap;
-    private ViewFlipper amountSwap;
+//    private ImageButton btnSwap;
+//    private ViewFlipper amountSwap;
 
     private boolean inPivs = true;
     private Transaction transaction;
@@ -141,137 +154,139 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
-        setTitle(R.string.btn_send);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
-        edit_amount = (EditText) findViewById(R.id.edit_amount);
+        setTitle("Send Transaction");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        edit_address = (EditText) findViewById(R.id.edit_address);
+        edit_amount = (ExpandableListView) findViewById(R.id.edit_amount);
+        edit_fee = (ExpandableListView) findViewById(R.id.edit_fee);
+        edit_ring= (ExpandableListView) findViewById(R.id.edit_ring);
         edit_memo = (EditText) findViewById(R.id.edit_memo);
-        container_address = root.findViewById(R.id.container_address);
-        txt_local_currency = (TextView) findViewById(R.id.txt_local_currency);
-        txt_multiple_outputs = (TextView) root.findViewById(R.id.txt_multiple_outputs);
-        txt_multiple_outputs.setOnClickListener(this);
-        txt_coin_selection = (TextView) root.findViewById(R.id.txt_coin_selection);
-        txt_coin_selection.setOnClickListener(this);
+//        container_address = root.findViewById(R.id.container_address);
+//        txt_local_currency = (TextView) findViewById(R.id.txt_local_currency);
+//        txt_multiple_outputs = (TextView) root.findViewById(R.id.txt_multiple_outputs);
+//        txt_multiple_outputs.setOnClickListener(this);
+//        txt_coin_selection = (TextView) root.findViewById(R.id.txt_coin_selection);
+//        txt_coin_selection.setOnClickListener(this);
         txt_custom_fee = (TextView) root.findViewById(R.id.txt_custom_fee);
-        txt_custom_fee.setOnClickListener(this);
-        txt_change_address = (TextView) root.findViewById(R.id.txt_change_address);
-        txt_change_address.setOnClickListener(this);
-        findViewById(R.id.button_qr).setOnClickListener(this);
+//        txt_custom_fee.setOnClickListener(this);
+//        txt_change_address = (TextView) root.findViewById(R.id.txt_change_address);
+//        txt_change_address.setOnClickListener(this);
+//        findViewById(R.id.button_qr).setOnClickListener(this);
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
 
         //Swap type of ammounts
-        amountSwap = (ViewFlipper) findViewById( R.id.viewFlipper );
-        amountSwap.setInAnimation(AnimationUtils.loadAnimation(this,
-                android.R.anim.slide_in_left));
-        amountSwap.setOutAnimation(AnimationUtils.loadAnimation(this,
-                android.R.anim.slide_out_right));
-        btnSwap = (ImageButton) findViewById(R.id.btn_swap);
-        btnSwap.setOnClickListener(this);
+//        amountSwap = (ViewFlipper) findViewById( R.id.viewFlipper );
+//        amountSwap.setInAnimation(AnimationUtils.loadAnimation(this,
+//                android.R.anim.slide_in_left));
+//        amountSwap.setOutAnimation(AnimationUtils.loadAnimation(this,
+//                android.R.anim.slide_out_right));
+//        btnSwap = (ImageButton) findViewById(R.id.btn_swap);
+//        btnSwap.setOnClickListener(this);
 
         //Sending amount currency
-        editCurrency = (EditText) findViewById(R.id.edit_amount_currency);
-        txt_currency_amount = (TextView) root.findViewById(R.id.txt_currency_amount);
-        txtShowPiv = (TextView) findViewById(R.id.txt_show_piv) ;
+//        editCurrency = (EditText) findViewById(R.id.edit_amount_currency);
+//        txt_currency_amount = (TextView) root.findViewById(R.id.txt_currency_amount);
+//        txtShowPiv = (TextView) findViewById(R.id.txt_show_piv) ;
 
         //Sending amount piv
-        addAllPiv =  (Button) findViewById(R.id.btn_add_all);
-        addAllPiv.setOnClickListener(this);
-        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+//        addAllPiv =  (Button) findViewById(R.id.btn_add_all);
+//        addAllPiv.setOnClickListener(this);
+//        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
-        txt_local_currency.setText("0 " + pivxRate.getCode());
+//        txt_local_currency.setText("0 " + pivxRate.getCode());
 
-        editCurrency.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        editCurrency.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (pivxRate != null) {
+//                    if (s.length() > 0) {
+//                        String valueStr = s.toString();
+//                        if (valueStr.charAt(0) == '.') {
+//                            valueStr = "0" + valueStr;
+//                        }
+//                        valueStr = valueStr.replace(",", "");
+//                        BigDecimal result = new BigDecimal(valueStr).divide(pivxRate.getRate(), 6, BigDecimal.ROUND_DOWN);
+//                        txtShowPiv.setText(result.toPlainString() + " DAPS");
+//                    } else {
+//                        txtShowPiv.setText("0 " + pivxRate.getCode());
+//                    }
+//                }else {
+//                    txtShowPiv.setText(R.string.no_rate);
+//                }
+//                cleanWallet = false;
+//            }
+//        });
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (pivxRate != null) {
-                    if (s.length() > 0) {
-                        String valueStr = s.toString();
-                        if (valueStr.charAt(0) == '.') {
-                            valueStr = "0" + valueStr;
-                        }
-                        valueStr = valueStr.replace(",", "");
-                        BigDecimal result = new BigDecimal(valueStr).divide(pivxRate.getRate(), 6, BigDecimal.ROUND_DOWN);
-                        txtShowPiv.setText(result.toPlainString() + " DAPS");
-                    } else {
-                        txtShowPiv.setText("0 " + pivxRate.getCode());
-                    }
-                }else {
-                    txtShowPiv.setText(R.string.no_rate);
-                }
-                cleanWallet = false;
-            }
-        });
-
-        edit_amount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length()>0) {
-                    if (pivxRate != null) {
-                        String valueStr = s.toString();
-                        if (valueStr.charAt(0) == '.') {
-                            valueStr = "0" + valueStr;
-                        }
-                        Coin coin = Coin.parseCoin(valueStr);
-                        txt_local_currency.setText(
-                                pivxApplication.getCentralFormats().format(
-                                        new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
-                                )
-                                        + " " + pivxRate.getCode()
-                        );
-                    }else {
-                        // rate null -> no connection.
-                        txt_local_currency.setText(R.string.no_rate);
-                    }
-                }else {
-                    if (pivxRate!=null)
-                        txt_local_currency.setText("0 "+pivxRate.getCode());
-                    else
-                        txt_local_currency.setText(R.string.no_rate);
-                }
-                cleanWallet = false;
-
-            }
-        });
+//        edit_amount.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.length()>0) {
+//                    if (pivxRate != null) {
+//                        String valueStr = s.toString();
+//                        if (valueStr.charAt(0) == '.') {
+//                            valueStr = "0" + valueStr;
+//                        }
+//                        Coin coin = Coin.parseCoin(valueStr);
+//                        txt_local_currency.setText(
+//                                pivxApplication.getCentralFormats().format(
+//                                        new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+//                                )
+//                                        + " " + pivxRate.getCode()
+//                        );
+//                    }else {
+//                        // rate null -> no connection.
+//                        txt_local_currency.setText(R.string.no_rate);
+//                    }
+//                }else {
+//                    if (pivxRate!=null)
+//                        txt_local_currency.setText("0 "+pivxRate.getCode());
+//                    else
+//                        txt_local_currency.setText(R.string.no_rate);
+//                }
+//                cleanWallet = false;
+//
+//            }
+//        });
 
         // Load data if exists
-        Intent intent = getIntent();
-        String address = intent.getStringExtra(INTENT_ADDRESS);
-        if (intent != null && address != null){
-            edit_address.setText(address);
-            Coin amount = (Coin) intent.getSerializableExtra(INTENT_EXTRA_TOTAL_AMOUNT);
-            edit_amount.setText(amount.toPlainString());
-            String memo = intent.getStringExtra(INTENT_MEMO);
-            if (memo != null)
-                edit_memo.setText(memo);
-        }
-
+//        Intent intent = getIntent();
+//        String address = intent.getStringExtra(INTENT_ADDRESS);
+//        if (intent != null && address != null){
+//            edit_address.setText(address);
+//            Coin amount = (Coin) intent.getSerializableExtra(INTENT_EXTRA_TOTAL_AMOUNT);
+//            edit_amount.setText(amount.toPlainString());
+//            edit_amount.getAdapter()
+//            String memo = intent.getStringExtra(INTENT_MEMO);
+//            if (memo != null)
+//                edit_memo.setText(memo);
+//        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.send_menu,menu);
+//        getMenuInflater().inflate(R.menu.send_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -361,11 +376,133 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        // todo: This is not updating the filter..
-        if (filterableAdapter==null) {
-            List<AddressLabel> list = new ArrayList<>(pivxModule.getContacts());
-            filterableAdapter = new MyFilterableAdapter(this,list );
-            edit_address.setAdapter(filterableAdapter);
+        setNavigationMenuItemChecked(1);
+
+        if (amountAdapter==null) {
+            List<String> list = new ArrayList<String>();
+            list.add("DAPS");
+            list.add("uDAPS");
+            list.add("mDAPS");
+
+            amountAdapter= new AmountAdapter(this, list,"DAPS");
+            edit_amount.setAdapter(amountAdapter);
+
+            edit_amount.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    edit_amount.getLayoutParams().height = convertDpToPx(120);
+                }
+            });
+
+            edit_amount.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+                @Override
+                public void onGroupCollapse(int groupPosition) {
+                    edit_amount.getLayoutParams().height = convertDpToPx(30);
+                }
+            });
+
+            edit_amount.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v,
+                                            int groupPosition, int childPosition, long id) {
+                    AmountAdapter adapter = (AmountAdapter)parent.getExpandableListAdapter();
+                    adapter.setUnitText((String)adapter.getChild(groupPosition, childPosition));
+
+                    parent.collapseGroup(0);
+                    return false;
+                }
+            });
+        }
+
+        if (feeAdapter==null) {
+            List<String> list = new ArrayList<String>();
+            list.add("Slow (0.005x DAPS/KB)");
+            list.add("Medium (0.5x DAPS/KB)");
+            list.add("Faster (0.6x DAPS/KB)");
+            list.add("Fast (0.9x DAPS/KB)");
+
+            feeAdapter= new FeeAdapter(this, list,"Medium (0.5x DAPS/KB)");
+            edit_fee.setAdapter(feeAdapter);
+
+            edit_fee.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    edit_fee.getLayoutParams().height = convertDpToPx(150);
+                }
+            });
+
+            edit_fee.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+                @Override
+                public void onGroupCollapse(int groupPosition) {
+                    edit_fee.getLayoutParams().height = convertDpToPx(30);
+                }
+            });
+
+            edit_fee.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v,
+                                            int groupPosition, int childPosition, long id) {
+                    FeeAdapter adapter = (FeeAdapter)parent.getExpandableListAdapter();
+                    adapter.setText((String)adapter.getChild(groupPosition, childPosition));
+
+                    parent.collapseGroup(0);
+                    return false;
+                }
+            });
+        }
+
+        if (ringAdapter==null) {
+            List<String> list = new ArrayList<String>();
+            list.add("6");
+            list.add("7");
+            list.add("8");
+            list.add("9");
+            list.add("10");
+
+            ringAdapter= new RingAdapter(this, list,"7");
+            edit_ring.setAdapter(ringAdapter);
+
+            edit_ring.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    edit_ring.getLayoutParams().height = convertDpToPx(150);
+                }
+            });
+
+            edit_ring.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+                @Override
+                public void onGroupCollapse(int groupPosition) {
+                    edit_ring.getLayoutParams().height = convertDpToPx(30);
+                }
+            });
+
+            edit_ring.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v,
+                                            int groupPosition, int childPosition, long id) {
+                    RingAdapter adapter = (RingAdapter)parent.getExpandableListAdapter();
+                    adapter.setText((String)adapter.getChild(groupPosition, childPosition));
+
+                    parent.collapseGroup(0);
+                    return false;
+                }
+            });
+
+            edit_ring.setOnTouchListener(new View.OnTouchListener() {
+                // Setting on Touch Listener for handling the touch inside ScrollView
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
         }
 
         if(getCurrentFocus()!=null) {
@@ -398,49 +535,54 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
             startActivityForResult(new Intent(this, ScanActivity.class),SCANNER_RESULT);
-        }else if(id == R.id.btn_add_all){
-            if (!isMultiSend) {
-                cleanWallet = true;
-//                Coin coin = pivxModule.getAvailableBalanceCoin();
-                String availableBalance = (String) daps.callRPC("getBalance");
-                if (availableBalance == null)
-                    availableBalance = "0";
-                Coin coin = Coin.valueOf(new BigDecimal(availableBalance).longValue());
-                if (inPivs) {
-                    edit_amount.setText(coin.toPlainString());
-                    txt_local_currency.setText(
-                            pivxApplication.getCentralFormats().format(
-                                    new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
-                            )
-                                    + " " + pivxRate.getCode()
-                    );
-                } else {
-                    editCurrency.setText(
-                            pivxApplication.getCentralFormats().format(
-                                    new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
-                            )
-                    );
-                    txtShowPiv.setText(coin.toFriendlyString());
-                }
-            }else {
-                Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_SHORT).show();
-            }
-        }else if(id == R.id.btn_swap){
-            if (!isMultiSend){
-                inPivs = !inPivs;
-                amountSwap.showNext();
-            }else {
-                Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_LONG).show();
-            }
-        }else if (id == R.id.txt_coin_selection){
-            startCoinControlActivity(unspent);
-        }else if(id == R.id.txt_multiple_outputs){
-            startMultiAddressSendActivity(outputWrappers);
-        }else if(id == R.id.txt_custom_fee){
-            startCustomFeeActivity(customFee);
-        }else if (id == R.id.txt_change_address){
-            startChangeAddressActivity(changeAddress,changeToOrigin);
+//        }else if(id == R.id.btn_add_all){
+//            if (!isMultiSend) {
+//                cleanWallet = true;
+////                Coin coin = pivxModule.getAvailableBalanceCoin();
+//                String availableBalance = (String) daps.callRPC("getBalance");
+//                if (availableBalance == null)
+//                    availableBalance = "0";
+//                Coin coin = Coin.valueOf(new BigDecimal(availableBalance).longValue());
+//                if (inPivs) {
+//                    edit_amount.setText(coin.toPlainString());
+//                    txt_local_currency.setText(
+//                            pivxApplication.getCentralFormats().format(
+//                                    new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+//                            )
+//                                    + " " + pivxRate.getCode()
+//                    );
+//                } else {
+//                    editCurrency.setText(
+//                            pivxApplication.getCentralFormats().format(
+//                                    new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+//                            )
+//                    );
+//                    txtShowPiv.setText(coin.toFriendlyString());
+//                }
+//            }else {
+//                Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_SHORT).show();
+//            }
+//        }else if(id == R.id.btn_swap){
+//            if (!isMultiSend){
+//                inPivs = !inPivs;
+//                amountSwap.showNext();
+//            }else {
+//                Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_LONG).show();
+//            }
+//        }else if (id == R.id.txt_coin_selection){
+//            startCoinControlActivity(unspent);
+//        }else if(id == R.id.txt_multiple_outputs){
+//            startMultiAddressSendActivity(outputWrappers);
+//        }else if(id == R.id.txt_custom_fee){
+//            startCustomFeeActivity(customFee);
+//        }else if (id == R.id.txt_change_address){
+//            startChangeAddressActivity(changeAddress,changeToOrigin);
         }
+    }
+
+    private boolean checkPermission(String permission) {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(),permission);
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
     private boolean checkConnectivity() {
@@ -526,81 +668,93 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     showErrorDialog(R.string.commit_tx_fail);
                 }
             }
-        }else if(requestCode == MULTIPLE_ADDRESSES_SEND_RESULT){
-            if (resultCode == RESULT_OK){
-                if (data.hasExtra(INTENT_EXTRA_OUTPUTS_CLEAR)){
-                    outputWrappers = null;
-                    txt_multiple_outputs.setVisibility(View.GONE);
-                    container_address.setVisibility(View.VISIBLE);
-                    unBlockAmount();
-                    isMultiSend = false;
-                }else {
-                    outputWrappers = (List<OutputWrapper>) data.getSerializableExtra(INTENT_EXTRA_OUTPUTS_WRAPPERS);
-                    Coin totalAmount = Coin.ZERO;
-                    for (OutputWrapper outputWrapper : outputWrappers) {
-                        totalAmount = outputWrapper.getAmount().plus(totalAmount);
-                    }
-                    setAmountAndBlock(totalAmount);
-                    txt_multiple_outputs.setText(getString(R.string.multiple_address_send, outputWrappers.size()));
-                    txt_multiple_outputs.setVisibility(View.VISIBLE);
-                    container_address.setVisibility(View.GONE);
-                    isMultiSend = true;
-                }
-            }
-        }else if (requestCode == CUSTOM_INPUTS){
-            if (resultCode == RESULT_OK) {
-                try {
-                    Set<InputWrapper> unspents = (Set<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
-                    for (InputWrapper inputWrapper : unspents) {
-                        inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
-                    }
-                    unspent = unspents;
-                    txt_coin_selection.setVisibility(View.VISIBLE);
-                } catch (TxNotFoundException e) {
-                    e.printStackTrace();
-                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
-                    Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
-                } catch (Exception e){
-                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
-                    Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
-                }
-            }
-        }else if (requestCode == CUSTOM_FEE_RESULT){
-            if (resultCode == RESULT_OK){
-                if (data.hasExtra(INTENT_EXTRA_CLEAR)){
-                    customFee = null;
-                    txt_custom_fee.setVisibility(View.GONE);
-                }else {
-                    boolean isPerKb = data.getBooleanExtra(INTENT_EXTRA_IS_FEE_PER_KB, false);
-                    boolean isTotal = data.getBooleanExtra(INTENT_EXTRA_IS_TOTAL_FEE, false);
-                    boolean isMinimum = data.getBooleanExtra(INTENT_EXTRA_IS_MINIMUM_FEE, false);
-                    Coin feeAmount = (Coin) data.getSerializableExtra(INTENT_EXTRA_FEE);
-                    customFee = new CustomFeeFragment.FeeSelector(isPerKb, feeAmount, isMinimum);
-                    txt_custom_fee.setVisibility(View.VISIBLE);
-                }
-            }
-        }else if(requestCode == CUSTOM_CHANGE_ADDRESS){
-            if (resultCode == RESULT_OK){
-                if (data.hasExtra(ChangeAddressActivity.INTENT_EXTRA_CLEAR_CHANGE_ADDRESS)){
-                    changeAddress = null;
-                    changeToOrigin = false;
-                    txt_change_address.setVisibility(View.GONE);
-                }else {
-                    if (data.hasExtra(INTENT_EXTRA_CHANGE_SEND_ORIGIN)){
-                        changeAddress = null;
-                        changeToOrigin = true;
-                    }else {
-                        if (data.hasExtra(INTENT_EXTRA_CHANGE_ADDRESS)) {
-                            String address = data.getStringExtra(INTENT_EXTRA_CHANGE_ADDRESS);
-                            changeAddress = Address.fromBase58(pivxModule.getConf().getNetworkParams(),address);
-                        }
-                    }
-                    txt_change_address.setVisibility(View.VISIBLE);
-                }
-            }
+//        }else if(requestCode == MULTIPLE_ADDRESSES_SEND_RESULT){
+//            if (resultCode == RESULT_OK){
+//                if (data.hasExtra(INTENT_EXTRA_OUTPUTS_CLEAR)){
+//                    outputWrappers = null;
+//                    txt_multiple_outputs.setVisibility(View.GONE);
+//                    container_address.setVisibility(View.VISIBLE);
+//                    unBlockAmount();
+//                    isMultiSend = false;
+//                }else {
+//                    outputWrappers = (List<OutputWrapper>) data.getSerializableExtra(INTENT_EXTRA_OUTPUTS_WRAPPERS);
+//                    Coin totalAmount = Coin.ZERO;
+//                    for (OutputWrapper outputWrapper : outputWrappers) {
+//                        totalAmount = outputWrapper.getAmount().plus(totalAmount);
+//                    }
+//                    setAmountAndBlock(totalAmount);
+//                    txt_multiple_outputs.setText(getString(R.string.multiple_address_send, outputWrappers.size()));
+//                    txt_multiple_outputs.setVisibility(View.VISIBLE);
+//                    container_address.setVisibility(View.GONE);
+//                    isMultiSend = true;
+//                }
+//            }
+//        }else if (requestCode == CUSTOM_INPUTS){
+//            if (resultCode == RESULT_OK) {
+//                try {
+//                    Set<InputWrapper> unspents = (Set<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+//                    for (InputWrapper inputWrapper : unspents) {
+//                        inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
+//                    }
+//                    unspent = unspents;
+//                    txt_coin_selection.setVisibility(View.VISIBLE);
+//                } catch (TxNotFoundException e) {
+//                    e.printStackTrace();
+//                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
+//                    Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
+//                } catch (Exception e){
+//                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
+//                    Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        }else if (requestCode == CUSTOM_FEE_RESULT){
+//            if (resultCode == RESULT_OK){
+//                if (data.hasExtra(INTENT_EXTRA_CLEAR)){
+//                    customFee = null;
+//                    txt_custom_fee.setVisibility(View.GONE);
+//                }else {
+//                    boolean isPerKb = data.getBooleanExtra(INTENT_EXTRA_IS_FEE_PER_KB, false);
+//                    boolean isTotal = data.getBooleanExtra(INTENT_EXTRA_IS_TOTAL_FEE, false);
+//                    boolean isMinimum = data.getBooleanExtra(INTENT_EXTRA_IS_MINIMUM_FEE, false);
+//                    Coin feeAmount = (Coin) data.getSerializableExtra(INTENT_EXTRA_FEE);
+//                    customFee = new CustomFeeFragment.FeeSelector(isPerKb, feeAmount, isMinimum);
+//                    txt_custom_fee.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        }else if(requestCode == CUSTOM_CHANGE_ADDRESS){
+//            if (resultCode == RESULT_OK){
+//                if (data.hasExtra(ChangeAddressActivity.INTENT_EXTRA_CLEAR_CHANGE_ADDRESS)){
+//                    changeAddress = null;
+//                    changeToOrigin = false;
+//                    txt_change_address.setVisibility(View.GONE);
+//                }else {
+//                    if (data.hasExtra(INTENT_EXTRA_CHANGE_SEND_ORIGIN)){
+//                        changeAddress = null;
+//                        changeToOrigin = true;
+//                    }else {
+//                        if (data.hasExtra(INTENT_EXTRA_CHANGE_ADDRESS)) {
+//                            String address = data.getStringExtra(INTENT_EXTRA_CHANGE_ADDRESS);
+//                            changeAddress = Address.fromBase58(pivxModule.getConf().getNetworkParams(),address);
+//                        }
+//                    }
+//                    txt_change_address.setVisibility(View.VISIBLE);
+//                }
+//            }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public int convertDpToPx(int dp) {
+        return (int)(dp * SendActivity.this.getResources().getDisplayMetrics().density);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        edit_amount.setIndicatorBounds(edit_amount.getWidth()- convertDpToPx(40), edit_amount.getWidth());
+        edit_fee.setIndicatorBounds(edit_fee.getWidth()- convertDpToPx(40), edit_fee.getWidth());
+        edit_ring.setIndicatorBounds(edit_ring.getWidth()- convertDpToPx(40), edit_ring.getWidth());
     }
 
     private void showErrorDialog(int resStr){
@@ -616,40 +770,51 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         errorDialog.show(getFragmentManager(),getResources().getString(R.string.send_error_dialog_tag));
     }
 
+    private String getUnitStr() {
+        String unitStr = "DAPS";
+        View groupView = edit_amount.getChildAt(0);
+        TextView unitView = (TextView) groupView.findViewById(R.id.listTitle);
+        unitStr = unitView.getText().toString();
+
+        return unitStr;
+    }
+
     private String getAmountStr(){
         String amountStr = "0";
         if (inPivs) {
-            amountStr = edit_amount.getText().toString();
+            View groupView = edit_amount.getChildAt(0);
+            EditText amountView = (EditText) groupView.findViewById(R.id.listAmount);
+            amountStr = amountView.getText().toString();
         }else {
-            // the value is already converted
-            String valueStr = txtShowPiv.getText().toString();
-            amountStr = valueStr.replace(" DAPS","");
-            if(valueStr.length() > 0) {
-                if (valueStr.charAt(0) == '.') {
-                    amountStr = "0" + valueStr;
-                }
-            }
+//            // the value is already converted
+//            String valueStr = txtShowPiv.getText().toString();
+//            amountStr = valueStr.replace(" DAPS","");
+//            if(valueStr.length() > 0) {
+//                if (valueStr.charAt(0) == '.') {
+//                    amountStr = "0" + valueStr;
+//                }
+//            }
         }
         return amountStr;
     }
 
     public void setAmountAndBlock(Coin amount) {
         if (inPivs) {
-            edit_amount.setText(amount.toPlainString());
-            edit_amount.setEnabled(false);
+            ((AmountAdapter)edit_amount.getExpandableListAdapter()).setAmountText(amount.toPlainString());
+//            edit_amount.setEnabled(false);
         }else {
-            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(pivxRate.getRate()).setScale(6,RoundingMode.FLOOR);
-            editCurrency.setText(result.toPlainString());
-            edit_amount.setEnabled(false);
+//            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(pivxRate.getRate()).setScale(6,RoundingMode.FLOOR);
+//            editCurrency.setText(result.toPlainString());
+//            edit_amount.setEnabled(false);
         }
     }
 
     public void unBlockAmount(){
-        if (inPivs) {
-            edit_amount.setEnabled(true);
-        }else {
-            edit_amount.setEnabled(true);
-        }
+//        if (inPivs) {
+//            edit_amount.setEnabled(true);
+//        }else {
+//            edit_amount.setEnabled(true);
+//        }
     }
 
     private void send(boolean sendOffline) {
@@ -675,7 +840,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 amountStr = "0"+amountStr;
             }
 
+            String unit = getUnitStr();
             Coin amount = Coin.parseCoin(amountStr);
+            if (unit.contains("uDAPS"))
+                amount = amount.divide(1000L);
+            else if (unit.contains("mDAPS"))
+                amount = amount.divide(1000L).divide(1000L);
+
             if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
             if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT)) throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, "+Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
 
@@ -835,25 +1006,39 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public Coin getFee() {
-        Coin feePerKb;
+        Coin feePerKb = Coin.valueOf(10000L);
         // tx size calculation -> (148*inputs)+(34*outputs)+10
         //long txSize = 148 * transaction.getInputs().size() + 34 * transaction.getOutputs().size() + 10;
 
-        if (customFee!=null){
-            if (customFee.isPayMinimum()){
-                feePerKb = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
-            }else {
-                if (customFee.isFeePerKbSelected()){
-                    // fee per kB
-                    feePerKb = customFee.getAmount();
-                }else {
-                    // todo: total fee..
-                    feePerKb = customFee.getAmount();
-                }
-            }
-        }else {
-            feePerKb = Transaction.DEFAULT_TX_FEE;
-        }
+//        if (customFee!=null){
+//            if (customFee.isPayMinimum()){
+//                feePerKb = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
+//            }else {
+//                if (customFee.isFeePerKbSelected()){
+//                    // fee per kB
+//                    feePerKb = customFee.getAmount();
+//                }else {
+//                    // todo: total fee..
+//                    feePerKb = customFee.getAmount();
+//                }
+//            }
+//        }else {
+//            feePerKb = Transaction.DEFAULT_TX_FEE;
+//        }
+
+        View groupView = edit_fee.getChildAt(0);
+        TextView feeView = (TextView) groupView.findViewById(R.id.listTitle);
+        String feeStr = feeView.getText().toString();
+
+        if (feeStr.contains("0.005x"))
+            feePerKb = Coin.valueOf(500000L);
+        else if (feeStr.contains("0.5x"))
+            feePerKb = Coin.valueOf(50000000L);
+        else if (feeStr.contains("0.6x"))
+            feePerKb = Coin.valueOf(50000000L);
+        else if (feeStr.contains("0.9x"))
+            feePerKb = Coin.valueOf(90000000L);
+
         return feePerKb;
     }
 

@@ -137,7 +137,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     protected void onResume() {
         super.onResume();
         // to check current activity in the navigation drawer
-        setNavigationMenuItemChecked(2);
+        setNavigationMenuItemChecked(4);
         updateNetworkStatus();
         text_rates.setText(pivxApplication.getAppConf().getSelectedRateCoin());
     }
