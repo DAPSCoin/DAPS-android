@@ -8,10 +8,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -36,6 +40,7 @@ import org.pivxj.core.Transaction;
 import org.pivxj.core.TransactionInput;
 import org.pivxj.core.TransactionOutput;
 import org.pivxj.uri.PivxURI;
+import org.pivxj.utils.MonetaryFormat;
 import org.pivxj.wallet.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +74,7 @@ import global.wrappers.TransactionWrapper;
 import pivx.org.pivxwallet.utils.AddressAdapter;
 import pivx.org.pivxwallet.utils.AmountAdapter;
 import pivx.org.pivxwallet.utils.CrashReporter;
+import pivx.org.pivxwallet.utils.DapsController;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.FeeAdapter;
 import pivx.org.pivxwallet.utils.NavigationUtils;
@@ -114,7 +120,9 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
     private static final int CUSTOM_INPUTS = 125;
     private static final int SEND_DETAIL = 126;
     private static final int CUSTOM_CHANGE_ADDRESS = 127;
+    private final MonetaryFormat DAPS_FORMAT = MonetaryFormat.BTC.minDecimals(8).optionalDecimals(0).noCode();
 
+    private SendDialog sendDialog;
     private View root;
     private Button buttonSend, addAllPiv;
     private EditText edit_address;
@@ -122,11 +130,11 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 //    private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txt_change_address, txtShowPiv;
 //    private TextView txt_multiple_outputs, txt_currency_amount;
 //    private View container_address;
-    private ExpandableListView edit_amount, edit_fee, edit_ring/*, editCurrency*/;
+    private ExpandableListView edit_amount, edit_fee/*, edit_ring*/;
     private EditText edit_memo;
     private AddressAdapter addressAdapter;
     private AmountAdapter amountAdapter;
-    private RingAdapter ringAdapter;
+//    private RingAdapter ringAdapter;
     private FeeAdapter feeAdapter;
     private String addressStr;
     private PivxRate pivxRate;
@@ -160,7 +168,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
         edit_address = (EditText) findViewById(R.id.edit_address);
         edit_amount = (ExpandableListView) findViewById(R.id.edit_amount);
         edit_fee = (ExpandableListView) findViewById(R.id.edit_fee);
-        edit_ring= (ExpandableListView) findViewById(R.id.edit_ring);
+//        edit_ring= (ExpandableListView) findViewById(R.id.edit_ring);
         edit_memo = (EditText) findViewById(R.id.edit_memo);
 //        container_address = root.findViewById(R.id.container_address);
 //        txt_local_currency = (TextView) findViewById(R.id.txt_local_currency);
@@ -455,55 +463,55 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
             });
         }
 
-        if (ringAdapter==null) {
-            List<String> list = new ArrayList<String>();
-            list.add("6");
-            list.add("7");
-            list.add("8");
-            list.add("9");
-            list.add("10");
-
-            ringAdapter= new RingAdapter(this, list,"7");
-            edit_ring.setAdapter(ringAdapter);
-
-            edit_ring.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-                @Override
-                public void onGroupExpand(int groupPosition) {
-                    edit_ring.getLayoutParams().height = convertDpToPx(150);
-                }
-            });
-
-            edit_ring.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-                @Override
-                public void onGroupCollapse(int groupPosition) {
-                    edit_ring.getLayoutParams().height = convertDpToPx(30);
-                }
-            });
-
-            edit_ring.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView parent, View v,
-                                            int groupPosition, int childPosition, long id) {
-                    RingAdapter adapter = (RingAdapter)parent.getExpandableListAdapter();
-                    adapter.setText((String)adapter.getChild(groupPosition, childPosition));
-
-                    parent.collapseGroup(0);
-                    return false;
-                }
-            });
-
-            edit_ring.setOnTouchListener(new View.OnTouchListener() {
-                // Setting on Touch Listener for handling the touch inside ScrollView
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    // Disallow the touch request for parent scroll on touch of child view
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
-                    return false;
-                }
-            });
-        }
+//        if (ringAdapter==null) {
+//            List<String> list = new ArrayList<String>();
+//            list.add("6");
+//            list.add("7");
+//            list.add("8");
+//            list.add("9");
+//            list.add("10");
+//
+//            ringAdapter= new RingAdapter(this, list,"7");
+//            edit_ring.setAdapter(ringAdapter);
+//
+//            edit_ring.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//
+//                @Override
+//                public void onGroupExpand(int groupPosition) {
+//                    edit_ring.getLayoutParams().height = convertDpToPx(150);
+//                }
+//            });
+//
+//            edit_ring.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//
+//                @Override
+//                public void onGroupCollapse(int groupPosition) {
+//                    edit_ring.getLayoutParams().height = convertDpToPx(30);
+//                }
+//            });
+//
+//            edit_ring.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//                @Override
+//                public boolean onChildClick(ExpandableListView parent, View v,
+//                                            int groupPosition, int childPosition, long id) {
+//                    RingAdapter adapter = (RingAdapter)parent.getExpandableListAdapter();
+//                    adapter.setText((String)adapter.getChild(groupPosition, childPosition));
+//
+//                    parent.collapseGroup(0);
+//                    return false;
+//                }
+//            });
+//
+//            edit_ring.setOnTouchListener(new View.OnTouchListener() {
+//                // Setting on Touch Listener for handling the touch inside ScrollView
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    // Disallow the touch request for parent scroll on touch of child view
+//                    v.getParent().requestDisallowInterceptTouchEvent(true);
+//                    return false;
+//                }
+//            });
+//        }
 
         if(getCurrentFocus()!=null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -754,7 +762,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
         super.onWindowFocusChanged(hasFocus);
         edit_amount.setIndicatorBounds(edit_amount.getWidth()- convertDpToPx(40), edit_amount.getWidth());
         edit_fee.setIndicatorBounds(edit_fee.getWidth()- convertDpToPx(40), edit_fee.getWidth());
-        edit_ring.setIndicatorBounds(edit_ring.getWidth()- convertDpToPx(40), edit_ring.getWidth());
+//        edit_ring.setIndicatorBounds(edit_ring.getWidth()- convertDpToPx(40), edit_ring.getWidth());
     }
 
     private void showErrorDialog(int resStr){
@@ -762,12 +770,12 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
     }
 
     private void showErrorDialog(String message) {
-        if (errorDialog==null){
-            errorDialog = DialogsUtil.buildSimpleErrorTextDialog(this,getResources().getString(R.string.invalid_inputs),message);
-        }else {
-            errorDialog.setBody(message);
-        }
-        errorDialog.show(getFragmentManager(),getResources().getString(R.string.send_error_dialog_tag));
+//        if (errorDialog==null){
+//            errorDialog = DialogsUtil.buildSimpleErrorTextDialog(this,getResources().getString(R.string.invalid_inputs),message);
+//        }else {
+//            errorDialog.setBody(message);
+//        }
+//        errorDialog.show(getFragmentManager(),getResources().getString(R.string.send_error_dialog_tag));
     }
 
     private String getUnitStr() {
@@ -918,7 +926,11 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 //
 //                // then fee and change address
                 Coin feePerKb = getFee();
-                daps.callRPC("setTxFee", feePerKb.toString());
+                if (sendDialog != null){
+                    sendDialog = null;
+                }
+                sendDialog = SendDialog.newInstance(DAPS_FORMAT.format(amount).toString(), "", DAPS_FORMAT.format(feePerKb).toString(), addressStr, daps);
+                sendDialog.show(getSupportFragmentManager(), "send_dialog");
 //
 //                if (memo.length()>0)
 //                    transaction.setMemo(memo);
@@ -954,8 +966,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 //            intent.putExtras(bundle);
 //            startActivityForResult(intent,SEND_DETAIL);
 
-            String txId = (String)daps.callRPC("sendToStealthAddress", addressStr, amountStr);
-            Log.i("APP","tx: "+txId);
+
 
 //        } catch (InsufficientMoneyException e) {
 //            e.printStackTrace();
@@ -1061,5 +1072,78 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
         Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
         finish();
         NavigationUtils.goBackToHome(this);
+    }
+
+    public static class SendDialog extends DialogFragment {
+
+        private View root;
+        private TextView txt_amount, txt_fee, txt_to_address, txt_description;
+        private String amount, fee, address, description;
+        private DapsController rpc;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            try {
+                root = inflater.inflate(R.layout.send_dialog, container);
+                txt_amount = (TextView) root.findViewById(R.id.txt_amount);
+                txt_fee = (TextView) root.findViewById(R.id.tx_fee);
+                txt_to_address = (TextView) root.findViewById(R.id.to_address);
+                txt_description = (TextView) root.findViewById(R.id.tx_description);
+
+                txt_amount.setText(amount + " DAPS");
+                txt_description.setText(description);
+                txt_fee.setText(fee + " DAPS");
+                txt_to_address.setText(address);
+
+                root.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        rpc.callRPC("setTxFee", fee);
+
+                        String txId = (String)rpc.callRPC("sendToStealthAddress", address, amount);
+                        Log.i("APP","tx: "+txId);
+
+                        dismiss();
+                    }
+                });
+
+                root.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dismiss();
+                    }
+                });
+            }catch (Exception e){
+                Toast.makeText(getActivity(),R.string.error_generic,Toast.LENGTH_SHORT).show();
+                dismiss();
+                getActivity().onBackPressed();
+            }
+            return root;
+        }
+
+        public void updateData(String amount, String description, String fee, String address, DapsController controller) {
+            this.amount = amount;
+            this.description = description;
+            this.fee = fee;
+            this.address = address;
+            this.rpc = controller;
+
+            if (txt_amount != null)
+                txt_amount.setText(amount + " DAPS");
+            if (txt_description != null)
+                txt_description.setText(description);
+            if (txt_fee != null)
+                txt_fee.setText(fee + " DAPS");
+            if (txt_to_address != null)
+                txt_to_address.setText(address);
+        }
+
+        public static SendDialog newInstance(String amount, String description, String fee, String address, DapsController controller) {
+            SendDialog sendDialog = new SendDialog();
+            sendDialog.updateData(amount, description, fee, address, controller);
+            return sendDialog;
+        }
     }
 }

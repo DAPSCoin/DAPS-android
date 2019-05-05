@@ -280,12 +280,12 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
     }
 
     private void showErrorDialog(String message) {
-        if (errorDialog == null) {
-            errorDialog = DialogsUtil.buildSimpleErrorTextDialog(this, getResources().getString(R.string.invalid_inputs), message);
-        } else {
-            errorDialog.setBody(message);
-        }
-        errorDialog.show(getFragmentManager(), getResources().getString(R.string.send_error_dialog_tag));
+//        if (errorDialog == null) {
+//            errorDialog = DialogsUtil.buildSimpleErrorTextDialog(this, getResources().getString(R.string.invalid_inputs), message);
+//        } else {
+//            errorDialog.setBody(message);
+//        }
+//        errorDialog.show(getFragmentManager(), getResources().getString(R.string.send_error_dialog_tag));
     }
 
 //    public static class QrDialog extends DialogFragment {

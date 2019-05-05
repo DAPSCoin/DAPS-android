@@ -138,17 +138,17 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Ring Size"
-            android:gravity="center_vertical"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            />
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="30dp"-->
+            <!--android:text="Ring Size"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textStyle="bold"-->
+            <!--/>-->
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
@@ -171,9 +171,9 @@
                 android:childDivider="@drawable/list_divider"
                 android:dividerHeight="0.5dp" />
 
-        </LinearLayout>
+        </LinearLayout>-->
 
-        <TextView
+        <!--<TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -182,7 +182,7 @@
             android:textColor="@color/white"
             android:textStyle="italic"
             android:textSize="9sp"
-            />
+            /> -->
 
         <Button
             android:id="@+id/btnSend"

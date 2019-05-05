@@ -200,13 +200,13 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             finish();
         } else if (id == R.id.nav_send) {
             startActivity(new Intent(this, SendActivity.class));
-        } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+//        } else if (id == R.id.nav_settings) {
+//            startActivity(new Intent(this, SettingsActivity.class));
 //        } else if (id == R.id.nav_donations){
 //            startActivity(new Intent(this, DonateActivity.class));
         } else if (id == R.id.nav_receive) {
             startActivity(new Intent(this, RequestActivity.class));
-        } else if (id == R.id.nav_history) {
+//        } else if (id == R.id.nav_history) {
 //            startActivity(new Intent(this, History.class));
         }
 

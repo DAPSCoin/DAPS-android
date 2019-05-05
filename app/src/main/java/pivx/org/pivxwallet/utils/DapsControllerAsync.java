@@ -18,7 +18,8 @@ import wf.bitcoin.javabitcoindrpcclient.BitcoinJSONRPCClient;
 public class DapsControllerAsync extends AsyncTask<String, Void, Object> {
     private final String user = "admin";
     private final String password = "admin123";
-    private final String host = "35.243.195.143";
+//    private final String host = "35.229.118.7";       //node 1
+    private final String host = "35.243.195.143";       //node 2
     private final String port = "53573";
     private BitcoinJSONRPCClient rpcClient = null;
 
@@ -57,6 +58,8 @@ public class DapsControllerAsync extends AsyncTask<String, Void, Object> {
                     return rpcClient.query("sendtostealthaddress", params[1], new BigDecimal(params[2]));
                 case "listTransactions":
                     return rpcClient.query("listtransactions");
+                case "getPendingBalance":
+                    return rpcClient.query("getbalances");
             }
         } catch (Exception e) {
             e.printStackTrace();
