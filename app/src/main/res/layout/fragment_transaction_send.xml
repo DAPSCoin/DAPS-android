@@ -79,16 +79,48 @@
                 android:layout_height="30dp"
                 android:src="@drawable/wallet"
                 android:background="@color/transparent" />
-            <ExpandableListView
-                android:id = "@+id/edit_amount"
-                android:layout_marginLeft="15dp"
-                android:layout_width = "match_parent"
-                android:layout_height = "30dp"
-                android:background="@drawable/rounded_border"
-                android:groupIndicator="@drawable/custom_indicator"
-                android:textColor = "@color/white"
-                android:childDivider="@drawable/list_divider"
-                android:dividerHeight="0.5dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp" >
+                <EditText
+                    android:id = "@+id/edit_amount"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "30dp"
+                    android:background="@drawable/rounded_border"
+                    android:textColor = "@color/white"
+                    android:ellipsize="start"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:singleLine="true"
+                    android:hint=""
+                    android:text = ""
+                    android:textColorHint="@color/hinttext"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:textSize = "14sp" />
+                <Button
+                    android:id="@+id/button_qr"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_generate_btn"
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:text="QRScan"
+                    android:textColor="@color/gray_87_text"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+            <!--<ExpandableListView-->
+                <!--android:id = "@+id/edit_amount"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_width = "match_parent"-->
+                <!--android:layout_height = "30dp"-->
+                <!--android:background="@drawable/rounded_border"-->
+                <!--android:textColor = "@color/white"-->
+                <!--android:groupIndicator="@drawable/custom_indicator"-->
+                <!--android:childDivider="@drawable/list_divider"-->
+                <!--android:dividerHeight="0.5dp" />-->
 
         </LinearLayout>
 

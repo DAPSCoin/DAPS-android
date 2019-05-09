@@ -39,7 +39,10 @@ import org.pivxj.core.NetworkParameters;
 import org.pivxj.core.Transaction;
 import org.pivxj.core.TransactionInput;
 import org.pivxj.core.TransactionOutput;
+import org.pivxj.uri.BitcoinURIParseException;
+import org.pivxj.uri.OptionalFieldValidationException;
 import org.pivxj.uri.PivxURI;
+import org.pivxj.uri.RequiredFieldValidationException;
 import org.pivxj.utils.MonetaryFormat;
 import org.pivxj.wallet.Wallet;
 import org.slf4j.Logger;
@@ -47,10 +50,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -130,8 +136,8 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 //    private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txt_change_address, txtShowPiv;
 //    private TextView txt_multiple_outputs, txt_currency_amount;
 //    private View container_address;
-    private ExpandableListView edit_amount, edit_fee/*, edit_ring*/;
-    private EditText edit_memo;
+    private ExpandableListView edit_fee/*, edit_ring*/;
+    private EditText edit_memo, edit_amount;
     private AddressAdapter addressAdapter;
     private AmountAdapter amountAdapter;
 //    private RingAdapter ringAdapter;
@@ -166,7 +172,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
         edit_address = (EditText) findViewById(R.id.edit_address);
-        edit_amount = (ExpandableListView) findViewById(R.id.edit_amount);
+        edit_amount = (EditText) findViewById(R.id.edit_amount);
         edit_fee = (ExpandableListView) findViewById(R.id.edit_fee);
 //        edit_ring= (ExpandableListView) findViewById(R.id.edit_ring);
         edit_memo = (EditText) findViewById(R.id.edit_memo);
@@ -180,7 +186,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 //        txt_custom_fee.setOnClickListener(this);
 //        txt_change_address = (TextView) root.findViewById(R.id.txt_change_address);
 //        txt_change_address.setOnClickListener(this);
-//        findViewById(R.id.button_qr).setOnClickListener(this);
+        findViewById(R.id.button_qr).setOnClickListener(this);
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
 
@@ -386,43 +392,43 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
         super.onResume();
         setNavigationMenuItemChecked(1);
 
-        if (amountAdapter==null) {
-            List<String> list = new ArrayList<String>();
-            list.add("DAPS");
-            list.add("uDAPS");
-            list.add("mDAPS");
-
-            amountAdapter= new AmountAdapter(this, list,"DAPS");
-            edit_amount.setAdapter(amountAdapter);
-
-            edit_amount.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-                @Override
-                public void onGroupExpand(int groupPosition) {
-                    edit_amount.getLayoutParams().height = convertDpToPx(120);
-                }
-            });
-
-            edit_amount.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-                @Override
-                public void onGroupCollapse(int groupPosition) {
-                    edit_amount.getLayoutParams().height = convertDpToPx(30);
-                }
-            });
-
-            edit_amount.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView parent, View v,
-                                            int groupPosition, int childPosition, long id) {
-                    AmountAdapter adapter = (AmountAdapter)parent.getExpandableListAdapter();
-                    adapter.setUnitText((String)adapter.getChild(groupPosition, childPosition));
-
-                    parent.collapseGroup(0);
-                    return false;
-                }
-            });
-        }
+//        if (amountAdapter==null) {
+//            List<String> list = new ArrayList<String>();
+//            list.add("DAPS");
+//            list.add("uDAPS");
+//            list.add("mDAPS");
+//
+//            amountAdapter= new AmountAdapter(this, list,"DAPS");
+//            edit_amount.setAdapter(amountAdapter);
+//
+//            edit_amount.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//
+//                @Override
+//                public void onGroupExpand(int groupPosition) {
+//                    edit_amount.getLayoutParams().height = convertDpToPx(120);
+//                }
+//            });
+//
+//            edit_amount.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//
+//                @Override
+//                public void onGroupCollapse(int groupPosition) {
+//                    edit_amount.getLayoutParams().height = convertDpToPx(30);
+//                }
+//            });
+//
+//            edit_amount.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//                @Override
+//                public boolean onChildClick(ExpandableListView parent, View v,
+//                                            int groupPosition, int childPosition, long id) {
+//                    AmountAdapter adapter = (AmountAdapter)parent.getExpandableListAdapter();
+//                    adapter.setUnitText((String)adapter.getChild(groupPosition, childPosition));
+//
+//                    parent.collapseGroup(0);
+//                    return false;
+//                }
+//            });
+//        }
 
         if (feeAdapter==null) {
             List<String> list = new ArrayList<String>();
@@ -652,14 +658,72 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
                 try {
                     address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (pivxModule.chechAddress(address)){
+
+                    NetworkParameters params = pivxModule.getConf().getNetworkParams();
+                    String scheme = params.getUriScheme();
+                    if (!address.contains("dapscoin:")){
                         usedAddress = address;
                     }else {
-                        PivxURI pivxUri = new PivxURI(address);
-                        usedAddress = pivxUri.getAddress().toBase58();
+                        usedAddress = address.substring(scheme.length() + 1);
+                        String[] addressSplitTokens = usedAddress.split("\\?", 2);
+                        if (addressSplitTokens.length != 0)
+                            usedAddress = addressSplitTokens[0];
+                        String[] nameValuePairTokens = new String[0];
+                        if (addressSplitTokens.length > 1)
+                            nameValuePairTokens = addressSplitTokens[1].split("&");
+
+                        Coin amount = null;
+                        String memo = "";
+                        for(int i = 0; i < nameValuePairTokens.length; ++i) {
+                            String nameValuePairToken = nameValuePairTokens[i];
+                            int sepIndex = nameValuePairToken.indexOf(61);
+                            if (sepIndex == -1) {
+                                throw new BitcoinURIParseException("Malformed Pivx URI - no separator in '" + nameValuePairToken + "'");
+                            }
+
+                            if (sepIndex == 0) {
+                                throw new BitcoinURIParseException("Malformed Bitcoin URI - empty name '" + nameValuePairToken + "'");
+                            }
+
+                            String nameToken = nameValuePairToken.substring(0, sepIndex).toLowerCase(Locale.ENGLISH);
+                            String valueToken = nameValuePairToken.substring(sepIndex + 1);
+                            if ("amount".equals(nameToken)) {
+                                try {
+                                    amount = Coin.parseCoin(valueToken);
+                                    if (params != null && amount.isGreaterThan(params.getMaxMoney())) {
+                                        throw new BitcoinURIParseException("Max number of coins exceeded");
+                                    }
+
+                                    if (amount.signum() < 0) {
+                                        throw new ArithmeticException("Negative coins specified");
+                                    }
+
+                                } catch (IllegalArgumentException e) {
+                                    throw new OptionalFieldValidationException(String.format(Locale.US, "'%s' is not a valid amount", valueToken), e);
+                                } catch (ArithmeticException e) {
+                                    throw new OptionalFieldValidationException(String.format(Locale.US, "'%s' has too many decimal places", valueToken), e);
+                                }
+                            } else {
+                                if (nameToken.startsWith("req-")) {
+                                    throw new RequiredFieldValidationException("'" + nameToken + "' is required but not known, this URI is not valid");
+                                }
+
+                                try {
+                                    if (valueToken.length() > 0) {
+                                        if ("message".equals(nameToken))
+                                            memo = URLDecoder.decode(valueToken, "UTF-8");
+                                    }
+                                } catch (UnsupportedEncodingException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+
+                        if (amount != null){
+                            edit_address.setText(usedAddress);
+                            edit_amount.setText(amount.toPlainString());
+                        }
                     }
-                    final String tempPubKey = usedAddress;
-                    edit_address.setText(tempPubKey);
                 }catch (Exception e){
                     e.printStackTrace();
                     Toast.makeText(this,"Bad address "+address,Toast.LENGTH_LONG).show();
@@ -760,7 +824,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        edit_amount.setIndicatorBounds(edit_amount.getWidth()- convertDpToPx(40), edit_amount.getWidth());
+//        edit_amount.setIndicatorBounds(edit_amount.getWidth()- convertDpToPx(40), edit_amount.getWidth());
         edit_fee.setIndicatorBounds(edit_fee.getWidth()- convertDpToPx(40), edit_fee.getWidth());
 //        edit_ring.setIndicatorBounds(edit_ring.getWidth()- convertDpToPx(40), edit_ring.getWidth());
     }
@@ -778,21 +842,21 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 //        errorDialog.show(getFragmentManager(),getResources().getString(R.string.send_error_dialog_tag));
     }
 
-    private String getUnitStr() {
-        String unitStr = "DAPS";
-        View groupView = edit_amount.getChildAt(0);
-        TextView unitView = (TextView) groupView.findViewById(R.id.listTitle);
-        unitStr = unitView.getText().toString();
-
-        return unitStr;
-    }
+//    private String getUnitStr() {
+//        String unitStr = "DAPS";
+//        View groupView = edit_amount.getChildAt(0);
+//        TextView unitView = (TextView) groupView.findViewById(R.id.listTitle);
+//        unitStr = unitView.getText().toString();
+//
+//        return unitStr;
+//    }
 
     private String getAmountStr(){
         String amountStr = "0";
         if (inPivs) {
-            View groupView = edit_amount.getChildAt(0);
-            EditText amountView = (EditText) groupView.findViewById(R.id.listAmount);
-            amountStr = amountView.getText().toString();
+//            View groupView = edit_amount.getChildAt(0);
+//            EditText amountView = (EditText) groupView.findViewById(R.id.listAmount);
+            amountStr = edit_amount.getText().toString();
         }else {
 //            // the value is already converted
 //            String valueStr = txtShowPiv.getText().toString();
@@ -808,7 +872,8 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 
     public void setAmountAndBlock(Coin amount) {
         if (inPivs) {
-            ((AmountAdapter)edit_amount.getExpandableListAdapter()).setAmountText(amount.toPlainString());
+//            ((AmountAdapter)edit_amount.getExpandableListAdapter()).setAmountText(amount.toPlainString());
+            edit_amount.setText(amount.toPlainString());
 //            edit_amount.setEnabled(false);
         }else {
 //            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(pivxRate.getRate()).setScale(6,RoundingMode.FLOOR);
@@ -848,12 +913,12 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
                 amountStr = "0"+amountStr;
             }
 
-            String unit = getUnitStr();
+//            String unit = getUnitStr();
             Coin amount = Coin.parseCoin(amountStr);
-            if (unit.contains("uDAPS"))
-                amount = amount.divide(1000L);
-            else if (unit.contains("mDAPS"))
-                amount = amount.divide(1000L).divide(1000L);
+//            if (unit.contains("uDAPS"))
+//                amount = amount.divide(1000L);
+//            else if (unit.contains("mDAPS"))
+//                amount = amount.divide(1000L).divide(1000L);
 
             if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
             if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT)) throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, "+Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
