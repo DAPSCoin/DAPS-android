@@ -80,8 +80,8 @@
 
         </activity>
         <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.qr_activity.QrActivity"/>
-        <activity android:name=".utils.scanner.ScanActivity"/>
+        <activity android:name=".ui.qr_activity.QrActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".utils.scanner.ScanActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.donate.DonateActivity" />
         <activity android:name=".ui.export_account.ExportKeyActivity"/>
         <activity android:name=".ui.import_watch_only.SettingsWatchOnly"/>

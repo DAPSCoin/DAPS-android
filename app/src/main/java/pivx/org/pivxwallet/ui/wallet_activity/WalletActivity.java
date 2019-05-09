@@ -489,7 +489,7 @@ public class WalletActivity extends BaseDrawerActivity {
         String availableBalance = (String) daps.callRPC("getBalance");
         if (availableBalance == null)
             availableBalance = "0";
-        Coin availableBalanceCoin = Coin.valueOf(new BigDecimal(availableBalance).longValue());
+        Coin availableBalanceCoin = Coin.parseCoin(availableBalance);
         if (availableBalanceCoin.isZero())
             txt_value.setText("0.00000000 DAPS");
         else
@@ -500,7 +500,7 @@ public class WalletActivity extends BaseDrawerActivity {
         String pendingBalance = String.valueOf(result.get("pending"));
         if (pendingBalance == null)
             pendingBalance = "0";
-        Coin pendingBalanceCoin = Coin.valueOf(new BigDecimal(pendingBalance).longValue());
+        Coin pendingBalanceCoin = Coin.parseCoin(pendingBalance);
         if (pendingBalanceCoin.isZero())
             txt_pending_value.setText("0.00000000 DAPS");
         else

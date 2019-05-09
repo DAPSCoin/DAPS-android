@@ -862,7 +862,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
             if (availableBalance == null)
                 availableBalance = "0";
 //            if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance())))
-            if (amount.isGreaterThan(Coin.valueOf(new BigDecimal(availableBalance).longValue())))
+            if (amount.isGreaterThan(Coin.parseCoin(availableBalance)))
                 throw new IllegalArgumentException("Insuficient balance");
 
             // memo

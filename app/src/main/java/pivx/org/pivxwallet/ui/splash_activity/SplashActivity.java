@@ -37,14 +37,14 @@ public class SplashActivity extends AppCompatActivity {
 
     private void jump() {
 
-        if (PivxApplication.getInstance().getAppConf().isAppInit()){
+//        if (PivxApplication.getInstance().getAppConf().isAppInit()){
             Intent intent = new Intent(this, WalletActivity.class);
             startActivity(intent);
-        }else {
-            // Jump to your Next Activity or MainActivity
-            Intent intent = new Intent(this, StartActivity.class);
-            startActivity(intent);
-        }
+//        }else {
+////             Jump to your Next Activity or MainActivity
+//            Intent intent = new Intent(this, StartActivity.class);
+//            startActivity(intent);
+//        }
         finish();
     }
 }
