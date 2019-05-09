@@ -82,6 +82,7 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
         copy_data = (LinearLayout) root.findViewById(R.id.copy_data);
 
         root.findViewById(R.id.btnRequest).setOnClickListener(this);
+        root.findViewById(R.id.btnGenerate).setOnClickListener(this);
         img_copy.setOnClickListener(this);
 
     }
@@ -174,6 +175,8 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
         } else if (id == R.id.img_copy) {
             copyToClipboard(this,pivxURI);
             Toast.makeText(this, R.string.copy_uri, Toast.LENGTH_LONG).show();
+        } else if (id == R.id.btnGenerate) {
+            payment_id.setText("Payment_Test");
         }
     }
 
