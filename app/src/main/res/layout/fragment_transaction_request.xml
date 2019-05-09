@@ -1,85 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@color/bgWhite"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="pivx.org.pivxwallet.ui.transaction_send_activity.AmountInputFragment"
-        android:id="@+id/fragment_amount"
-        />
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:layout_width="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="30dp"
+        android:padding="16dp" >
 
-
-        <TextView
-            android:id = "@+id/titleDescription"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:text = "@string/title_description"
-            android:paddingBottom="12dp"
-            android:layout_gravity="center"
-            android:textColor = "#757575"
-            android:textSize = "14sp" />
-
-        <EditText
-            android:id = "@+id/edit_memo"
-            android:ellipsize="start"
-            android:gravity="center_horizontal"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:padding="8dp"
-            android:textCursorDrawable="@drawable/color_cursor"
-            android:background="@drawable/transaction_inputs"
-            android:layout_marginBottom="10dp"
-            android:singleLine="true"
-            android:hint="@string/set_description"
-            android:text = ""
-            android:textColor = "#434343"
-            android:textSize = "17.5sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:padding="20dp"
-        android:gravity="center|bottom"
-        android:orientation="vertical"
-        android:background="@android:color/transparent">
-
-        <Button
-            android:id="@+id/btnRequest"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_button_border"
-            android:elevation="2dp"
-            android:gravity="center"
-            android:layout_gravity="bottom"
-            android:text="@string/btn_request"
-            android:textColor="@color/textColorPurple"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/qrcode"
+                android:background="@color/transparent" />
+
+            <ExpandableListView
+                android:id = "@+id/edit_address"
+                android:layout_marginLeft="15dp"
+                android:layout_width = "match_parent"
+                android:layout_height = "30dp"
+                android:background="@drawable/rounded_border"
+                android:groupIndicator="@drawable/custom_indicator"
+                android:textColor = "@color/white"
+                android:childDivider="@drawable/list_divider"
+                android:dividerHeight="0.5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/wallet"
+                android:background="@color/transparent" />
+            <ExpandableListView
+                android:id = "@+id/edit_amount"
+                android:layout_marginLeft="15dp"
+                android:layout_width = "match_parent"
+                android:layout_height = "30dp"
+                android:background="@drawable/rounded_border"
+                android:groupIndicator="@drawable/custom_indicator"
+                android:textColor = "@color/white"
+                android:childDivider="@drawable/list_divider"
+                android:dividerHeight="0.5dp" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/fee_included"
+            android:layout_marginTop="10dp"
+            android:text="@string/amount_desc"
+            android:textSize="9sp"
+            android:layout_marginLeft="45dp"
+            android:textStyle="italic"
+            android:textColor="@color/white"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/refund"
+                android:background="@color/transparent" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp" >
+
+                <TextView
+                    android:id = "@+id/edit_payment_id"
+                    android:ellipsize="start"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "30dp"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:background="@drawable/rounded_border"
+                    android:singleLine="true"
+                    android:hint="Payment ID"
+                    android:text = ""
+                    android:textColorHint="@color/hinttext"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:textColor = "@color/white"
+                    android:textSize = "14sp" />
+                <Button
+                    android:id="@+id/btnGenerate"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_generate_btn"
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:text="Generate"
+                    android:textColor="@color/gray_87_text"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnRequest"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_button_border"
             android:gravity="center"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"/>
+            android:layout_gravity="bottom"
+            android:text="@string/btn_request"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/img_qr"
+            android:layout_marginTop="20dp"
+            android:layout_width="225dp"
+            android:layout_height="225dp"
+            android:background="@drawable/rounded_border"
+            android:adjustViewBounds="true"
+            android:padding = "1dp"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:layout_width="225dp"
+            android:layout_height="50dp"
+            android:id="@+id/copy_data"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:visibility="gone" >
+            <TextView
+                android:layout_width="185dp"
+                android:layout_height="30dp"
+                android:id="@+id/underline_text"
+                android:text=""
+                android:textSize="12sp"
+                android:ellipsize="end"
+                android:lines="2"
+                android:textColor="#83faff"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
+                android:id="@+id/img_copy"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/copy"
+                android:backgroundTint="#83faff"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>

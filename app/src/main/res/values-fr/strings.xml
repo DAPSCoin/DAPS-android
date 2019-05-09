@@ -155,4 +155,5 @@
     <string name="donation_title">Je souhaite faire un don</string>
     <string name="btn_donate">Faire un don</string>
     <string name="donation_thanks">Envoi du don.. Merci de votre soutien ! </string>
+    <string name="copy_uri" />
 </resources>

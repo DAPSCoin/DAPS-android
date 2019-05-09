@@ -177,4 +177,5 @@
     <string name="donation_title">Ik ga doneren</string>
     <string name="btn_donate">Doneer</string>
     <string name="donation_thanks">Donatie verzenden.. Bedankt voor je ondersteuning!</string>
+    <string name="copy_uri" />
 </resources>

@@ -177,4 +177,5 @@
     <string name="donation_title">Aion lahjoittaa</string>
     <string name="btn_donate">Lahjoita</string>
     <string name="donation_thanks">Lähettää lahjoitusta.. Kiitos tuestasi!</string>
+    <string name="copy_uri" />
 </resources>

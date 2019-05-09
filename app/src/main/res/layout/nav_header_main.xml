@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/side_nav_bar"
+
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -16,40 +16,8 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@mipmap/img_header_logo"  />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:textSize="16sp"
-        android:text="Wallet"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_sync_status"
-            tools:text="Sync"
-            android:textSize="13sp"
-            android:textColor="#99ffffff"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_sync"
-            android:layout_gravity="center"
-            android:layout_marginStart="7dp"
-            android:src="@drawable/ic_header_unsynced"
-            />
-
-    </LinearLayout>
+        android:layout_marginBottom="50dp"
+        android:layout_gravity="center"
+        android:src="@drawable/dapsico"  />
 
 </LinearLayout>

@@ -178,4 +178,5 @@
     <string name="donation_title">기부하려고 해요</string>
     <string name="btn_donate">기부하기</string>
     <string name="donation_thanks">기부중입니다. 대단히 감사합니다.</string>
+    <string name="copy_uri" />
 </resources>

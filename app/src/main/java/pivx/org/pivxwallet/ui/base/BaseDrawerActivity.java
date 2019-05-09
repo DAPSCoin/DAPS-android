@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.base;
 
+import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,8 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.donate.DonateActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
+import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 import static pivx.org.pivxwallet.module.PivxContext.OUT_OF_SYNC_TIME;
@@ -41,9 +44,6 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     private Toolbar toolbar;
     private DrawerLayout drawer;
     protected FrameLayout header_container;
-    private TextView txt_app_version;
-    private TextView txt_sync_status;
-    private ImageView img_sync;
 
     protected BlockchainState blockchainState = BlockchainState.SYNCING;
 
@@ -86,10 +86,6 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.getHeaderView(0);
-        txt_sync_status = (TextView) headerLayout.findViewById(R.id.txt_sync_status);
-        img_sync = (ImageView) headerLayout.findViewById(R.id.img_sync);
-        txt_app_version = (TextView) navigationView.findViewById(R.id.txt_app_version);
-        txt_app_version.setText(BuildConfig.VERSION_NAME);
 
         onCreateView(savedInstanceState,frameLayout);
 
@@ -197,21 +193,33 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             return false;
         }
 
-        if (id == R.id.nav_wallet) {
+        if (id == R.id.nav_overview) {
             Intent intent = new Intent(this,WalletActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
-        } else if (id == R.id.nav_address) {
-            startActivity(new Intent(this, ContactsActivity.class));
-        } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-        } else if (id == R.id.nav_donations){
-            startActivity(new Intent(this, DonateActivity.class));
+        } else if (id == R.id.nav_send) {
+            startActivity(new Intent(this, SendActivity.class));
+//        } else if (id == R.id.nav_settings) {
+//            startActivity(new Intent(this, SettingsActivity.class));
+//        } else if (id == R.id.nav_donations){
+//            startActivity(new Intent(this, DonateActivity.class));
+        } else if (id == R.id.nav_receive) {
+            startActivity(new Intent(this, RequestActivity.class));
+//        } else if (id == R.id.nav_history) {
+//            startActivity(new Intent(this, History.class));
         }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle("");
+
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        mTitle.setText(title);
     }
 
     protected void setNavigationMenuItemChecked(int pos){
@@ -222,36 +230,36 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         // Check if the activity is on foreground
         if (!isOnForeground)return;
 
-        if (txt_sync_status!=null) {
-            String text = null;
-            int color = 0;
-            int imgSrc = 0;
-            double progress = calculateBlockchainSyncProgress();
-            switch (blockchainState) {
-                case SYNC:
-                    text = getString(R.string.sync);
-                    color = Color.parseColor("#ffffffff");
-                    imgSrc = 0;
-                    break;
-                case SYNCING:
-                    text = getString(R.string.syncing)+" "+progress+"%";
-                    color = Color.parseColor("#f6a623");
-                    imgSrc = R.drawable.ic_header_unsynced;
-                    break;
-                case NOT_CONNECTION:
-                    text = getString(R.string.not_connection);
-                    color = Color.parseColor("#f6a623");
-                    imgSrc = R.drawable.ic_header_unsynced;
-                    break;
-            }
-            txt_sync_status.setText(text);
-            txt_sync_status.setTextColor(color);
-            if (imgSrc!=0) {
-                img_sync.setImageResource(imgSrc);
-                img_sync.setVisibility(View.VISIBLE);
-            }else
-                img_sync.setVisibility(View.INVISIBLE);
-        }
+//        if (txt_sync_status!=null) {
+//            String text = null;
+//            int color = 0;
+//            int imgSrc = 0;
+//            double progress = calculateBlockchainSyncProgress();
+//            switch (blockchainState) {
+//                case SYNC:
+//                    text = getString(R.string.sync);
+//                    color = Color.parseColor("#ffffffff");
+//                    imgSrc = 0;
+//                    break;
+//                case SYNCING:
+//                    text = getString(R.string.syncing)+" "+progress+"%";
+//                    color = Color.parseColor("#f6a623");
+//                    imgSrc = R.drawable.ic_header_unsynced;
+//                    break;
+//                case NOT_CONNECTION:
+//                    text = getString(R.string.not_connection);
+//                    color = Color.parseColor("#f6a623");
+//                    imgSrc = R.drawable.ic_header_unsynced;
+//                    break;
+//            }
+//            txt_sync_status.setText(text);
+//            txt_sync_status.setTextColor(color);
+//            if (imgSrc!=0) {
+//                img_sync.setImageResource(imgSrc);
+//                img_sync.setVisibility(View.VISIBLE);
+//            }else
+//                img_sync.setVisibility(View.INVISIBLE);
+//        }
     }
 
     protected double calculateBlockchainSyncProgress() {

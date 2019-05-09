@@ -177,4 +177,5 @@
     <string name="donation_title">Chcem darovať</string>
     <string name="btn_donate">Darovať</string>
     <string name="donation_thanks">Odoslanie daru... Ďakujeme za Vašu podporu!</string>
+    <string name="copy_uri" />
 </resources>
