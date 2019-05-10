@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -1152,6 +1153,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             try {
+                getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 root = inflater.inflate(R.layout.send_dialog, container);
                 txt_amount = (TextView) root.findViewById(R.id.txt_amount);
                 txt_fee = (TextView) root.findViewById(R.id.tx_fee);
