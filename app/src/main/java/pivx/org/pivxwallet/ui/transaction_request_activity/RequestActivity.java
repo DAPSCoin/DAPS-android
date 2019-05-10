@@ -54,7 +54,8 @@ import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
 
 public class RequestActivity extends BaseDrawerActivity implements View.OnClickListener {
 
-    private ExpandableListView edit_amount, edit_address;
+    private ExpandableListView edit_address;
+    private EditText edit_amount;
     private TextView payment_id, underline_text;
     private AmountAdapter amountAdapter;
     private AddressAdapter addressAdapter;
@@ -73,7 +74,7 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        edit_amount = (ExpandableListView) root.findViewById(R.id.edit_amount);
+        edit_amount = (EditText) root.findViewById(R.id.edit_amount);
         edit_address = (ExpandableListView) root.findViewById(R.id.edit_address);
         payment_id = (TextView) root.findViewById(R.id.edit_payment_id);
         underline_text = (TextView) root.findViewById(R.id.underline_text);
@@ -90,7 +91,7 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        edit_amount.setIndicatorBounds(edit_amount.getWidth()- convertDpToPx(40), edit_amount.getWidth());
+//        edit_amount.setIndicatorBounds(edit_amount.getWidth()- convertDpToPx(40), edit_amount.getWidth());
         edit_address.setIndicatorBounds(edit_address.getWidth()- convertDpToPx(40), edit_address.getWidth());
     }
 
@@ -109,43 +110,43 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
             edit_address.setAdapter(addressAdapter);
         }
 
-        if (amountAdapter == null) {
-            List<String> list = new ArrayList<String>();
-            list.add("DAPS");
-            list.add("uDAPS");
-            list.add("mDAPS");
-
-            amountAdapter = new AmountAdapter(this, list, "DAPS");
-            edit_amount.setAdapter(amountAdapter);
-
-            edit_amount.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-                @Override
-                public void onGroupExpand(int groupPosition) {
-                    edit_amount.getLayoutParams().height = convertDpToPx(120);
-                }
-            });
-
-            edit_amount.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-                @Override
-                public void onGroupCollapse(int groupPosition) {
-                    edit_amount.getLayoutParams().height = convertDpToPx(30);
-                }
-            });
-
-            edit_amount.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView parent, View v,
-                                            int groupPosition, int childPosition, long id) {
-                    AmountAdapter adapter = (AmountAdapter) parent.getExpandableListAdapter();
-                    adapter.setUnitText((String) adapter.getChild(groupPosition, childPosition));
-
-                    parent.collapseGroup(0);
-                    return false;
-                }
-            });
-        }
+//        if (amountAdapter == null) {
+//            List<String> list = new ArrayList<String>();
+//            list.add("DAPS");
+//            list.add("uDAPS");
+//            list.add("mDAPS");
+//
+//            amountAdapter = new AmountAdapter(this, list, "DAPS");
+//            edit_amount.setAdapter(amountAdapter);
+//
+//            edit_amount.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//
+//                @Override
+//                public void onGroupExpand(int groupPosition) {
+//                    edit_amount.getLayoutParams().height = convertDpToPx(120);
+//                }
+//            });
+//
+//            edit_amount.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//
+//                @Override
+//                public void onGroupCollapse(int groupPosition) {
+//                    edit_amount.getLayoutParams().height = convertDpToPx(30);
+//                }
+//            });
+//
+//            edit_amount.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//                @Override
+//                public boolean onChildClick(ExpandableListView parent, View v,
+//                                            int groupPosition, int childPosition, long id) {
+//                    AmountAdapter adapter = (AmountAdapter) parent.getExpandableListAdapter();
+//                    adapter.setUnitText((String) adapter.getChild(groupPosition, childPosition));
+//
+//                    parent.collapseGroup(0);
+//                    return false;
+//                }
+//            });
+//        }
 
         if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -190,21 +191,21 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
         }
 
         String amountStr = "0";
-        View groupView = edit_amount.getChildAt(0);
-        EditText amountView = (EditText) groupView.findViewById(R.id.listAmount);
-        amountStr = amountView.getText().toString();
+//        View groupView = edit_amount.getChildAt(0);
+//        EditText amountView = (EditText) groupView.findViewById(R.id.listAmount);
+        amountStr = edit_amount.getText().toString();
 
         return amountStr;
     }
 
-    public String getUnitStr() {
-        String unitStr = "DAPS";
-        View groupView = edit_amount.getChildAt(0);
-        TextView unitView = (TextView) groupView.findViewById(R.id.listTitle);
-        unitStr = unitView.getText().toString();
-
-        return unitStr;
-    }
+//    public String getUnitStr() {
+//        String unitStr = "DAPS";
+//        View groupView = edit_amount.getChildAt(0);
+//        TextView unitView = (TextView) groupView.findViewById(R.id.listTitle);
+//        unitStr = unitView.getText().toString();
+//
+//        return unitStr;
+//    }
 
     public String getAddressStr() throws Exception {
         if (edit_address== null){
@@ -229,12 +230,12 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
             amountStr = "0" + amountStr;
         }
 
-        String unit = getUnitStr();
+//        String unit = getUnitStr();
         Coin amount = Coin.parseCoin(amountStr);
-        if (unit.contains("uDAPS"))
-            amount = amount.divide(1000L);
-        else if (unit.contains("mDAPS"))
-            amount = amount.divide(1000L).divide(1000L);
+//        if (unit.contains("uDAPS"))
+//            amount = amount.divide(1000L);
+//        else if (unit.contains("mDAPS"))
+//            amount = amount.divide(1000L).divide(1000L);
 
         if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
         if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT))

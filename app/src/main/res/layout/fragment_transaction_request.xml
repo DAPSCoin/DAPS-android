@@ -47,16 +47,32 @@
                 android:layout_height="30dp"
                 android:src="@drawable/wallet"
                 android:background="@color/transparent" />
-            <ExpandableListView
+            <EditText
                 android:id = "@+id/edit_amount"
                 android:layout_marginLeft="15dp"
                 android:layout_width = "match_parent"
                 android:layout_height = "30dp"
                 android:background="@drawable/rounded_border"
-                android:groupIndicator="@drawable/custom_indicator"
                 android:textColor = "@color/white"
-                android:childDivider="@drawable/list_divider"
-                android:dividerHeight="0.5dp" />
+                android:ellipsize="start"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:singleLine="true"
+                android:hint=""
+                android:text = ""
+                android:textColorHint="@color/hinttext"
+                android:paddingLeft="15dp"
+                android:gravity="center_vertical"
+                android:textSize = "14sp" />
+            <!--<ExpandableListView-->
+                <!--android:id = "@+id/edit_amount"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_width = "match_parent"-->
+                <!--android:layout_height = "30dp"-->
+                <!--android:background="@drawable/rounded_border"-->
+                <!--android:groupIndicator="@drawable/custom_indicator"-->
+                <!--android:textColor = "@color/white"-->
+                <!--android:childDivider="@drawable/list_divider"-->
+                <!--android:dividerHeight="0.5dp" />-->
 
         </LinearLayout>
 
