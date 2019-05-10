@@ -660,8 +660,9 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
                     String usedAddress;
 
                     NetworkParameters params = pivxModule.getConf().getNetworkParams();
-                    String scheme = params.getUriScheme();
-                    if (!address.contains("dapscoin:")){
+//                    String scheme = params.getUriScheme();
+                    String scheme = "dapscoin";
+                    if (!address.contains(scheme + ":")){
                         usedAddress = address;
                     }else {
                         usedAddress = address.substring(scheme.length() + 1);
