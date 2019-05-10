@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.TimerTask;
+import java.util.Timer;
 
 import chain.BlockchainState;
 import pivx.org.pivxwallet.R;
@@ -179,8 +181,24 @@ public class WalletActivity extends BaseDrawerActivity {
 
 //        txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
         updateWallet();
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(timer , 0 , 10000);
 
     }
+
+    TimerTask timer= new TimerTask(){
+
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateBalance();
+                }
+            });
+        }
+
+    };
 
     @Override
     protected void onResume() {
