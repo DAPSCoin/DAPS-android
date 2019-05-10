@@ -290,6 +290,7 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
 //            errorDialog.setBody(message);
 //        }
 //        errorDialog.show(getFragmentManager(), getResources().getString(R.string.send_error_dialog_tag));
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
 //    public static class QrDialog extends DialogFragment {

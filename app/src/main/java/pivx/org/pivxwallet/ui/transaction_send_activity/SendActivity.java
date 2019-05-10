@@ -841,6 +841,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 //            errorDialog.setBody(message);
 //        }
 //        errorDialog.show(getFragmentManager(),getResources().getString(R.string.send_error_dialog_tag));
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
 //    private String getUnitStr() {
@@ -927,8 +928,9 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
             String availableBalance = (String) daps.callRPC("getBalance");
             if (availableBalance == null)
                 availableBalance = "0";
+            Coin feePerKb = getFee();
 //            if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance())))
-            if (amount.isGreaterThan(Coin.parseCoin(availableBalance)))
+            if (amount.plus(feePerKb).isGreaterThan(Coin.parseCoin(availableBalance)))
                 throw new IllegalArgumentException("Insuficient balance");
 
             // memo
@@ -991,7 +993,6 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
 //                }
 //
 //                // then fee and change address
-                Coin feePerKb = getFee();
                 if (sendDialog != null){
                     sendDialog = null;
                 }
@@ -1169,6 +1170,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
                         rpc.callRPC("setTxFee", fee);
 
                         String txId = (String)rpc.callRPC("sendToStealthAddress", address, amount);
+                        Toast.makeText(getActivity(),"Tx: " + txId, Toast.LENGTH_SHORT).show();
                         Log.i("APP","tx: "+txId);
 
                         dismiss();
