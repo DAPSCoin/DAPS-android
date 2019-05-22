@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="30dp"
+        android:padding="16dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ring"
+                android:background="@color/transparent" />
+            <ExpandableListView
+                android:id = "@+id/edit_node"
+                android:layout_marginLeft="15dp"
+                android:layout_width = "match_parent"
+                android:layout_height = "30dp"
+                android:background="@drawable/rounded_border"
+                android:groupIndicator="@drawable/custom_indicator"
+                android:textColor = "@color/white"
+                android:childDivider="@drawable/list_divider"
+                android:dividerHeight="0.5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Node Info"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                />
+
+            <EditText
+                android:id = "@+id/edit_name"
+                android:layout_marginTop="20dp"
+                android:ellipsize="start"
+                android:layout_width="match_parent"
+                android:layout_height = "30dp"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:background="@drawable/rounded_border"
+                android:singleLine="true"
+                android:hint="Node name (Optional)"
+                android:text = ""
+                android:textColorHint="@color/hinttext"
+                android:paddingLeft="15dp"
+                android:textColor = "@color/white"
+                android:textSize = "14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id = "@+id/edit_host"
+                    android:ellipsize="start"
+                    android:layout_weight= "0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height = "30dp"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:background="@drawable/rounded_border"
+                    android:singleLine="true"
+                    android:hint="Host IP address"
+                    android:text = ""
+                    android:textColorHint="@color/hinttext"
+                    android:paddingLeft="15dp"
+                    android:textColor = "@color/white"
+                    android:textSize = "14sp" />
+
+                <EditText
+                    android:id = "@+id/edit_port"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="start"
+                    android:layout_weight= "0.3"
+                    android:layout_width="wrap_content"
+                    android:layout_height = "30dp"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:background="@drawable/rounded_border"
+                    android:singleLine="true"
+                    android:hint="Port"
+                    android:text = ""
+                    android:textColorHint="@color/hinttext"
+                    android:paddingLeft="15dp"
+                    android:textColor = "@color/white"
+                    android:textSize = "14sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id = "@+id/edit_user"
+                android:layout_marginTop="10dp"
+                android:ellipsize="start"
+                android:layout_width="match_parent"
+                android:layout_height = "30dp"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:background="@drawable/rounded_border"
+                android:singleLine="true"
+                android:hint="RPC User"
+                android:text = ""
+                android:textColorHint="@color/hinttext"
+                android:paddingLeft="15dp"
+                android:textColor = "@color/white"
+                android:textSize = "14sp" />
+
+            <EditText
+                android:id = "@+id/edit_password"
+                android:layout_marginTop="10dp"
+                android:ellipsize="start"
+                android:layout_width="match_parent"
+                android:layout_height = "30dp"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:background="@drawable/rounded_border"
+                android:singleLine="true"
+                android:hint="RPC Password"
+                android:inputType="textPassword"
+                android:text = ""
+                android:textColorHint="@color/hinttext"
+                android:paddingLeft="15dp"
+                android:textColor = "@color/white"
+                android:textSize = "14sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnNodeUpdate"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_button_border"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:text="Update"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>

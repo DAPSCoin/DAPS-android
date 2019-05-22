@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import pivx.org.pivxwallet.PivxApplication;
 import wf.bitcoin.javabitcoindrpcclient.BitcoinJSONRPCClient;
 
 
@@ -16,20 +17,17 @@ import wf.bitcoin.javabitcoindrpcclient.BitcoinJSONRPCClient;
  */
 
 public class DapsControllerAsync extends AsyncTask<String, Void, Object> {
-    private final String user = "admin";
-    private final String password = "admin123";
-//    private final String host = "35.229.118.7";       //node 1
-    private final String host = "35.243.195.143";       //node 2
-    private final String port = "53573";
     private BitcoinJSONRPCClient rpcClient = null;
+    protected PivxApplication pivxApplication;
 
     public DapsControllerAsync() {
+        pivxApplication = PivxApplication.getInstance();
         try {
-            if (rpcClient == null) {
-                URL url = new URL("http://" + user + ':' + password + "@" + host + ":" + port + "/");
-                rpcClient = new BitcoinJSONRPCClient(url);
-            }
+            AppConf appConf = pivxApplication.getAppConf();
+            NodeInfo node = appConf.getCurNodeInfo();
 
+            URL url = new URL("http://" + node.user + ':' + node.password + "@" + node.host + ":" + node.port + "/");
+            rpcClient = new BitcoinJSONRPCClient(url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
