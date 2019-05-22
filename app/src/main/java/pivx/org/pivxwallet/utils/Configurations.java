@@ -2,10 +2,11 @@ package pivx.org.pivxwallet.utils;
 
 import android.content.SharedPreferences;
 
+import java.util.List;
+
 /**
  * Created by mati on 22/11/16.
  */
-
 public class Configurations {
 
     protected final SharedPreferences prefs;

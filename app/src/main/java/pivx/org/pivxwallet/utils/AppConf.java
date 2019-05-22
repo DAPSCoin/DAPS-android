@@ -2,6 +2,9 @@ package pivx.org.pivxwallet.utils;
 
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pivtrum.PivtrumPeerData;
 
 import static pivx.org.pivxwallet.module.PivxContext.DEFAULT_RATE_COIN;
@@ -25,9 +28,15 @@ public class AppConf extends Configurations {
     private static final String SPLASH_SOUND = "splash_sound";
     private static final String SHOW_REPORT_ON_START = "show_report";
 
+    private List<NodeInfo> nodeList;
+    private int curNodeIndex;
+
 
     public AppConf(SharedPreferences prefs) {
         super(prefs);
+
+        nodeList = new ArrayList<NodeInfo>();
+        curNodeIndex = 0;
     }
 
     public void setAppInit(boolean v){
@@ -60,6 +69,34 @@ public class AppConf extends Configurations {
             return new PivtrumPeerData(host,tcp,ssl);
         }else
             return null;
+    }
+
+    private void initNodeList() {
+        nodeList.add(new NodeInfo("Node#1", "35.229.118.7", 53573, "admin", "admin123"));
+        nodeList.add(new NodeInfo("Node#2", "35.243.195.143", 53573, "admin", "admin123"));
+    }
+    public List<NodeInfo> getNodeList() {
+        if (nodeList.size() == 0) {
+            initNodeList();
+        }
+
+        return nodeList;
+    }
+
+    public void updateCurNode(NodeInfo info) {
+        nodeList.set(curNodeIndex, info);
+    }
+
+    public NodeInfo getCurNodeInfo() {
+        if (nodeList.size() == 0) {
+            initNodeList();
+        }
+
+        return nodeList.get(curNodeIndex);
+    }
+
+    public void setCurNodeIndex(int index) {
+        curNodeIndex = index;
     }
 
     public void setSelectedRateCoin(String coin){
