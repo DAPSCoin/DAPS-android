@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.io.BaseEncoding;
 import com.google.zxing.WriterException;
 
 import org.pivxj.core.Coin;
@@ -29,9 +30,13 @@ import org.pivxj.core.NetworkParameters;
 import org.pivxj.core.Transaction;
 import org.pivxj.uri.PivxURI;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -40,8 +45,12 @@ import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.transaction_send_activity.AmountInputFragment;
 import pivx.org.pivxwallet.utils.AddressAdapter;
 import pivx.org.pivxwallet.utils.AmountAdapter;
+import pivx.org.pivxwallet.utils.Base32String;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.NavigationUtils;
+import pivx.org.pivxwallet.utils.PasscodeGenerator;
+import pivx.org.pivxwallet.utils.TotpCounter;
+import pivx.org.pivxwallet.utils.Utilities;
 
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.ui.qr_activity.MyAddressFragment.convertDpToPx;
@@ -256,6 +265,19 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
         );
         pivxURI = pivxURI.replace("pivx:", "dapscoin:");
 
+//        {
+//            pivxURI = "otpauth://totp/dapscoin:test@test.com?secret=ABCDEFG&issuer=dapscoin&algorithm=SHA1&digits=6&period=30";
+//            String checkCode = null;
+//            try {
+//                checkCode = getCheckCode("ABCDEFG");
+//                Log.d("!!!!!!!!!!!!!!!!", checkCode);
+//            } catch (GeneralSecurityException e) {
+//                e.printStackTrace();
+//            } catch (Base32String.DecodingException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
         if (img_qr != null) {
             int px = convertDpToPx(225);
             Bitmap qrBitmap = encodeAsBitmap(pivxURI, px, px, Color.parseColor("#1A1A1A"), WHITE);
@@ -278,6 +300,16 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
 //        qrDialog.show(getFragmentManager(),"qr_dialog");
 
     }
+
+//    private String getCheckCode(String secret) throws GeneralSecurityException,
+//            Base32String.DecodingException {
+//        final byte[] keyBytes = Base32String.decode(secret);
+//        Mac mac = Mac.getInstance("HMACSHA1");
+//        mac.init(new SecretKeySpec(keyBytes, ""));
+//        PasscodeGenerator pcg = new PasscodeGenerator(mac);
+//        TotpCounter mTotpCounter = new TotpCounter(30);
+//        return pcg.generateResponseCode(mTotpCounter.getValueAtTime(Utilities.millisToSeconds(System.currentTimeMillis())));
+//    }
 
     private void showErrorDialog(int resStr) {
         showErrorDialog(getString(resStr));

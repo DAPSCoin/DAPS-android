@@ -72,7 +72,8 @@ public class AppConf extends Configurations {
     }
 
     private void initNodeList() {
-        nodeList.add(new NodeInfo("Node#1", "35.229.118.7", 53573, "admin", "admin123"));
+        nodeList.add(new NodeInfo("Node#1", "10.0.2.2", 53573, "bilbo", "baggins"));
+//        nodeList.add(new NodeInfo("Node#1", "35.229.118.7", 53573, "admin", "admin123"));
         nodeList.add(new NodeInfo("Node#2", "35.243.195.143", 53573, "admin", "admin123"));
     }
     public List<NodeInfo> getNodeList() {
