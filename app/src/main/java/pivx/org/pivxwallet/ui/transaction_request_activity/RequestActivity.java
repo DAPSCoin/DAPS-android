@@ -265,19 +265,6 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
         );
         pivxURI = pivxURI.replace("pivx:", "dapscoin:");
 
-//        {
-//            pivxURI = "otpauth://totp/dapscoin:test@test.com?secret=ABCDEFG&issuer=dapscoin&algorithm=SHA1&digits=6&period=30";
-//            String checkCode = null;
-//            try {
-//                checkCode = getCheckCode("ABCDEFG");
-//                Log.d("!!!!!!!!!!!!!!!!", checkCode);
-//            } catch (GeneralSecurityException e) {
-//                e.printStackTrace();
-//            } catch (Base32String.DecodingException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
         if (img_qr != null) {
             int px = convertDpToPx(225);
             Bitmap qrBitmap = encodeAsBitmap(pivxURI, px, px, Color.parseColor("#1A1A1A"), WHITE);
@@ -300,16 +287,6 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
 //        qrDialog.show(getFragmentManager(),"qr_dialog");
 
     }
-
-//    private String getCheckCode(String secret) throws GeneralSecurityException,
-//            Base32String.DecodingException {
-//        final byte[] keyBytes = Base32String.decode(secret);
-//        Mac mac = Mac.getInstance("HMACSHA1");
-//        mac.init(new SecretKeySpec(keyBytes, ""));
-//        PasscodeGenerator pcg = new PasscodeGenerator(mac);
-//        TotpCounter mTotpCounter = new TotpCounter(30);
-//        return pcg.generateResponseCode(mTotpCounter.getValueAtTime(Utilities.millisToSeconds(System.currentTimeMillis())));
-//    }
 
     private void showErrorDialog(int resStr) {
         showErrorDialog(getString(resStr));
