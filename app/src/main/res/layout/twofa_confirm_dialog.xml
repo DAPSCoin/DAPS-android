@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_container"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_border"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/txt_title"
+        android:paddingBottom="15dp"
+        android:text="Enter Code"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:orientation="horizontal">
+
+        <pivx.org.pivxwallet.ui.twofa_config.CutCopyPasteEditText
+            android:id = "@+id/code_1"
+            android:layout_width="match_parent"
+            android:layout_height = "30dp"
+            android:layout_weight="0.4"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bottom_border"
+            android:textAlignment="center"
+            android:text = ""
+            android:maxLength="1"
+            android:maxLines="1"
+            android:textCursorDrawable="@color/white"
+            android:digits="0123456789"
+            android:textColor = "@color/white"
+            android:textSize = "16sp" />
+
+        <pivx.org.pivxwallet.ui.twofa_config.CutCopyPasteEditText
+            android:id = "@+id/code_2"
+            android:layout_width="match_parent"
+            android:layout_height = "30dp"
+            android:layout_weight="0.4"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bottom_border"
+            android:textAlignment="center"
+            android:text = ""
+            android:maxLength="1"
+            android:maxLines="1"
+            android:textCursorDrawable="@color/white"
+            android:digits="0123456789"
+            android:textColor = "@color/white"
+            android:textSize = "16sp" />
+
+        <pivx.org.pivxwallet.ui.twofa_config.CutCopyPasteEditText
+            android:id = "@+id/code_3"
+            android:layout_width="match_parent"
+            android:layout_height = "30dp"
+            android:layout_weight="0.4"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bottom_border"
+            android:textAlignment="center"
+            android:text = ""
+            android:maxLength="1"
+            android:maxLines="1"
+            android:textCursorDrawable="@color/white"
+            android:digits="0123456789"
+            android:textColor = "@color/white"
+            android:textSize = "16sp" />
+
+        <pivx.org.pivxwallet.ui.twofa_config.CutCopyPasteEditText
+            android:id = "@+id/code_4"
+            android:layout_width="match_parent"
+            android:layout_height = "30dp"
+            android:layout_weight="0.4"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bottom_border"
+            android:textAlignment="center"
+            android:text = ""
+            android:maxLength="1"
+            android:maxLines="1"
+            android:textCursorDrawable="@color/white"
+            android:digits="0123456789"
+            android:textColor = "@color/white"
+            android:textSize = "16sp" />
+
+        <pivx.org.pivxwallet.ui.twofa_config.CutCopyPasteEditText
+            android:id = "@+id/code_5"
+            android:layout_width="match_parent"
+            android:layout_height = "30dp"
+            android:layout_weight="0.4"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bottom_border"
+            android:textAlignment="center"
+            android:text = ""
+            android:maxLength="1"
+            android:maxLines="1"
+            android:textCursorDrawable="@color/white"
+            android:digits="0123456789"
+            android:textColor = "@color/white"
+            android:textSize = "16sp" />
+
+        <pivx.org.pivxwallet.ui.twofa_config.CutCopyPasteEditText
+            android:id = "@+id/code_6"
+            android:layout_width="match_parent"
+            android:layout_height = "30dp"
+            android:layout_weight="0.4"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bottom_border"
+            android:textAlignment="center"
+            android:text = ""
+            android:maxLength="1"
+            android:maxLines="1"
+            android:textCursorDrawable="@color/white"
+            android:digits="0123456789"
+            android:textColor = "@color/white"
+            android:textSize = "16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/btn_confirm"
+            android:text="Confirm"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_button_border"
+            />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/btn_cancel"
+            android:text="Cancel"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_button_border"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

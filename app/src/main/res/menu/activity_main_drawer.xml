@@ -18,6 +18,10 @@
             android:id="@+id/nav_node"
             android:icon="@drawable/configure"
             android:title="Node Select" />
+        <item
+            android:id="@+id/nav_2fa"
+            android:icon="@drawable/configure"
+            android:title="2FA Config" />
         <!--<item
             android:id="@+id/nav_history"
             android:icon="@drawable/history"

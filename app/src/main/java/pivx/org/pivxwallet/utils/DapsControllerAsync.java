@@ -42,6 +42,8 @@ public class DapsControllerAsync extends AsyncTask<String, Void, Object> {
                     return String.valueOf(rpcClient.getBlockCount());
                 case "getBalance":
                     return String.valueOf(rpcClient.getBalance());
+                case "getAccountAddress":
+                    return String.valueOf(rpcClient.getAccountAddress(""));
                 case "backupWallet":
                     rpcClient.backupWallet(params[1]);
                     return null;
