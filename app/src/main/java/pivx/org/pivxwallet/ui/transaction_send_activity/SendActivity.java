@@ -59,6 +59,8 @@ import java.math.RoundingMode;
 import java.net.URLDecoder;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -548,11 +550,19 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
                     AppConf appConf = pivxApplication.getAppConf();
                     String status = appConf.getTwoFA();
                     if (status.compareTo("enabled") == 0) {
-                        if (confirmDialog != null) {
-                            confirmDialog = null;
+                        String lastTime = appConf.getTwoFALastTime();
+                        String period = appConf.getTwoFAPeriod();
+                        Date currentTime = Calendar.getInstance().getTime();
+                        long diffTime = currentTime.getTime() - Long.valueOf(lastTime);
+                        if (diffTime <= Long.valueOf(period) * 24 * 60 * 60)
+                            send(false);
+                        else {
+                            if (confirmDialog != null) {
+                                confirmDialog = null;
+                            }
+                            confirmDialog = TwoFAConfirmDialog.newInstance(daps);
+                            confirmDialog.show(getSupportFragmentManager(), "twofa_confirm dialog");
                         }
-                        confirmDialog = TwoFAConfirmDialog.newInstance(daps);
-                        confirmDialog.show(getSupportFragmentManager(), "twofa_confirm dialog");
                     } else
                         send(false);
                 }
@@ -1297,6 +1307,10 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
                             Toast.makeText(getActivity(), "No match code", Toast.LENGTH_SHORT).show();
                             return;
                         }
+
+                        AppConf appConf = ((SendActivity)getActivity()).pivxApplication.getAppConf();
+                        Date currentTime = Calendar.getInstance().getTime();
+                        appConf.saveTwoFALastTime(String.valueOf(currentTime.getTime()));
 
                         dismiss();
                         ((SendActivity)getActivity()).dialog_finished();
