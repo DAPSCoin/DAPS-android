@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:id="@+id/txt_title"
         android:paddingBottom="15dp"
-        android:text="Enter Code"
+        android:text="Enter 2FA Authentication Code"
         android:gravity="center"
         android:layout_gravity="center"
         android:textColor="@color/white"

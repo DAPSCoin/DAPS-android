@@ -35,57 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="Remember my authenticator code for"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            />
-
-        <Button
-            android:id="@+id/btnDay"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@drawable/bg_button_border"
-            android:gravity="center"
-            android:text="1 Day"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btnWeek"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@drawable/bg_button_border"
-            android:gravity="center"
-            android:text="1 Week"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btnMonth"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@drawable/bg_button_border"
-            android:gravity="center"
-            android:text="1 Month"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_marginTop="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:gravity="center_vertical"
-            android:background="@color/white"
-            />
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:text="Current authenticator code"
             android:textAlignment="center"
             android:textColor="@color/white"
@@ -170,6 +119,57 @@
                 android:textSize = "16sp" />
 
         </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Remember my authenticator code for"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            />
+
+        <Button
+            android:id="@+id/btnDay"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_button_border"
+            android:gravity="center"
+            android:text="1 Day"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnWeek"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_button_border"
+            android:gravity="center"
+            android:text="1 Week"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnMonth"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_button_border"
+            android:gravity="center"
+            android:text="1 Month"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </ScrollView>
