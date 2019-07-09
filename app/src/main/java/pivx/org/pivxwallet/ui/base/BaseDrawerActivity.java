@@ -25,9 +25,11 @@ import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.donate.DonateActivity;
+import pivx.org.pivxwallet.ui.node_activity.NodeActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
+import pivx.org.pivxwallet.ui.twofa_config.TwoFAConfigActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 import static pivx.org.pivxwallet.module.PivxContext.OUT_OF_SYNC_TIME;
@@ -208,6 +210,10 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             startActivity(new Intent(this, RequestActivity.class));
 //        } else if (id == R.id.nav_history) {
 //            startActivity(new Intent(this, History.class));
+        } else if (id == R.id.nav_node) {
+            startActivity(new Intent(this, NodeActivity.class));
+        } else if (id == R.id.nav_2fa) {
+            startActivity(new Intent(this, TwoFAConfigActivity.class));
         }
 
         drawer.closeDrawer(GravityCompat.START);

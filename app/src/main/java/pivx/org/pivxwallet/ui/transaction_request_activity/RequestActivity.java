@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.io.BaseEncoding;
 import com.google.zxing.WriterException;
 
 import org.pivxj.core.Coin;
@@ -29,9 +30,13 @@ import org.pivxj.core.NetworkParameters;
 import org.pivxj.core.Transaction;
 import org.pivxj.uri.PivxURI;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -40,8 +45,12 @@ import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.transaction_send_activity.AmountInputFragment;
 import pivx.org.pivxwallet.utils.AddressAdapter;
 import pivx.org.pivxwallet.utils.AmountAdapter;
+import pivx.org.pivxwallet.utils.Base32String;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.NavigationUtils;
+import pivx.org.pivxwallet.utils.PasscodeGenerator;
+import pivx.org.pivxwallet.utils.TotpCounter;
+import pivx.org.pivxwallet.utils.Utilities;
 
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.ui.qr_activity.MyAddressFragment.convertDpToPx;

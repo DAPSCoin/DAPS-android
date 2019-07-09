@@ -1,5 +1,7 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -55,11 +57,17 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URLDecoder;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 import pivx.org.pivxwallet.R;
 import global.AddressLabel;
@@ -78,14 +86,20 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActi
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity;
 import global.wrappers.TransactionWrapper;
+import pivx.org.pivxwallet.ui.twofa_config.CutCopyPasteEditText;
 import pivx.org.pivxwallet.utils.AddressAdapter;
 import pivx.org.pivxwallet.utils.AmountAdapter;
+import pivx.org.pivxwallet.utils.AppConf;
+import pivx.org.pivxwallet.utils.Base32String;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DapsController;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.FeeAdapter;
 import pivx.org.pivxwallet.utils.NavigationUtils;
+import pivx.org.pivxwallet.utils.PasscodeGenerator;
 import pivx.org.pivxwallet.utils.RingAdapter;
+import pivx.org.pivxwallet.utils.TotpCounter;
+import pivx.org.pivxwallet.utils.Utilities;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
@@ -130,6 +144,7 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
     private final MonetaryFormat DAPS_FORMAT = MonetaryFormat.BTC.minDecimals(8).optionalDecimals(0).noCode();
 
     private SendDialog sendDialog;
+    private TwoFAConfirmDialog confirmDialog;
     private View root;
     private Button buttonSend, addAllPiv;
     private EditText edit_address;
@@ -531,8 +546,25 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
         int id = v.getId();
         if (id == R.id.btnSend){
             try {
-                if (checkConnectivity()){
-                    send(false);
+                if (checkConnectivity()) {
+                    AppConf appConf = pivxApplication.getAppConf();
+                    String status = appConf.getTwoFA();
+                    if (status.compareTo("enabled") == 0) {
+                        String lastTime = appConf.getTwoFALastTime();
+                        String period = appConf.getTwoFAPeriod();
+                        Date currentTime = Calendar.getInstance().getTime();
+                        long diffTime = currentTime.getTime() - Long.valueOf(lastTime);
+                        if (diffTime <= Long.valueOf(period) * 24 * 60 * 60)
+                            send(false);
+                        else {
+                            if (confirmDialog != null) {
+                                confirmDialog = null;
+                            }
+                            confirmDialog = TwoFAConfirmDialog.newInstance(daps);
+                            confirmDialog.show(getSupportFragmentManager(), "twofa_confirm dialog");
+                        }
+                    } else
+                        send(false);
                 }
             }catch (IllegalArgumentException e){
                 e.printStackTrace();
@@ -1142,6 +1174,13 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
         NavigationUtils.goBackToHome(this);
     }
 
+    public void dialog_finished() {
+        send(false);
+    }
+
+    public void dialog_rejected() {
+    }
+
     public static class SendDialog extends DialogFragment {
 
         private View root;
@@ -1214,6 +1253,137 @@ public class SendActivity extends BaseDrawerActivity implements View.OnClickList
             SendDialog sendDialog = new SendDialog();
             sendDialog.updateData(amount, description, fee, address, controller);
             return sendDialog;
+        }
+    }
+
+    public static class TwoFAConfirmDialog extends DialogFragment implements CutCopyPasteEditText.OnCutCopyPasteListener {
+
+        private View root;
+        private DapsController rpc;
+        private CutCopyPasteEditText code1, code2, code3, code4, code5, code6;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            try {
+                getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                root = inflater.inflate(R.layout.twofa_confirm_dialog, container);
+                code1= (CutCopyPasteEditText) root.findViewById(R.id.code_1);
+                code1.setOnCutCopyPasteListener(this);
+                code2= (CutCopyPasteEditText) root.findViewById(R.id.code_2);
+                code2.setOnCutCopyPasteListener(this);
+                code3= (CutCopyPasteEditText) root.findViewById(R.id.code_3);
+                code3.setOnCutCopyPasteListener(this);
+                code4= (CutCopyPasteEditText) root.findViewById(R.id.code_4);
+                code4.setOnCutCopyPasteListener(this);
+                code5= (CutCopyPasteEditText) root.findViewById(R.id.code_5);
+                code5.setOnCutCopyPasteListener(this);
+                code6= (CutCopyPasteEditText) root.findViewById(R.id.code_6);
+                code6.setOnCutCopyPasteListener(this);
+
+                root.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String code = "";
+                        code += code1.getText().toString();
+                        code += code2.getText().toString();
+                        code += code3.getText().toString();
+                        code += code4.getText().toString();
+                        code += code5.getText().toString();
+                        code += code6.getText().toString();
+
+                        String address = (String)rpc.callRPC("getAccountAddress");
+                        address = address.replaceAll("[^A-Za-z]","");
+                        String checkCode = null;
+                        try {
+                            checkCode = getCheckCode(address);
+                        } catch (GeneralSecurityException e) {
+                            e.printStackTrace();
+                        } catch (Base32String.DecodingException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (checkCode.compareTo(code) != 0) {
+                            Toast.makeText(getActivity(), "No match code", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        AppConf appConf = ((SendActivity)getActivity()).pivxApplication.getAppConf();
+                        Date currentTime = Calendar.getInstance().getTime();
+                        appConf.saveTwoFALastTime(String.valueOf(currentTime.getTime()));
+
+                        dismiss();
+                        ((SendActivity)getActivity()).dialog_finished();
+                    }
+                });
+
+                root.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dismiss();
+                        ((SendActivity)getActivity()).dialog_rejected();
+                    }
+                });
+            }catch (Exception e){
+                Toast.makeText(getActivity(),R.string.error_generic,Toast.LENGTH_SHORT).show();
+                dismiss();
+                getActivity().onBackPressed();
+            }
+            return root;
+        }
+
+        private String getCheckCode(String secret) throws GeneralSecurityException,
+                Base32String.DecodingException {
+            final byte[] keyBytes = Base32String.decode(secret);
+            Mac mac = Mac.getInstance("HMACSHA1");
+            mac.init(new SecretKeySpec(keyBytes, ""));
+            PasscodeGenerator pcg = new PasscodeGenerator(mac);
+            TotpCounter mTotpCounter = new TotpCounter(30);
+            return pcg.generateResponseCode(mTotpCounter.getValueAtTime(Utilities.millisToSeconds(System.currentTimeMillis())));
+        }
+
+        public void updateData(DapsController controller) {
+            this.rpc = controller;
+        }
+
+        public static TwoFAConfirmDialog newInstance(DapsController controller) {
+            TwoFAConfirmDialog dlg = new TwoFAConfirmDialog();
+            dlg.setCancelable(false);
+            dlg.updateData(controller);
+            return dlg;
+        }
+
+        @Override
+        public void onCut() {
+
+        }
+
+        @Override
+        public void onCopy() {
+
+        }
+
+        @Override
+        public void onPaste(EditText v) {
+            ClipboardManager clipboardManager = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+
+            if(clipboardManager.hasPrimaryClip()) {
+                ClipData.Item item = clipboardManager.getPrimaryClip().getItemAt(0);
+
+                String ptext = item.getText().toString();
+                if (ptext.length() != 6) {
+                    v.setText("");
+                    return;
+                }
+
+                String[] splitCode = ptext.split("");
+                code1.setText(splitCode[1]);
+                code2.setText(splitCode[2]);
+                code3.setText(splitCode[3]);
+                code4.setText(splitCode[4]);
+                code5.setText(splitCode[5]);
+                code6.setText(splitCode[6]);
+            }
         }
     }
 }

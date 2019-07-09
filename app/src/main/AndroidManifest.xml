@@ -79,6 +79,14 @@
             android:parentActivityName=".ui.wallet_activity.WalletActivity">
 
         </activity>
+        <activity android:name=".ui.node_activity.NodeActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.wallet_activity.WalletActivity">
+        </activity>
+        <activity android:name=".ui.twofa_config.TwoFAConfigActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.wallet_activity.WalletActivity">
+        </activity>
         <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.qr_activity.QrActivity" android:screenOrientation="portrait"/>
         <activity android:name=".utils.scanner.ScanActivity" android:screenOrientation="portrait"/>

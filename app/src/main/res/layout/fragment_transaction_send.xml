@@ -124,16 +124,16 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/amount_desc"
-            android:textSize="9sp"
-            android:layout_marginLeft="45dp"
-            android:textStyle="italic"
-            android:textColor="@color/white"
-            />
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:text="@string/amount_desc"-->
+            <!--android:textSize="9sp"-->
+            <!--android:layout_marginLeft="45dp"-->
+            <!--android:textStyle="italic"-->
+            <!--android:textColor="@color/white"-->
+            <!--/>-->
 
         <TextView
             android:layout_width="match_parent"

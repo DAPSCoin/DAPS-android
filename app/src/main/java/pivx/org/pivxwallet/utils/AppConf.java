@@ -2,6 +2,9 @@ package pivx.org.pivxwallet.utils;
 
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pivtrum.PivtrumPeerData;
 
 import static pivx.org.pivxwallet.module.PivxContext.DEFAULT_RATE_COIN;
@@ -24,10 +27,20 @@ public class AppConf extends Configurations {
     private static final String LAST_BEST_CHAIN_BLOCK_TIME = "last_best_chain_block_time";
     private static final String SPLASH_SOUND = "splash_sound";
     private static final String SHOW_REPORT_ON_START = "show_report";
+    private static final String TWOFA= "2fa";
+    private static final String TWOFACODE= "2fa_code";
+    private static final String TWOFAPERIOD= "2fa_period";
+    private static final String TWOFALASTTIME= "2fa_lasttime";
+
+    private List<NodeInfo> nodeList;
+    private int curNodeIndex;
 
 
     public AppConf(SharedPreferences prefs) {
         super(prefs);
+
+        nodeList = new ArrayList<NodeInfo>();
+        curNodeIndex = 0;
     }
 
     public void setAppInit(boolean v){
@@ -47,6 +60,38 @@ public class AppConf extends Configurations {
         return getString(PINCODE,null);
     }
 
+    public void saveTwoFA(String status) {
+        save(TWOFA,status);
+    }
+
+    public String getTwoFA(){
+        return getString(TWOFA,"disabled");
+    }
+
+    public void saveTwoFACode(String code) {
+        save(TWOFACODE,code);
+    }
+
+    public String getTwoFACode(){
+        return getString(TWOFACODE,"");
+    }
+
+    public void saveTwoFAPeriod(String period) {
+        save(TWOFAPERIOD,period);
+    }
+
+    public String getTwoFAPeriod(){
+        return getString(TWOFAPERIOD,"1");
+    }
+
+    public void saveTwoFALastTime(String lasttime) {
+        save(TWOFALASTTIME,lasttime);
+    }
+
+    public String getTwoFALastTime(){
+        return getString(TWOFALASTTIME,"0");
+    }
+
     public void saveTrustedNode(PivtrumPeerData pivtrumPeerData){
         save(TRUSTED_NODE_HOST,pivtrumPeerData.getHost());
         save(TRUSTED_NODE_TCP,pivtrumPeerData.getTcpPort());
@@ -60,6 +105,35 @@ public class AppConf extends Configurations {
             return new PivtrumPeerData(host,tcp,ssl);
         }else
             return null;
+    }
+
+    private void initNodeList() {
+//        nodeList.add(new NodeInfo("Node#1", "10.0.2.2", 53573, "bilbo", "baggins"));
+        nodeList.add(new NodeInfo("Node#1", "35.229.118.7", 53573, "admin", "admin123"));
+        nodeList.add(new NodeInfo("Node#2", "35.243.195.143", 53573, "admin", "admin123"));
+    }
+    public List<NodeInfo> getNodeList() {
+        if (nodeList.size() == 0) {
+            initNodeList();
+        }
+
+        return nodeList;
+    }
+
+    public void updateCurNode(NodeInfo info) {
+        nodeList.set(curNodeIndex, info);
+    }
+
+    public NodeInfo getCurNodeInfo() {
+        if (nodeList.size() == 0) {
+            initNodeList();
+        }
+
+        return nodeList.get(curNodeIndex);
+    }
+
+    public void setCurNodeIndex(int index) {
+        curNodeIndex = index;
     }
 
     public void setSelectedRateCoin(String coin){
