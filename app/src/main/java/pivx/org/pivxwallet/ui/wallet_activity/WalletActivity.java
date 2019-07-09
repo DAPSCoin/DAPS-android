@@ -515,9 +515,12 @@ public class WalletActivity extends BaseDrawerActivity {
         txt_syncing_value.setText(txt_value.getText());
 
         Map result = (Map) daps.callRPC("getPendingBalance");
-        String pendingBalance = String.valueOf(result.get("pending"));
-        if (pendingBalance == null)
-            pendingBalance = "0";
+        String pendingBalance = "0";
+        if (result != null) {
+            String.valueOf(result.get("pending"));
+            if (pendingBalance == null)
+                pendingBalance = "0";
+        }
         Coin pendingBalanceCoin = Coin.parseCoin(pendingBalance);
         if (pendingBalanceCoin.isZero())
             txt_pending_value.setText("0.00000000 DAPS");
