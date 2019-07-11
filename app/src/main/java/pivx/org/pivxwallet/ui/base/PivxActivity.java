@@ -53,6 +53,7 @@ public class PivxActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pivxApplication = PivxApplication.getInstance();
+        pivxApplication.startPivxService();
         pivxModule = pivxApplication.getModule();
         daps = new DapsController();
         localBroadcastManager = LocalBroadcastManager.getInstance(this);

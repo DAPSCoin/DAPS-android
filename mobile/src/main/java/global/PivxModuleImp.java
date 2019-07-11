@@ -140,6 +140,16 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public DeterministicKey getSpendKey() {
+        return walletManager.getKeyPairForAddress(getReceiveAddress());
+    }
+
+    @Override
+    public String getHDPath() {
+        return getSpendKey().getPathAsString();
+    }
+
+    @Override
     public Address getFreshNewAddress(){
         return walletManager.newFreshReceiveAddress();
     }
@@ -404,12 +414,7 @@ public class PivxModuleImp implements PivxModule {
             if (!isStaking){
                 // Check if a zc_spend
                 boolean isZcSpend = false;
-                for (TransactionInput transactionInput : transaction.getInputs()) {
-                    if (transactionInput.isZcspend()){
-                        isZcSpend = true;
-                        break;
-                    }
-                }
+
                 TransactionWrapper.TransactionUse transactionUse;
                 if (!isZcSpend)
                     transactionUse = isMine ? TransactionWrapper.TransactionUse.SENT_SINGLE: TransactionWrapper.TransactionUse.RECEIVE;

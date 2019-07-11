@@ -550,12 +550,12 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void onBlockchainStateChange(){
-//        if (blockchainState == BlockchainState.SYNCING){
-//            AnimationUtils.fadeInView(container_syncing,500);
-//        }else if (blockchainState == BlockchainState.SYNC){
-//            AnimationUtils.fadeOutGoneView(container_syncing,500);
-//        }else if (blockchainState == BlockchainState.NOT_CONNECTION){
-//            AnimationUtils.fadeInView(container_syncing,500);
-//        }
+        /*if (blockchainState == BlockchainState.SYNCING){
+            AnimationUtils.fadeInView(container_syncing,500);
+        }else if (blockchainState == BlockchainState.SYNC){
+            AnimationUtils.fadeOutGoneView(container_syncing,500);
+        }else if (blockchainState == BlockchainState.NOT_CONNECTION){
+            AnimationUtils.fadeInView(container_syncing,500);
+        }*/
     }
 }

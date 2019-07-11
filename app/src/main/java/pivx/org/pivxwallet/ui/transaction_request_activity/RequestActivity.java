@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.google.common.io.BaseEncoding;
 import com.google.zxing.WriterException;
 
+import org.pivxj.core.Address;
 import org.pivxj.core.Coin;
 import org.pivxj.core.NetworkParameters;
 import org.pivxj.core.Transaction;
@@ -38,6 +39,7 @@ import java.util.Map;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
@@ -112,7 +114,8 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
         if (addressAdapter == null) {
             List<String> list = new ArrayList<String>();
             Map address = (Map) daps.callRPC("createPrivacyAccount");
-            String stealthAddress = (String) address.get("stealthaddress");
+            String receiveAddr = PivxApplication.getInstance().getModule().getMnemonic().toString();
+            String stealthAddress = receiveAddr;
 
             list.add(stealthAddress);
             addressAdapter = new AddressAdapter(this, list, stealthAddress);

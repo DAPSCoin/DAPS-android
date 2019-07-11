@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
@@ -149,6 +150,8 @@ public class PivxApplication extends Application implements ContextWrapper {
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,contactsStore,new RateDb(this),new WalletBackupHelper());
             pivxModule.start();
+
+            Log.println(Log.INFO,"initialized wallet", "initialized");
 
         } catch (Exception e){
             e.printStackTrace();

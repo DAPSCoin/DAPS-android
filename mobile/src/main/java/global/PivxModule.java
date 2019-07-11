@@ -72,6 +72,10 @@ public interface PivxModule {
      */
     Address getReceiveAddress();
 
+    DeterministicKey getSpendKey();
+
+    String getHDPath();
+
     Address getFreshNewAddress();
 
     boolean isAddressUsed(Address address);
