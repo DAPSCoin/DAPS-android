@@ -109,6 +109,15 @@ public abstract class Message {
         if (!serializer.isParseRetainMode())
             this.payload = null;
     }
+    
+    protected void serializeBytes(OutputStream stream, byte[] bs) throws IOException {
+    	if (bs == null) {
+    		stream.write(new VarInt(0).encode());
+    	} else {
+    		stream.write(new VarInt(bs.length).encode());
+    		stream.write(bs);
+    	}
+    }
 
     private void selfCheck(byte[] payload, int offset) {
         if (!(this instanceof VersionMessage)) {

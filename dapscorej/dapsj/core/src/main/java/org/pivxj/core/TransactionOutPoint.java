@@ -70,6 +70,10 @@ public class TransactionOutPoint extends ChildMessage {
         this(params, connectedOutput.getIndex(), connectedOutput.getParentTransactionHash());
         this.connectedOutput = connectedOutput;
     }
+    
+    public boolean isNull() {
+    	return hash == Sha256Hash.ZERO_HASH;
+    }
 
     /**
     /**

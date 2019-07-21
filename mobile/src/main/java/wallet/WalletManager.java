@@ -288,6 +288,10 @@ public class WalletManager {
         restoreWallet(wallet);
     }
 
+    public String getStealthAddress() {
+        return wallet.getStealthPubAddress();
+    }
+
     /**
      * Este metodo puede tener varias implementaciones de guardado distintas.
      */

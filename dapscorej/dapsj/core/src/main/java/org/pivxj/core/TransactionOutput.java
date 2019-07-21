@@ -18,6 +18,8 @@
 package org.pivxj.core;
 
 import com.google.common.base.Objects;
+
+import org.pivxj.crypto.LazyECPoint;
 import org.pivxj.script.*;
 import org.pivxj.wallet.Wallet;
 import org.slf4j.*;
@@ -37,6 +39,20 @@ import static com.google.common.base.Preconditions.*;
 public class TransactionOutput extends ChildMessage {
     private static final Logger log = LoggerFactory.getLogger(TransactionOutput.class);
 
+    class MaskValue {
+        LazyECPoint sharedSec;  //secret is computed based on the transaction pubkey, using diffie hellman
+                            //sharedSec = txPub * viewPrivateKey of receiver = txPriv * viewPublicKey of receiver
+        Sha256Hash amount;
+        Sha256Hash mask;   //blinding factor, this is encoded throug ECDH before sending to the receiver
+        ECKey inMemoryRawBind;
+        Sha256Hash hashOfKey; //hash of encrypting key
+        MaskValue() {
+            amount = Sha256Hash.ZERO_HASH;
+            mask = Sha256Hash.ZERO_HASH;
+            hashOfKey = Sha256Hash.ZERO_HASH;
+        }
+    }
+    
     // The output's value is kept as a native type in order to save class instances.
     private long value;
 
@@ -46,6 +62,14 @@ public class TransactionOutput extends ChildMessage {
 
     // The script bytes are parsed and turned into a Script on demand.
     private Script scriptPubKey;
+    
+    public byte[] txPriv;
+    public byte[] txPub;
+    //ECDH encoded value for the amount: the idea is the use the shared secret and a key derivation function to
+    //encode the value and the mask so that only the sender and the receiver of the tx output can decode the encoded amount
+    MaskValue maskValue;
+    public byte[] masternodeStealthAddress;  //will be clone from the tx having 1000000 daps output
+    public byte[] commitment;  //Commitment C = mask * G + amount * H, H = Hp(G), Hp = toHashPoint
 
     // These fields are not Bitcoin serialized. They are used for tracking purposes in our wallet
     // only. If set to true, this output is counted towards our balance. If false and spentBy is null the tx output
@@ -159,8 +183,34 @@ public class TransactionOutput extends ChildMessage {
     protected void parse() throws ProtocolException {
         value = readInt64();
         scriptLen = (int) readVarInt();
-        length = cursor - offset + scriptLen;
         scriptBytes = readBytes(scriptLen);
+        
+        int txPrivLen = (int) readVarInt();
+        txPriv = readBytes(txPrivLen);
+        System.out.println("txPrivLen len = " + txPrivLen);
+        
+        int txPublen = (int) readVarInt();
+        txPub = readBytes(txPublen);
+        System.out.println("txPublen len = " + txPublen);
+        
+        maskValue = new MaskValue();
+        maskValue.amount = readHash();
+        
+        maskValue.mask = readHash();
+        maskValue.hashOfKey = readHash();
+        
+        int masternodeStealthAddressLen = (int) readVarInt();
+        masternodeStealthAddress = readBytes(masternodeStealthAddressLen);
+        System.out.println("masternodeStealthAddressLen len = " + masternodeStealthAddressLen);
+
+        int commitmentLen = (int) readVarInt();
+        System.out.println("Commitment len = " + commitmentLen);
+        commitment = readBytes(commitmentLen);
+        length = cursor - offset;
+    }
+    
+    public boolean isEmpty() {
+        return (value == 0 && getScriptBytes().length == 0);
     }
 
     @Override
@@ -170,6 +220,18 @@ public class TransactionOutput extends ChildMessage {
         // TODO: Move script serialization into the Script class, where it belongs.
         stream.write(new VarInt(scriptBytes.length).encode());
         stream.write(scriptBytes);
+        
+        serializeBytes(stream, txPriv);
+        
+        serializeBytes(stream, txPub);
+        
+        stream.write(maskValue.amount.getReversedBytes());
+        stream.write(maskValue.mask.getReversedBytes());
+        stream.write(maskValue.hashOfKey.getReversedBytes());
+
+        serializeBytes(stream, masternodeStealthAddress);
+        
+        serializeBytes(stream, commitment);
     }
 
     /**

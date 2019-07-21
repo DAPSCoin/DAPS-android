@@ -17,6 +17,7 @@
 
 package org.pivxj.core;
 
+import org.pivxj.crypto.LazyECPoint;
 import org.pivxj.script.Script;
 import org.pivxj.wallet.DefaultRiskAnalysis;
 import org.pivxj.wallet.KeyBag;
@@ -29,6 +30,7 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -58,6 +60,17 @@ public class TransactionInput extends ChildMessage {
     // is no input transaction, so instead the scriptBytes contains some extra stuff (like a rollover nonce) that we
     // don't care about much. The bytes are turned into a Script object (cached below) on demand via a getter.
     private byte[] scriptBytes;
+    
+    public byte[] s;	//used for shnor sig
+    public byte[] R;	//used for shnor sig
+
+    //ECDH key used for encrypting/decrypting the transaction amount
+    //it is only not NULL when the prevout is used for staking to prove the transaction amount
+    public byte[] encryptionKey;   //33bytes
+    LazyECPoint keyImage;   
+    public ArrayList<TransactionOutPoint> decoys;
+    public byte[] masternodeStealthAddress;
+    
     // The Script object obtained from parsing scriptBytes. Only filled in on demand and if the transaction is not
     // coinbase.
     private WeakReference<Script> scriptSig;
@@ -82,10 +95,10 @@ public class TransactionInput extends ChildMessage {
         super(params);
         this.scriptBytes = scriptBytes;
         this.outpoint = outpoint;
-        this.sequence = NO_SEQUENCE;
+        //this.sequence = NO_SEQUENCE;
         this.value = value;
         setParent(parentTransaction);
-        length = 40 + (scriptBytes == null ? 1 : VarInt.sizeOf(scriptBytes.length) + scriptBytes.length);
+        //length = 40 + (scriptBytes == null ? 1 : VarInt.sizeOf(scriptBytes.length) + scriptBytes.length);
     }
 
     /**
@@ -134,9 +147,43 @@ public class TransactionInput extends ChildMessage {
         outpoint = new TransactionOutPoint(params, payload, cursor, this, serializer);
         cursor += outpoint.getMessageSize();
         int scriptLen = (int) readVarInt();
-        length = cursor - offset + scriptLen + 4;
+        
         scriptBytes = readBytes(scriptLen);
         sequence = readUint32();
+        
+        //read encryptionkey 
+        int encryptionkeyLen = (int) readVarInt();
+        encryptionKey = readBytes(encryptionkeyLen);
+        
+        //read keyimage
+        int kiLen = (int) readVarInt();
+        byte[] kiBytes = readBytes(kiLen);
+        if (kiLen > 0) {
+        	keyImage = new LazyECPoint(ECKey.CURVE.getCurve(), kiBytes);
+        }
+        
+        int numDecoys = (int) readVarInt();
+        System.out.println("decoy num = " + numDecoys);
+        decoys = new ArrayList<TransactionOutPoint>();
+        for(int i = 0; i < numDecoys; i++) {
+        	TransactionOutPoint o = new TransactionOutPoint(params, payload, cursor, this, serializer);
+        	decoys.add(o);
+            cursor += o.getMessageSize();
+        }
+                
+        //read masternodeStealthAddress 
+        int masternodeStealthAddressLen = (int) readVarInt();
+        masternodeStealthAddress = readBytes(masternodeStealthAddressLen);
+        
+        //read masternodeStealthAddress 
+        int sLen = (int) readVarInt();
+        s = readBytes(sLen);
+        
+        //read masternodeStealthAddress 
+        int RLen = (int) readVarInt();
+        R = readBytes(RLen);
+        
+        length = cursor - offset;
     }
 
     @Override
@@ -145,6 +192,25 @@ public class TransactionInput extends ChildMessage {
         stream.write(new VarInt(scriptBytes.length).encode());
         stream.write(scriptBytes);
         Utils.uint32ToByteStreamLE(sequence, stream);
+        
+        stream.write(new VarInt(encryptionKey.length).encode());
+        stream.write(encryptionKey);
+        if (keyImage != null) {
+	        stream.write(new VarInt(33).encode());
+	        stream.write(keyImage.getEncoded(true));
+        } else {
+	        stream.write(new VarInt(0).encode());
+        }
+        
+        stream.write(new VarInt(decoys.size()).encode());
+        for(int i = 0; i < decoys.size(); i++) {
+        	decoys.get(i).bitcoinSerialize(stream);
+        }
+        serializeBytes(stream, masternodeStealthAddress);
+        
+        serializeBytes(stream, s);
+
+        serializeBytes(stream, R);
     }
 
     /**

@@ -71,6 +71,7 @@ public interface PivxModule {
      * Return a new address.
      */
     Address getReceiveAddress();
+    String getStealthAddress();
 
     DeterministicKey getSpendKey();
 

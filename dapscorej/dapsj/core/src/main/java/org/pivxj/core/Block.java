@@ -23,6 +23,8 @@ import com.google.common.collect.*;
 import org.pivxj.script.*;
 import org.slf4j.*;
 import com.hashengineering.crypto.Hash9;
+import com.hashengineering.crypto.Sha512Hash;
+
 import javax.annotation.*;
 import java.io.*;
 import java.math.*;
@@ -101,7 +103,16 @@ public class Block extends Message {
     public static final long BLOCK_VERSION_BIP66 = 3;
     /** Block version introduced in BIP 65: OP_CHECKLOCKTIMEVERIFY */
     public static final long BLOCK_VERSION_BIP65 = 4;
+    
+  //Efficient and compatible, but not beautiful design: A PoA block version will be always equal or higher this const
+    public static final long POA_BLOCK_VERSION_LOW_LIMIT = 100;
 
+    public class PoSBlockSummary {
+    	public Sha256Hash hash = Sha256Hash.ZERO_HASH;
+        public long nTime;
+        public long height;
+    }
+    
     // Fields defined as part of the protocol format.
     private long version;
     private Sha256Hash prevBlockHash;
@@ -109,10 +120,26 @@ public class Block extends Message {
     private long time;
     private long difficultyTarget; // "nBits"
     private long nonce;
+    
+    
+    //PoA block specific
+    //hash of previous PoA block, other block types dont need to care this property
+    //For the first PoA block, this property should be set as a default value: maybe 0x11 (magic number) 
+    //or the hash of the genenis block
+    private Sha256Hash hashPrevPoABlock;
+    //The hash root of all audited PoS block summary
+    private Sha256Hash hashPoAMerkleRoot;
+    //hash of any mined PoA block: minedHash is found when a miner successfully mines a PoA block
+    //PoA block hash is hash of combination of previous hash and minedHash, since the previous hash of
+    //a PoA block is only known once the miner has mined the PoA block
+    private Sha256Hash minedHash;
 
     // TODO: Get rid of all the direct accesses to this field. It's a long-since unnecessary holdover from the Dalvik days.
     /** If null, it means this object holds only the headers. */
     @Nullable List<Transaction> transactions;
+    
+    public byte[] vchBlockSig = new byte[0];
+    public ArrayList<PoSBlockSummary> posBlocksAudited = new ArrayList<Block.PoSBlockSummary>();
 
     /** Stores the hash of the block. If null, getHash() will recalculate it. */
     private Sha256Hash hash;
@@ -138,6 +165,9 @@ public class Block extends Message {
         difficultyTarget = 0x1e0ffff0L;
         time = System.currentTimeMillis() / 1000;
         prevBlockHash = Sha256Hash.ZERO_HASH;
+        hashPrevPoABlock = Sha256Hash.ZERO_HASH;
+        hashPoAMerkleRoot = Sha256Hash.ZERO_HASH;
+        minedHash = Sha256Hash.ZERO_HASH;
 
         length = getHeaderSize();
     }
@@ -246,7 +276,7 @@ public class Block extends Message {
      * Useful for non-Bitcoin chains where the block header may not be a fixed
      * size.
      */
-    protected void parseTransactions(final int transactionsOffset) throws ProtocolException {
+    protected void parseBody(final int transactionsOffset) throws ProtocolException {
         cursor = transactionsOffset;
         optimalEncodingMessageSize = getHeaderSize();
         if (payload.length == cursor) {
@@ -265,6 +295,16 @@ public class Block extends Message {
             transactions.add(tx);
             cursor += tx.getMessageSize();
             optimalEncodingMessageSize += tx.getOptimalEncodingMessageSize();
+        }
+        
+        if (IsPoABlock()) {
+        	int auditedNum = (int) readVarInt();
+        	for(int i = 0; i < auditedNum; i++) {
+        		PoSBlockSummary summary = new PoSBlockSummary();
+        		summary.hash = readHash();
+        		summary.nTime = readUint32();
+        		summary.height = readUint32();
+        	}
         }
         transactionBytesValid = serializer.isParseRetainMode();
     }
@@ -289,6 +329,13 @@ public class Block extends Message {
             //System.out.println("parse prevBlockHash: "+prevBlockHash);
             merkleRoot = readHash();
             //System.out.println("parse merkleRoot: "+merkleRoot);
+            
+            if (IsPoABlock()) {
+            	hashPrevPoABlock = readHash();
+            	hashPoAMerkleRoot = readHash();
+            	minedHash = readHash();
+            }
+            
             time = readUint32();
             //System.out.println("parse time: "+time);
             difficultyTarget = readUint32();
@@ -296,29 +343,18 @@ public class Block extends Message {
             nonce = readUint32();
             //System.out.println("parse nonce: "+nonce);
             int headerSize = getHeaderSize();
-            if (isZerocoin() && length >= ZEROCOIN_HEADER_SIZE) {
-                // accumulator
-                zeroCoinAccumulator = readHash(true);
-                //System.out.println("parse zeroCoinAccumulator: "+zeroCoinAccumulator);
-                //System.out.println("offset: "+offset);
-                //System.out.println("cursor: "+cursor);
-                //System.out.println("payload size: "+payload.length);
-                //System.out.println("Hash payload "+Arrays.toString(copy));
-               // hash = Sha256Hash.wrapReversed(Sha256Hash.hashTwice(copy));
-               // System.out.println("zerocoin hash parsed: "+hash.toString());
-                hash = Sha256Hash.wrapReversed(Sha256Hash.hashTwice(payload, offset, cursor - offset));
-                //System.out.println("zerocoin test hash parsed 2: "+hash.toString());
-
-                //hash = Sha256Hash.wrapReversed(Sha256Hash.hashTwice(payload, offset, cursor - offset));
-            } else {
-                hash = Sha256Hash.wrapReversed(Hash9.digest(payload, offset, cursor - offset));
-                //System.out.println("hash parsed: "+hash.toString());
+            hash = Sha256Hash.wrapReversed(Hash9.digest(payload, offset, cursor - offset));
+            if (IsPoABlock()) {
+            	byte[] a = new byte[64];
+            	System.arraycopy(prevBlockHash, 0, a, 0, 32);
+            	System.arraycopy(minedHash, 0, a, 32, 32);
             }
-
+            //System.out.println("hash parsed: "+hash.toString());
+            
             headerBytesValid = serializer.isParseRetainMode();
 
             // transactions
-            parseTransactions(offset + headerSize);
+            parseBody(offset + headerSize);
             length = cursor - offset;
         }catch (Exception e){
             e.printStackTrace();
@@ -349,27 +385,28 @@ public class Block extends Message {
         //System.out.println("writeHeader prevBlockHash: "+prevBlockHash);
         stream.write(getMerkleRoot().getReversedBytes());
         //System.out.println("writeHeader merkle root: "+getMerkleRoot());
+        if (IsPoABlock()) {
+        	stream.write(hashPrevPoABlock.getReversedBytes());
+        	stream.write(hashPoAMerkleRoot.getReversedBytes());
+        	stream.write(minedHash.getReversedBytes());
+        }
         Utils.uint32ToByteStreamLE(time, stream);
         //System.out.println("writeHeader time: "+time);
         Utils.uint32ToByteStreamLE(difficultyTarget, stream);
         //System.out.println("writeHeader difficultyTarget: "+difficultyTarget);
         Utils.uint32ToByteStreamLE(nonce, stream);
         //System.out.println("writeHeader nonce: "+nonce);
-        if (isZerocoin()){
-            byte[] accumulator = (zeroCoinAccumulator!=null)?zeroCoinAccumulator.getReversedBytes():new byte[32];
-            stream.write(accumulator);
-            //System.out.println("writeHeader zeroCoinAccumulator: "+nonce);
-        }
     }
 
     public int getHeaderSize(){
-        return isZerocoin()?ZEROCOIN_HEADER_SIZE:HEADER_SIZE;
+        return IsPoABlock()? 176:80;
     }
 
-    private void writeTransactions(OutputStream stream) throws IOException {
+    private void writeBody(OutputStream stream) throws IOException {
         // check for no transaction conditions first
         // must be a more efficient way to do this but I'm tired atm.
         if (transactions == null) {
+        	stream.write(new VarInt(0).encode());
             return;
         }
         int headerSize = getHeaderSize();
@@ -383,6 +420,20 @@ public class Block extends Message {
             stream.write(new VarInt(transactions.size()).encode());
             for (Transaction tx : transactions) {
                 tx.bitcoinSerialize(stream);
+            }
+            
+            if (transactions.size() > 1 && transactions.get(0).isCoinStake()) {
+            	stream.write(new VarInt(vchBlockSig.length).encode());
+            	stream.write(vchBlockSig);
+            }
+            
+            if (IsPoABlock()) {
+            	stream.write(new VarInt(posBlocksAudited.size()).encode());
+            	for (int i = 0; i < posBlocksAudited.size(); i++) {
+            		stream.write(posBlocksAudited.get(i).hash.getReversedBytes());
+            		Utils.uint32ToByteStreamLE(posBlocksAudited.get(i).nTime, stream);
+            		Utils.uint32ToByteStreamLE(posBlocksAudited.get(i).height, stream);
+            	}
             }
         }
         //writeMasterNodeVotes(stream);
@@ -413,7 +464,7 @@ public class Block extends Message {
         ByteArrayOutputStream stream = new UnsafeByteArrayOutputStream(length == UNKNOWN_LENGTH ? getHeaderSize() + guessTransactionsLength() : length);
         try {
             writeHeader(stream);
-            writeTransactions(stream);
+            writeBody(stream);
         } catch (IOException e) {
             // Cannot happen, we are serializing to a memory stream.
         }
@@ -424,7 +475,7 @@ public class Block extends Message {
     protected void bitcoinSerializeToStream(OutputStream stream) throws IOException {
         writeHeader(stream);
         // We may only have enough data to write the header.
-        writeTransactions(stream);
+        writeBody(stream);
     }
 
     /**
@@ -484,9 +535,6 @@ public class Block extends Message {
             writeHeader(bos);
             return Sha256Hash.wrap(
                     Utils.reverseBytes(
-                            isZerocoin()?
-                                    Sha256Hash.hashTwice(bos.toByteArray())
-                                    :
                                     Hash9.digest(bos.toByteArray())
                             )
                     );
@@ -807,6 +855,10 @@ public class Block extends Message {
         // enough, it's probably been done by the network.
         checkProofOfWork(true);
         checkTimestamp();
+    }
+    
+    public boolean IsPoABlock() {
+    	return version >= POA_BLOCK_VERSION_LOW_LIMIT;
     }
 
     /**

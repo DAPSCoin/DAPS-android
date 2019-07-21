@@ -175,6 +175,11 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public String getStealthAddress() {
+        return walletManager.getStealthAddress();
+    }
+
+    @Override
     public boolean isWalletWatchOnly(){
         return walletManager.isWatchOnly();
     }

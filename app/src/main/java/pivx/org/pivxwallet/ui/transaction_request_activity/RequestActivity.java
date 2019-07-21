@@ -29,6 +29,7 @@ import org.pivxj.core.Address;
 import org.pivxj.core.Coin;
 import org.pivxj.core.NetworkParameters;
 import org.pivxj.core.Transaction;
+import org.pivxj.crypto.DeterministicKey;
 import org.pivxj.uri.PivxURI;
 
 import java.security.GeneralSecurityException;
@@ -113,9 +114,8 @@ public class RequestActivity extends BaseDrawerActivity implements View.OnClickL
 
         if (addressAdapter == null) {
             List<String> list = new ArrayList<String>();
-            Map address = (Map) daps.callRPC("createPrivacyAccount");
-            String receiveAddr = PivxApplication.getInstance().getModule().getMnemonic().toString();
-            String stealthAddress = receiveAddr;
+            //Map address = (Map) daps.callRPC("createPrivacyAccount");
+            String stealthAddress = PivxApplication.getInstance().getModule().getStealthAddress();
 
             list.add(stealthAddress);
             addressAdapter = new AddressAdapter(this, list, stealthAddress);

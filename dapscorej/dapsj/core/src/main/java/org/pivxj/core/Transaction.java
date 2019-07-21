@@ -128,7 +128,7 @@ public class Transaction extends ChildMessage {
     //const unsigned int nTime;
     private long txType;
 
-    private byte[] bulletproofs = new byte[5];
+    private byte[] bulletproofs;
 
     private long nTxFee;
 
@@ -211,6 +211,9 @@ public class Transaction extends ChildMessage {
         version = 1;
         inputs = new ArrayList<TransactionInput>();
         outputs = new ArrayList<TransactionOutput>();
+        bulletproofs = new byte[0];
+        c = Sha256Hash.ZERO_HASH;
+        S = new ArrayList<ArrayList<Sha256Hash>>();
         // We don't initialize appearsIn deliberately as it's only useful for transactions stored in the wallet.
         length = 8; // 8 for std fields
     }
@@ -575,10 +578,11 @@ public class Transaction extends ChildMessage {
         for (long i = 0; i < numInputs; i++) {
             TransactionInput input = new TransactionInput(params, this, payload, cursor, serializer);
             inputs.add(input);
-            long scriptLen = readVarInt(TransactionOutPoint.MESSAGE_LENGTH);
-            optimalEncodingMessageSize += TransactionOutPoint.MESSAGE_LENGTH + VarInt.sizeOf(scriptLen) + scriptLen + 4;
-            cursor += scriptLen + 4;
+            optimalEncodingMessageSize += input.getMessageSize();
+            cursor += input.getMessageSize();
+            System.out.println("input decoded length = " + input.decoys.size());
         }
+        
         // Now the outputs
         long numOutputs = readVarInt();
         optimalEncodingMessageSize += VarInt.sizeOf(numOutputs);
@@ -586,24 +590,50 @@ public class Transaction extends ChildMessage {
         for (long i = 0; i < numOutputs; i++) {
             TransactionOutput output = new TransactionOutput(params, this, payload, cursor, serializer);
             outputs.add(output);
-            long scriptLen = readVarInt(8);
-            optimalEncodingMessageSize += 8 + VarInt.sizeOf(scriptLen) + scriptLen;
-            cursor += scriptLen;
+            optimalEncodingMessageSize += output.getMessageSize();
+            System.out.println("decoded length = " + output.getMessageSize());
+            cursor += output.getMessageSize();
         }
         lockTime = readUint32();
         optimalEncodingMessageSize += 4;
         
         byte[] b = readBytes(1);
         hasPaymentID = b[0];
+        optimalEncodingMessageSize += 1;
         if (hasPaymentID != 0) {
-        	//uint64ToByteStreamLE(paymentID, stream);
+        	paymentID = readUint64();
+        	optimalEncodingMessageSize += 8;
         }
-        //uint32ToByteStreamLE(txType, stream);
-        /*stream.write(new VarInt(bulletproofs.length).encode());
-        stream.write(bulletproofs, 0, bulletproofs.length);
-        int64ToByteStreamLE(nTxFee, stream);
-        stream.write(new VarInt(c.getBytes().length).encode());
-        stream.write(c.getBytes());*/
+        txType = readUint32();
+        optimalEncodingMessageSize += 4;
+
+        int bulletproofLen = (int)readVarInt();
+        bulletproofs = readBytes(bulletproofLen);
+        optimalEncodingMessageSize += VarInt.sizeOf(bulletproofLen) + bulletproofLen;
+        
+        nTxFee = readInt64();
+        optimalEncodingMessageSize += 8;
+
+        c = readHash();
+        optimalEncodingMessageSize += 32;
+        
+        int SLen = (int) readVarInt();
+        optimalEncodingMessageSize += VarInt.sizeOf(SLen);
+        S = new ArrayList<ArrayList<Sha256Hash>>();
+        for (int i = 0; i < SLen; i++) {
+        	S.add(new ArrayList<Sha256Hash>());
+            int SLenVec = (int) readVarInt();
+            for(int j = 0; j < SLenVec; j++) {
+            	S.get(i).add(readHash());
+            }
+            optimalEncodingMessageSize += VarInt.sizeOf(SLenVec) + SLenVec * 32;
+        }
+        
+        int ntxFeeKeyImageLen = (int) readVarInt();
+        byte[] bs = readBytes(ntxFeeKeyImageLen);
+        if (ntxFeeKeyImageLen > 0)
+        	ntxFeeKeyImage = new LazyECPoint(ECKey.CURVE.getCurve(), bs);
+        optimalEncodingMessageSize += VarInt.sizeOf(ntxFeeKeyImageLen) + ntxFeeKeyImageLen;
         
         length = cursor - offset;
     }
@@ -653,6 +683,10 @@ public class Transaction extends ChildMessage {
             return false;
 
         return getConfidence().getDepthInBlocks() >= params.getSpendableCoinbaseDepth();
+    }
+    
+    public boolean isCoinStake() {
+        return (inputs.size() > 0 && (!inputs.get(0).getOutpoint().isNull() && inputs.get(0).decoys.isEmpty()) && outputs.size() >= 2 && outputs.get(0).isEmpty());
     }
 
     @Override
@@ -1093,12 +1127,25 @@ public class Transaction extends ChildMessage {
         	uint64ToByteStreamLE(paymentID, stream);
         }
         uint32ToByteStreamLE(txType, stream);
-        stream.write(new VarInt(bulletproofs.length).encode());
-        stream.write(bulletproofs, 0, bulletproofs.length);
+        
+        serializeBytes(stream, bulletproofs);
+        
         int64ToByteStreamLE(nTxFee, stream);
-        if (c != null) {
-        	stream.write(new VarInt(c.getBytes().length).encode());
-        	stream.write(c.getBytes());
+        
+        stream.write(c.getReversedBytes());
+        
+        stream.write(new VarInt(S.size()).encode());
+        for (int i = 0; i < S.size(); i++) {
+            stream.write(new VarInt(S.get(i).size()).encode());
+            for(int j = 0; j < S.get(i).size(); j++) {
+            	stream.write(S.get(i).get(j).getReversedBytes());
+            }
+        }
+        if (ntxFeeKeyImage != null) {
+	        stream.write(new VarInt(33).encode());
+	        stream.write(ntxFeeKeyImage.getEncoded(true));
+        } else {
+	        stream.write(new VarInt(0).encode());
         }
     }
 

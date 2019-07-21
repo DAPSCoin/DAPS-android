@@ -88,7 +88,7 @@ public class CoinDefinition {
 
     public static final boolean supportsBloomFiltering = true; //Requires PROTOCOL_VERSION 70000 in the client
 
-    public static final int Port    = 51472;       //protocol.h GetDefaultPort(testnet=false)
+    public static final int Port    = 53572;       //protocol.h GetDefaultPort(testnet=false)
     public static final int TestPort = 51474;     //protocol.h GetDefaultPort(testnet=true)
 
     /** Zerocoin starting block height */
@@ -106,10 +106,10 @@ public class CoinDefinition {
 
     //Genesis Block Information from main.cpp: LoadBlockIndex
     static public long genesisBlockDifficultyTarget = 0x1e0ffff0;         //main.cpp: LoadBlockIndex
-    static public long genesisBlockTime = 1454124731L;                       //main.cpp: LoadBlockIndex
-    static public long genesisBlockNonce = 2402015;                         //main.cpp: LoadBlockIndex
-    static public String genesisHash = "0000041e482b9b9691d98eefb48473405c0b8ec31b76df3797c74a78680ef818";  //main.cpp: hashGenesisBlock
-    static public String genesisMerkleRoot = "1b2ef6e2f28be914103a277377ae7729dcd125dfeb8bf97bd5964ba72b6dc39b";
+    static public long genesisBlockTime = 1558521974L;                       //main.cpp: LoadBlockIndex
+    static public long genesisBlockNonce = 13653769;                         //main.cpp: LoadBlockIndex
+    static public String genesisHash = "0000059f433f00d4ed1aa073e7bdd9b358676cc8e2537d371c354256390122b6";  //main.cpp: hashGenesisBlock
+    static public String genesisMerkleRoot = "03fcb696ffbce2bb8248c65f6286c9948a4927919506331f21992a7021f969ed";
     static public int genesisBlockValue = 250;                                                              //main.cpp: LoadBlockIndex
     //taken from the raw data of the block explorer
     static public String genesisTxInBytes = "04ffff001d01044c55552e532e204e657773202620576f726c64205265706f7274204a616e203238203230313620576974682048697320416273656e63652c205472756d7020446f6d696e6174657320416e6f7468657220446562617465";//"04ffff001d01044c5957697265642030392f4a616e2f3230313420546865204772616e64204578706572696d656e7420476f6573204c6976653a204f76657273746f636b2e636f6d204973204e6f7720416363657074696e6720426974636f696e73";   //"limecoin se convertira en una de las monedas mas segura del mercado, checa nuestros avances"
