@@ -21,12 +21,15 @@ import org.pivxj.core.*;
 import org.pivxj.core.TransactionConfidence.ConfidenceType;
 import org.pivxj.crypto.KeyCrypter;
 import org.pivxj.crypto.KeyCrypterScrypt;
+import org.pivxj.crypto.LazyECPoint;
 import org.pivxj.script.Script;
 import org.pivxj.signers.LocalTransactionSigner;
 import org.pivxj.signers.TransactionSigner;
 import org.pivxj.utils.ExchangeRate;
 import org.pivxj.utils.Fiat;
 import org.pivxj.wallet.Protos.Wallet.EncryptionType;
+import org.pivxj.wallet.Wallet.Decoy;
+import org.pivxj.wallet.Wallet.ValueMask;
 
 import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
@@ -148,8 +151,17 @@ public class WalletProtobufSerializer {
         }
 
         for (WalletTransaction wtx : wallet.getWalletTransactions()) {
-            Protos.Transaction txProto = makeTxProto(wtx);
+            Protos.Transaction txProto = makeTxProto(wtx, wallet);
             walletBuilder.addTransaction(txProto);
+        }
+        
+        for (Decoy d : wallet.decoySet.values()) {
+        	Protos.Decoy.Builder pD = Protos.Decoy.newBuilder();
+        	pD.setCommitment(ByteString.copyFrom(d.commitment));
+        	pD.setHash(hashToByteString(d.hash));
+        	pD.setIndex(d.index);
+        	pD.setPubkey(ByteString.copyFrom(d.pubKey));
+        	walletBuilder.addDecoysSet(pD);
         }
 
         walletBuilder.addAllKey(wallet.serializeKeyChainGroupToProtobuf());
@@ -228,7 +240,7 @@ public class WalletProtobufSerializer {
         }
     }
 
-    private static Protos.Transaction makeTxProto(WalletTransaction wtx) {
+    private static Protos.Transaction makeTxProto(WalletTransaction wtx, Wallet wallet) {
         Transaction tx = wtx.getTransaction();
         Protos.Transaction.Builder txBuilder = Protos.Transaction.newBuilder();
 
@@ -246,14 +258,40 @@ public class WalletProtobufSerializer {
 
         // Handle inputs.
         for (TransactionInput input : tx.getInputs()) {
-            Protos.TransactionInput.Builder inputBuilder = Protos.TransactionInput.newBuilder()
-                .setScriptBytes(ByteString.copyFrom(input.getScriptBytes()))
-                .setTransactionOutPointHash(hashToByteString(input.getOutpoint().getHash()))
-                .setTransactionOutPointIndex((int) input.getOutpoint().getIndex());
+            Protos.TransactionInput.Builder inputBuilder = Protos.TransactionInput.newBuilder();
+            inputBuilder.setScriptBytes(ByteString.copyFrom(input.getScriptBytes()));
+            inputBuilder.addTransactionOutPointsHash(hashToByteString(input.getOutpoint().getHash()));
+            inputBuilder.addTransactionOutPointsIndex(0);
+            int i = 1;
+            for(TransactionOutPoint op: input.decoys) {
+            	inputBuilder.addTransactionOutPointsHash(hashToByteString(op.getHash()));
+            	inputBuilder.addTransactionOutPointsIndex(i++);
+            }
+            //TODO: add real index
+            //.setTransactionOutPointIndex((int) input.getOutpoint().getIndex());
             if (input.hasSequence())
                 inputBuilder.setSequence((int) input.getSequenceNumber());
             if (input.getValue() != null)
                 inputBuilder.setValue(input.getValue().value);
+            if (input.s != null && input.s.length > 0) {
+            	inputBuilder.setS(ByteString.copyFrom(input.s));
+            }
+            
+            if (input.R != null && input.R.length > 0) {
+            	inputBuilder.setR(ByteString.copyFrom(input.R));
+            }
+            
+            if (input.encryptionKey != null && input.encryptionKey.length > 0) {
+            	inputBuilder.setEncryptionKey(ByteString.copyFrom(input.encryptionKey));
+            }
+            
+            if (input.keyImage != null) {
+            	inputBuilder.setKeyImage(ByteString.copyFrom(input.keyImage.getEncoded(true)));
+            }
+            
+            if (input.masternodeStealthAddress != null && input.masternodeStealthAddress.length > 0) {
+            	inputBuilder.setMasternodeStealthAddress(ByteString.copyFrom(input.masternodeStealthAddress));
+            }
             txBuilder.addTransactionInput(inputBuilder);
         }
 
@@ -269,6 +307,29 @@ public class WalletProtobufSerializer {
                 outputBuilder.setSpentByTransactionHash(hashToByteString(spendingHash))
                              .setSpentByTransactionIndex(spentByTransactionIndex);
             }
+            if (output.txPriv != null ) {
+            	outputBuilder.setTxPriv(ByteString.copyFrom(output.txPriv));
+            }
+            outputBuilder.setTxPub(ByteString.copyFrom(output.txPub));
+            outputBuilder.setCommitment(ByteString.copyFrom(output.commitment));
+            outputBuilder.setMask(ByteString.copyFrom(output.maskValue.mask.getBytes()));
+            outputBuilder.setAmount(ByteString.copyFrom(output.maskValue.amount.getBytes()));
+            outputBuilder.setRealIndex(output.getIndex());
+            String key = tx.getHashAsString() + output.getIndex();
+            if (wallet.valueMap.containsKey(key)) {
+            	outputBuilder.setDecodedAmount(wallet.valueMap.get(key).value.value);
+            	outputBuilder.setDecodedMask(ByteString.copyFrom(wallet.valueMap.get(key).mask));
+            } else {
+            	byte[] masked = new byte[32];
+            	outputBuilder.setDecodedAmount(0);
+            	outputBuilder.setDecodedMask(ByteString.copyFrom(masked));
+            }
+            
+            
+            if (output.masternodeStealthAddress != null) {
+                outputBuilder.setTxPub(ByteString.copyFrom(output.txPub));
+            }
+            
             txBuilder.addTransactionOutput(outputBuilder);
         }
 
@@ -506,10 +567,23 @@ public class WalletProtobufSerializer {
             wallet.setLastBlockSeenHeight(-1);
             wallet.setLastBlockSeenTimeSecs(0);
         } else {
+        	//read decoys
+        	for (Protos.Decoy pd : walletProto.getDecoysSetList()) {
+        		org.pivxj.wallet.Wallet.Decoy d = new org.pivxj.wallet.Wallet.Decoy(byteStringToHash(pd.getHash()), pd.getIndex(), pd.getCommitment().toByteArray(), pd.getPubkey().toByteArray());
+        		wallet.addToDecoySet(d);
+        	}
+        	
             // Read all transactions and insert into the txMap.
             for (Protos.Transaction txProto : walletProto.getTransactionList()) {
                 readTransaction(txProto, wallet.getParams());
+                
+                for (Protos.TransactionOutput outProto: txProto.getTransactionOutputList()) {
+                	if (outProto.getDecodedAmount() != 0) {
+                		wallet.valueMap.put(byteStringToHash(txProto.getHash()).toString() + outProto.getRealIndex(), new ValueMask(Coin.valueOf(outProto.getDecodedAmount()), outProto.getDecodedMask().toByteArray()));
+                	}
+                }
             }
+            
 
             // Update transaction outputs to point to inputs that spend them
             for (Protos.Transaction txProto : walletProto.getTransactionList()) {
@@ -616,19 +690,58 @@ public class WalletProtobufSerializer {
             Coin value = Coin.valueOf(outputProto.getValue());
             byte[] scriptBytes = outputProto.getScriptBytes().toByteArray();
             TransactionOutput output = new TransactionOutput(params, tx, value, scriptBytes);
+            if (outputProto.hasTxPriv()) {
+            	output.txPriv = outputProto.getTxPriv().toByteArray();
+            }
+        	output.txPub = outputProto.getTxPub().toByteArray();
+        	output.commitment = outputProto.getCommitment().toByteArray();
+        	output.maskValue.mask = Sha256Hash.wrap(outputProto.getMask().toByteArray());
+        	output.maskValue.amount = Sha256Hash.wrap(outputProto.getAmount().toByteArray());
+
+        	if (outputProto.hasMasternodeStealthAddress()) {
+            	output.masternodeStealthAddress = outputProto.getMasternodeStealthAddress().toByteArray();
+            }
+        	
             tx.addOutput(output);
         }
 
         for (Protos.TransactionInput inputProto : txProto.getTransactionInputList()) {
             byte[] scriptBytes = inputProto.getScriptBytes().toByteArray();
             TransactionOutPoint outpoint = new TransactionOutPoint(params,
-                    inputProto.getTransactionOutPointIndex() & 0xFFFFFFFFL,
-                    byteStringToHash(inputProto.getTransactionOutPointHash())
+                    inputProto.getTransactionOutPointsIndex(0) & 0xFFFFFFFFL,
+                    byteStringToHash(inputProto.getTransactionOutPointsHash(0))
             );
             Coin value = inputProto.hasValue() ? Coin.valueOf(inputProto.getValue()) : null;
             TransactionInput input = new TransactionInput(params, tx, scriptBytes, outpoint, value);
             if (inputProto.hasSequence())
                 input.setSequenceNumber(0xffffffffL & inputProto.getSequence());
+            
+            //read decoys
+            for (int i = 1; i < inputProto.getTransactionOutPointsHashCount(); i++) {
+            	TransactionOutPoint decoy = new TransactionOutPoint(params, inputProto.getTransactionOutPointsIndex(i), byteStringToHash(inputProto.getTransactionOutPointsHash(i)));
+            	input.decoys.add(decoy);
+            }
+            
+            if (inputProto.hasS()) {
+            	input.s = inputProto.getS().toByteArray();
+            }
+            
+            if (inputProto.hasR()) {
+            	input.R = inputProto.getR().toByteArray();
+            }
+            
+            if (inputProto.hasEncryptionKey()) {
+            	input.encryptionKey = inputProto.getEncryptionKey().toByteArray();
+            }
+            
+            if (inputProto.hasKeyImage()) {
+            	input.keyImage = new LazyECPoint(ECKey.CURVE.getCurve(), inputProto.getKeyImage().toByteArray());
+            }
+            
+            if (inputProto.hasMasternodeStealthAddress()) {
+            	input.masternodeStealthAddress = inputProto.getMasternodeStealthAddress().toByteArray();
+            }
+            
             tx.addInput(input);
         }
 

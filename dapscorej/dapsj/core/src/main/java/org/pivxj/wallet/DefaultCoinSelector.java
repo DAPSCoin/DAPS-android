@@ -31,7 +31,7 @@ import java.util.*;
  */
 public class DefaultCoinSelector implements CoinSelector {
     @Override
-    public CoinSelection select(Coin target, List<TransactionOutput> candidates) {
+    public CoinSelection select(Wallet wallet, Coin target, List<TransactionOutput> candidates) {
         ArrayList<TransactionOutput> selected = new ArrayList<TransactionOutput>();
         // Sort the inputs by age*value so we get the highest "coindays" spent.
         // TODO: Consider changing the wallets internal format to track just outputs and keep them ordered.
@@ -50,7 +50,8 @@ public class DefaultCoinSelector implements CoinSelector {
             // Only pick chain-included transactions, or transactions that are ours and pending.
             if (!shouldSelect(output.getParentTransaction())) continue;
             selected.add(output);
-            total += output.getValue().value;
+            byte[] masked = new byte[32];
+            total += wallet.revealValue(output, masked);
         }
         // Total may be lower than target here, if the given candidates were insufficient to create to requested
         // transaction.

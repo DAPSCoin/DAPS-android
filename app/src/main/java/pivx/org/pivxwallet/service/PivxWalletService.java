@@ -527,13 +527,13 @@ public class PivxWalletService extends Service{
         log.info("check");
         try {
             if (!isChecking.getAndSet(true)) {
-                blockchainManager.check(
+                /*blockchainManager.check(
                         impediments,
                         peerConnectivityListener,
                         peerConnectivityListener,
                         blockchainDownloadListener,
                         null
-                        );
+                        );*/
                 //todo: ver si conviene esto..
                 broadcastBlockchainState(true);
                 isChecking.set(false);

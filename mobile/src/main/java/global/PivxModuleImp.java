@@ -88,6 +88,11 @@ public class PivxModuleImp implements PivxModule {
         blockchainManager = new BlockchainManager(context,walletManager,walletConfiguration);
     }
 
+    @Override
+    public void saveWallet() {
+        walletManager.saveWallet();
+    }
+
     public void start() throws IOException{
         walletManager.init();
     }

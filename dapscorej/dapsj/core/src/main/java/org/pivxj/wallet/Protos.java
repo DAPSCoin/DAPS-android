@@ -8,10 +8,10 @@ public final class Protos {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface PeerAddressOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface PeerAddressOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.PeerAddress)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required bytes ip_address = 1;
     /**
      * <code>required bytes ip_address = 1;</code>
      */
@@ -21,7 +21,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getIpAddress();
 
-    // required uint32 port = 2;
     /**
      * <code>required uint32 port = 2;</code>
      */
@@ -31,7 +30,6 @@ public final class Protos {
      */
     int getPort();
 
-    // required uint64 services = 3;
     /**
      * <code>required uint64 services = 3;</code>
      */
@@ -45,8 +43,9 @@ public final class Protos {
    * Protobuf type {@code wallet.PeerAddress}
    */
   public static final class PeerAddress extends
-      com.google.protobuf.GeneratedMessage
-      implements PeerAddressOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.PeerAddress)
+      PeerAddressOrBuilder {
     // Use PeerAddress.newBuilder() to construct.
     private PeerAddress(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -147,7 +146,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required bytes ip_address = 1;
     public static final int IP_ADDRESS_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString ipAddress_;
     /**
@@ -163,7 +161,6 @@ public final class Protos {
       return ipAddress_;
     }
 
-    // required uint32 port = 2;
     public static final int PORT_FIELD_NUMBER = 2;
     private int port_;
     /**
@@ -179,7 +176,6 @@ public final class Protos {
       return port_;
     }
 
-    // required uint64 services = 3;
     public static final int SERVICES_FIELD_NUMBER = 3;
     private long services_;
     /**
@@ -203,7 +199,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasIpAddress()) {
         memoizedIsInitialized = 0;
@@ -336,8 +333,9 @@ public final class Protos {
      * Protobuf type {@code wallet.PeerAddress}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.PeerAddressOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.PeerAddress)
+        org.pivxj.wallet.Protos.PeerAddressOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_PeerAddress_descriptor;
@@ -480,7 +478,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required bytes ip_address = 1;
       private com.google.protobuf.ByteString ipAddress_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes ip_address = 1;</code>
@@ -516,7 +513,6 @@ public final class Protos {
         return this;
       }
 
-      // required uint32 port = 2;
       private int port_ ;
       /**
        * <code>required uint32 port = 2;</code>
@@ -549,7 +545,6 @@ public final class Protos {
         return this;
       }
 
-      // required uint64 services = 3;
       private long services_ ;
       /**
        * <code>required uint64 services = 3;</code>
@@ -593,10 +588,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.PeerAddress)
   }
 
-  public interface EncryptedDataOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface EncryptedDataOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.EncryptedData)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required bytes initialisation_vector = 1;
     /**
      * <code>required bytes initialisation_vector = 1;</code>
      *
@@ -614,7 +609,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getInitialisationVector();
 
-    // required bytes encrypted_private_key = 2;
     /**
      * <code>required bytes encrypted_private_key = 2;</code>
      *
@@ -636,8 +630,9 @@ public final class Protos {
    * Protobuf type {@code wallet.EncryptedData}
    */
   public static final class EncryptedData extends
-      com.google.protobuf.GeneratedMessage
-      implements EncryptedDataOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.EncryptedData)
+      EncryptedDataOrBuilder {
     // Use EncryptedData.newBuilder() to construct.
     private EncryptedData(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -733,7 +728,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required bytes initialisation_vector = 1;
     public static final int INITIALISATION_VECTOR_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString initialisationVector_;
     /**
@@ -757,7 +751,6 @@ public final class Protos {
       return initialisationVector_;
     }
 
-    // required bytes encrypted_private_key = 2;
     public static final int ENCRYPTED_PRIVATE_KEY_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString encryptedPrivateKey_;
     /**
@@ -788,7 +781,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasInitialisationVector()) {
         memoizedIsInitialized = 0;
@@ -910,8 +904,9 @@ public final class Protos {
      * Protobuf type {@code wallet.EncryptedData}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.EncryptedDataOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.EncryptedData)
+        org.pivxj.wallet.Protos.EncryptedDataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_EncryptedData_descriptor;
@@ -1041,7 +1036,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required bytes initialisation_vector = 1;
       private com.google.protobuf.ByteString initialisationVector_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes initialisation_vector = 1;</code>
@@ -1093,7 +1087,6 @@ public final class Protos {
         return this;
       }
 
-      // required bytes encrypted_private_key = 2;
       private com.google.protobuf.ByteString encryptedPrivateKey_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes encrypted_private_key = 2;</code>
@@ -1156,10 +1149,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.EncryptedData)
   }
 
-  public interface DeterministicKeyOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface DeterministicKeyOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.DeterministicKey)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required bytes chain_code = 1;
     /**
      * <code>required bytes chain_code = 1;</code>
      *
@@ -1179,7 +1172,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getChainCode();
 
-    // repeated uint32 path = 2;
     /**
      * <code>repeated uint32 path = 2;</code>
      *
@@ -1208,7 +1200,6 @@ public final class Protos {
      */
     int getPath(int index);
 
-    // optional uint32 issued_subkeys = 3;
     /**
      * <code>optional uint32 issued_subkeys = 3;</code>
      *
@@ -1217,7 +1208,6 @@ public final class Protos {
      * For the parents of keys being handed out, this is always less than the true number of children: the difference is
      * called the lookahead zone. These keys are put into Bloom filters so we can spot transactions made by clones of
      * this wallet - for instance when restoring from backup or if the seed was shared between devices.
-     *
      * If this field is missing it means we're not issuing subkeys of this key to users.
      * </pre>
      */
@@ -1230,13 +1220,11 @@ public final class Protos {
      * For the parents of keys being handed out, this is always less than the true number of children: the difference is
      * called the lookahead zone. These keys are put into Bloom filters so we can spot transactions made by clones of
      * this wallet - for instance when restoring from backup or if the seed was shared between devices.
-     *
      * If this field is missing it means we're not issuing subkeys of this key to users.
      * </pre>
      */
     int getIssuedSubkeys();
 
-    // optional uint32 lookahead_size = 4;
     /**
      * <code>optional uint32 lookahead_size = 4;</code>
      */
@@ -1246,7 +1234,6 @@ public final class Protos {
      */
     int getLookaheadSize();
 
-    // optional bool isFollowing = 5;
     /**
      * <code>optional bool isFollowing = 5;</code>
      *
@@ -1270,7 +1257,6 @@ public final class Protos {
      */
     boolean getIsFollowing();
 
-    // optional uint32 sigsRequiredToSpend = 6 [default = 1];
     /**
      * <code>optional uint32 sigsRequiredToSpend = 6 [default = 1];</code>
      *
@@ -1299,8 +1285,9 @@ public final class Protos {
    * </pre>
    */
   public static final class DeterministicKey extends
-      com.google.protobuf.GeneratedMessage
-      implements DeterministicKeyOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.DeterministicKey)
+      DeterministicKeyOrBuilder {
     // Use DeterministicKey.newBuilder() to construct.
     private DeterministicKey(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1435,7 +1422,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required bytes chain_code = 1;
     public static final int CHAIN_CODE_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString chainCode_;
     /**
@@ -1461,7 +1447,6 @@ public final class Protos {
       return chainCode_;
     }
 
-    // repeated uint32 path = 2;
     public static final int PATH_FIELD_NUMBER = 2;
     private java.util.List<java.lang.Integer> path_;
     /**
@@ -1499,7 +1484,6 @@ public final class Protos {
       return path_.get(index);
     }
 
-    // optional uint32 issued_subkeys = 3;
     public static final int ISSUED_SUBKEYS_FIELD_NUMBER = 3;
     private int issuedSubkeys_;
     /**
@@ -1510,7 +1494,6 @@ public final class Protos {
      * For the parents of keys being handed out, this is always less than the true number of children: the difference is
      * called the lookahead zone. These keys are put into Bloom filters so we can spot transactions made by clones of
      * this wallet - for instance when restoring from backup or if the seed was shared between devices.
-     *
      * If this field is missing it means we're not issuing subkeys of this key to users.
      * </pre>
      */
@@ -1525,7 +1508,6 @@ public final class Protos {
      * For the parents of keys being handed out, this is always less than the true number of children: the difference is
      * called the lookahead zone. These keys are put into Bloom filters so we can spot transactions made by clones of
      * this wallet - for instance when restoring from backup or if the seed was shared between devices.
-     *
      * If this field is missing it means we're not issuing subkeys of this key to users.
      * </pre>
      */
@@ -1533,7 +1515,6 @@ public final class Protos {
       return issuedSubkeys_;
     }
 
-    // optional uint32 lookahead_size = 4;
     public static final int LOOKAHEAD_SIZE_FIELD_NUMBER = 4;
     private int lookaheadSize_;
     /**
@@ -1549,7 +1530,6 @@ public final class Protos {
       return lookaheadSize_;
     }
 
-    // optional bool isFollowing = 5;
     public static final int ISFOLLOWING_FIELD_NUMBER = 5;
     private boolean isFollowing_;
     /**
@@ -1579,7 +1559,6 @@ public final class Protos {
       return isFollowing_;
     }
 
-    // optional uint32 sigsRequiredToSpend = 6 [default = 1];
     public static final int SIGSREQUIREDTOSPEND_FIELD_NUMBER = 6;
     private int sigsRequiredToSpend_;
     /**
@@ -1616,7 +1595,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasChainCode()) {
         memoizedIsInitialized = 0;
@@ -1772,8 +1752,9 @@ public final class Protos {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.DeterministicKeyOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.DeterministicKey)
+        org.pivxj.wallet.Protos.DeterministicKeyOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_DeterministicKey_descriptor;
@@ -1943,7 +1924,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required bytes chain_code = 1;
       private com.google.protobuf.ByteString chainCode_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes chain_code = 1;</code>
@@ -1999,7 +1979,6 @@ public final class Protos {
         return this;
       }
 
-      // repeated uint32 path = 2;
       private java.util.List<java.lang.Integer> path_ = java.util.Collections.emptyList();
       private void ensurePathIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -2081,7 +2060,8 @@ public final class Protos {
       public Builder addAllPath(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensurePathIsMutable();
-        super.addAll(values, path_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, path_);
         onChanged();
         return this;
       }
@@ -2100,7 +2080,6 @@ public final class Protos {
         return this;
       }
 
-      // optional uint32 issued_subkeys = 3;
       private int issuedSubkeys_ ;
       /**
        * <code>optional uint32 issued_subkeys = 3;</code>
@@ -2110,7 +2089,6 @@ public final class Protos {
        * For the parents of keys being handed out, this is always less than the true number of children: the difference is
        * called the lookahead zone. These keys are put into Bloom filters so we can spot transactions made by clones of
        * this wallet - for instance when restoring from backup or if the seed was shared between devices.
-       *
        * If this field is missing it means we're not issuing subkeys of this key to users.
        * </pre>
        */
@@ -2125,7 +2103,6 @@ public final class Protos {
        * For the parents of keys being handed out, this is always less than the true number of children: the difference is
        * called the lookahead zone. These keys are put into Bloom filters so we can spot transactions made by clones of
        * this wallet - for instance when restoring from backup or if the seed was shared between devices.
-       *
        * If this field is missing it means we're not issuing subkeys of this key to users.
        * </pre>
        */
@@ -2140,7 +2117,6 @@ public final class Protos {
        * For the parents of keys being handed out, this is always less than the true number of children: the difference is
        * called the lookahead zone. These keys are put into Bloom filters so we can spot transactions made by clones of
        * this wallet - for instance when restoring from backup or if the seed was shared between devices.
-       *
        * If this field is missing it means we're not issuing subkeys of this key to users.
        * </pre>
        */
@@ -2158,7 +2134,6 @@ public final class Protos {
        * For the parents of keys being handed out, this is always less than the true number of children: the difference is
        * called the lookahead zone. These keys are put into Bloom filters so we can spot transactions made by clones of
        * this wallet - for instance when restoring from backup or if the seed was shared between devices.
-       *
        * If this field is missing it means we're not issuing subkeys of this key to users.
        * </pre>
        */
@@ -2169,7 +2144,6 @@ public final class Protos {
         return this;
       }
 
-      // optional uint32 lookahead_size = 4;
       private int lookaheadSize_ ;
       /**
        * <code>optional uint32 lookahead_size = 4;</code>
@@ -2202,7 +2176,6 @@ public final class Protos {
         return this;
       }
 
-      // optional bool isFollowing = 5;
       private boolean isFollowing_ ;
       /**
        * <code>optional bool isFollowing = 5;</code>
@@ -2263,7 +2236,6 @@ public final class Protos {
         return this;
       }
 
-      // optional uint32 sigsRequiredToSpend = 6 [default = 1];
       private int sigsRequiredToSpend_ = 1;
       /**
        * <code>optional uint32 sigsRequiredToSpend = 6 [default = 1];</code>
@@ -2327,10 +2299,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.DeterministicKey)
   }
 
-  public interface KeyOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface KeyOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.Key)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required .wallet.Key.Type type = 1;
     /**
      * <code>required .wallet.Key.Type type = 1;</code>
      */
@@ -2340,7 +2312,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.Key.Type getType();
 
-    // optional bytes secret_bytes = 2;
     /**
      * <code>optional bytes secret_bytes = 2;</code>
      *
@@ -2360,7 +2331,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getSecretBytes();
 
-    // optional .wallet.EncryptedData encrypted_data = 6;
     /**
      * <code>optional .wallet.EncryptedData encrypted_data = 6;</code>
      *
@@ -2386,7 +2356,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.EncryptedDataOrBuilder getEncryptedDataOrBuilder();
 
-    // optional bytes public_key = 3;
     /**
      * <code>optional bytes public_key = 3;</code>
      *
@@ -2406,7 +2375,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getPublicKey();
 
-    // optional string label = 4;
     /**
      * <code>optional string label = 4;</code>
      *
@@ -2433,7 +2401,6 @@ public final class Protos {
     com.google.protobuf.ByteString
         getLabelBytes();
 
-    // optional int64 creation_timestamp = 5;
     /**
      * <code>optional int64 creation_timestamp = 5;</code>
      *
@@ -2453,7 +2420,6 @@ public final class Protos {
      */
     long getCreationTimestamp();
 
-    // optional .wallet.DeterministicKey deterministic_key = 7;
     /**
      * <code>optional .wallet.DeterministicKey deterministic_key = 7;</code>
      */
@@ -2467,7 +2433,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.DeterministicKeyOrBuilder getDeterministicKeyOrBuilder();
 
-    // optional bytes deterministic_seed = 8;
     /**
      * <code>optional bytes deterministic_seed = 8;</code>
      *
@@ -2487,7 +2452,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getDeterministicSeed();
 
-    // optional .wallet.EncryptedData encrypted_deterministic_seed = 9;
     /**
      * <code>optional .wallet.EncryptedData encrypted_deterministic_seed = 9;</code>
      *
@@ -2519,17 +2483,16 @@ public final class Protos {
    * <pre>
    **
    * A key used to control Bitcoin spending.
-   *
    * Either the private key, the public key or both may be present.  It is recommended that
    * if the private key is provided that the public key is provided too because deriving it is slow.
-   *
    * If only the public key is provided, the key can only be used to watch the blockchain and verify
    * transactions, and not for spending.
    * </pre>
    */
   public static final class Key extends
-      com.google.protobuf.GeneratedMessage
-      implements KeyOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.Key)
+      KeyOrBuilder {
     // Use Key.newBuilder() to construct.
     private Key(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2597,8 +2560,9 @@ public final class Protos {
               break;
             }
             case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              label_ = input.readBytes();
+              label_ = bs;
               break;
             }
             case 40: {
@@ -2836,7 +2800,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required .wallet.Key.Type type = 1;
     public static final int TYPE_FIELD_NUMBER = 1;
     private org.pivxj.wallet.Protos.Key.Type type_;
     /**
@@ -2852,7 +2815,6 @@ public final class Protos {
       return type_;
     }
 
-    // optional bytes secret_bytes = 2;
     public static final int SECRET_BYTES_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString secretBytes_;
     /**
@@ -2878,7 +2840,6 @@ public final class Protos {
       return secretBytes_;
     }
 
-    // optional .wallet.EncryptedData encrypted_data = 6;
     public static final int ENCRYPTED_DATA_FIELD_NUMBER = 6;
     private org.pivxj.wallet.Protos.EncryptedData encryptedData_;
     /**
@@ -2912,7 +2873,6 @@ public final class Protos {
       return encryptedData_;
     }
 
-    // optional bytes public_key = 3;
     public static final int PUBLIC_KEY_FIELD_NUMBER = 3;
     private com.google.protobuf.ByteString publicKey_;
     /**
@@ -2938,7 +2898,6 @@ public final class Protos {
       return publicKey_;
     }
 
-    // optional string label = 4;
     public static final int LABEL_FIELD_NUMBER = 4;
     private java.lang.Object label_;
     /**
@@ -2993,7 +2952,6 @@ public final class Protos {
       }
     }
 
-    // optional int64 creation_timestamp = 5;
     public static final int CREATION_TIMESTAMP_FIELD_NUMBER = 5;
     private long creationTimestamp_;
     /**
@@ -3019,7 +2977,6 @@ public final class Protos {
       return creationTimestamp_;
     }
 
-    // optional .wallet.DeterministicKey deterministic_key = 7;
     public static final int DETERMINISTIC_KEY_FIELD_NUMBER = 7;
     private org.pivxj.wallet.Protos.DeterministicKey deterministicKey_;
     /**
@@ -3041,7 +2998,6 @@ public final class Protos {
       return deterministicKey_;
     }
 
-    // optional bytes deterministic_seed = 8;
     public static final int DETERMINISTIC_SEED_FIELD_NUMBER = 8;
     private com.google.protobuf.ByteString deterministicSeed_;
     /**
@@ -3067,7 +3023,6 @@ public final class Protos {
       return deterministicSeed_;
     }
 
-    // optional .wallet.EncryptedData encrypted_deterministic_seed = 9;
     public static final int ENCRYPTED_DETERMINISTIC_SEED_FIELD_NUMBER = 9;
     private org.pivxj.wallet.Protos.EncryptedData encryptedDeterministicSeed_;
     /**
@@ -3115,7 +3070,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasType()) {
         memoizedIsInitialized = 0;
@@ -3302,17 +3258,16 @@ public final class Protos {
      * <pre>
      **
      * A key used to control Bitcoin spending.
-     *
      * Either the private key, the public key or both may be present.  It is recommended that
      * if the private key is provided that the public key is provided too because deriving it is slow.
-     *
      * If only the public key is provided, the key can only be used to watch the blockchain and verify
      * transactions, and not for spending.
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.KeyOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.Key)
+        org.pivxj.wallet.Protos.KeyOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_Key_descriptor;
@@ -3548,7 +3503,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required .wallet.Key.Type type = 1;
       private org.pivxj.wallet.Protos.Key.Type type_ = org.pivxj.wallet.Protos.Key.Type.ORIGINAL;
       /**
        * <code>required .wallet.Key.Type type = 1;</code>
@@ -3584,7 +3538,6 @@ public final class Protos {
         return this;
       }
 
-      // optional bytes secret_bytes = 2;
       private com.google.protobuf.ByteString secretBytes_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes secret_bytes = 2;</code>
@@ -3640,7 +3593,6 @@ public final class Protos {
         return this;
       }
 
-      // optional .wallet.EncryptedData encrypted_data = 6;
       private org.pivxj.wallet.Protos.EncryptedData encryptedData_ = org.pivxj.wallet.Protos.EncryptedData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.pivxj.wallet.Protos.EncryptedData, org.pivxj.wallet.Protos.EncryptedData.Builder, org.pivxj.wallet.Protos.EncryptedDataOrBuilder> encryptedDataBuilder_;
@@ -3780,12 +3732,12 @@ public final class Protos {
        * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          org.pivxj.wallet.Protos.EncryptedData, org.pivxj.wallet.Protos.EncryptedData.Builder, org.pivxj.wallet.Protos.EncryptedDataOrBuilder>
+          org.pivxj.wallet.Protos.EncryptedData, org.pivxj.wallet.Protos.EncryptedData.Builder, org.pivxj.wallet.Protos.EncryptedDataOrBuilder> 
           getEncryptedDataFieldBuilder() {
         if (encryptedDataBuilder_ == null) {
           encryptedDataBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.pivxj.wallet.Protos.EncryptedData, org.pivxj.wallet.Protos.EncryptedData.Builder, org.pivxj.wallet.Protos.EncryptedDataOrBuilder>(
-                  encryptedData_,
+                  getEncryptedData(),
                   getParentForChildren(),
                   isClean());
           encryptedData_ = null;
@@ -3793,7 +3745,6 @@ public final class Protos {
         return encryptedDataBuilder_;
       }
 
-      // optional bytes public_key = 3;
       private com.google.protobuf.ByteString publicKey_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes public_key = 3;</code>
@@ -3849,7 +3800,6 @@ public final class Protos {
         return this;
       }
 
-      // optional string label = 4;
       private java.lang.Object label_ = "";
       /**
        * <code>optional string label = 4;</code>
@@ -3871,9 +3821,12 @@ public final class Protos {
       public java.lang.String getLabel() {
         java.lang.Object ref = label_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          label_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            label_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3947,7 +3900,6 @@ public final class Protos {
         return this;
       }
 
-      // optional int64 creation_timestamp = 5;
       private long creationTimestamp_ ;
       /**
        * <code>optional int64 creation_timestamp = 5;</code>
@@ -4000,7 +3952,6 @@ public final class Protos {
         return this;
       }
 
-      // optional .wallet.DeterministicKey deterministic_key = 7;
       private org.pivxj.wallet.Protos.DeterministicKey deterministicKey_ = org.pivxj.wallet.Protos.DeterministicKey.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.pivxj.wallet.Protos.DeterministicKey, org.pivxj.wallet.Protos.DeterministicKey.Builder, org.pivxj.wallet.Protos.DeterministicKeyOrBuilder> deterministicKeyBuilder_;
@@ -4104,12 +4055,12 @@ public final class Protos {
        * <code>optional .wallet.DeterministicKey deterministic_key = 7;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          org.pivxj.wallet.Protos.DeterministicKey, org.pivxj.wallet.Protos.DeterministicKey.Builder, org.pivxj.wallet.Protos.DeterministicKeyOrBuilder>
+          org.pivxj.wallet.Protos.DeterministicKey, org.pivxj.wallet.Protos.DeterministicKey.Builder, org.pivxj.wallet.Protos.DeterministicKeyOrBuilder> 
           getDeterministicKeyFieldBuilder() {
         if (deterministicKeyBuilder_ == null) {
           deterministicKeyBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.pivxj.wallet.Protos.DeterministicKey, org.pivxj.wallet.Protos.DeterministicKey.Builder, org.pivxj.wallet.Protos.DeterministicKeyOrBuilder>(
-                  deterministicKey_,
+                  getDeterministicKey(),
                   getParentForChildren(),
                   isClean());
           deterministicKey_ = null;
@@ -4117,7 +4068,6 @@ public final class Protos {
         return deterministicKeyBuilder_;
       }
 
-      // optional bytes deterministic_seed = 8;
       private com.google.protobuf.ByteString deterministicSeed_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes deterministic_seed = 8;</code>
@@ -4173,7 +4123,6 @@ public final class Protos {
         return this;
       }
 
-      // optional .wallet.EncryptedData encrypted_deterministic_seed = 9;
       private org.pivxj.wallet.Protos.EncryptedData encryptedDeterministicSeed_ = org.pivxj.wallet.Protos.EncryptedData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.pivxj.wallet.Protos.EncryptedData, org.pivxj.wallet.Protos.EncryptedData.Builder, org.pivxj.wallet.Protos.EncryptedDataOrBuilder> encryptedDeterministicSeedBuilder_;
@@ -4313,12 +4262,12 @@ public final class Protos {
        * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          org.pivxj.wallet.Protos.EncryptedData, org.pivxj.wallet.Protos.EncryptedData.Builder, org.pivxj.wallet.Protos.EncryptedDataOrBuilder>
+          org.pivxj.wallet.Protos.EncryptedData, org.pivxj.wallet.Protos.EncryptedData.Builder, org.pivxj.wallet.Protos.EncryptedDataOrBuilder> 
           getEncryptedDeterministicSeedFieldBuilder() {
         if (encryptedDeterministicSeedBuilder_ == null) {
           encryptedDeterministicSeedBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.pivxj.wallet.Protos.EncryptedData, org.pivxj.wallet.Protos.EncryptedData.Builder, org.pivxj.wallet.Protos.EncryptedDataOrBuilder>(
-                  encryptedDeterministicSeed_,
+                  getEncryptedDeterministicSeed(),
                   getParentForChildren(),
                   isClean());
           encryptedDeterministicSeed_ = null;
@@ -4337,10 +4286,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.Key)
   }
 
-  public interface ScriptOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ScriptOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.Script)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required bytes program = 1;
     /**
      * <code>required bytes program = 1;</code>
      */
@@ -4350,7 +4299,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getProgram();
 
-    // required int64 creation_timestamp = 2;
     /**
      * <code>required int64 creation_timestamp = 2;</code>
      *
@@ -4374,8 +4322,9 @@ public final class Protos {
    * Protobuf type {@code wallet.Script}
    */
   public static final class Script extends
-      com.google.protobuf.GeneratedMessage
-      implements ScriptOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.Script)
+      ScriptOrBuilder {
     // Use Script.newBuilder() to construct.
     private Script(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -4471,7 +4420,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required bytes program = 1;
     public static final int PROGRAM_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString program_;
     /**
@@ -4487,7 +4435,6 @@ public final class Protos {
       return program_;
     }
 
-    // required int64 creation_timestamp = 2;
     public static final int CREATION_TIMESTAMP_FIELD_NUMBER = 2;
     private long creationTimestamp_;
     /**
@@ -4520,7 +4467,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasProgram()) {
         memoizedIsInitialized = 0;
@@ -4642,8 +4590,9 @@ public final class Protos {
      * Protobuf type {@code wallet.Script}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.ScriptOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.Script)
+        org.pivxj.wallet.Protos.ScriptOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_Script_descriptor;
@@ -4773,7 +4722,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required bytes program = 1;
       private com.google.protobuf.ByteString program_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes program = 1;</code>
@@ -4809,7 +4757,6 @@ public final class Protos {
         return this;
       }
 
-      // required int64 creation_timestamp = 2;
       private long creationTimestamp_ ;
       /**
        * <code>required int64 creation_timestamp = 2;</code>
@@ -4873,48 +4820,71 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.Script)
   }
 
-  public interface TransactionInputOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface TransactionInputOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.TransactionInput)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required bytes transaction_out_point_hash = 1;
     /**
-     * <code>required bytes transaction_out_point_hash = 1;</code>
+     * <code>repeated bytes transaction_out_points_hash = 1;</code>
      *
      * <pre>
      * Hash of the transaction this input is using.
      * </pre>
      */
-    boolean hasTransactionOutPointHash();
+    java.util.List<com.google.protobuf.ByteString> getTransactionOutPointsHashList();
     /**
-     * <code>required bytes transaction_out_point_hash = 1;</code>
+     * <code>repeated bytes transaction_out_points_hash = 1;</code>
      *
      * <pre>
      * Hash of the transaction this input is using.
      * </pre>
      */
-    com.google.protobuf.ByteString getTransactionOutPointHash();
-
-    // required uint32 transaction_out_point_index = 2;
+    int getTransactionOutPointsHashCount();
     /**
-     * <code>required uint32 transaction_out_point_index = 2;</code>
+     * <code>repeated bytes transaction_out_points_hash = 1;</code>
+     *
+     * <pre>
+     * Hash of the transaction this input is using.
+     * </pre>
+     */
+    com.google.protobuf.ByteString getTransactionOutPointsHash(int index);
+
+    /**
+     * <code>repeated uint32 transaction_out_points_index = 2;</code>
      *
      * <pre>
      * Index of transaction output used by this input.
      * </pre>
      */
-    boolean hasTransactionOutPointIndex();
+    java.util.List<java.lang.Integer> getTransactionOutPointsIndexList();
     /**
-     * <code>required uint32 transaction_out_point_index = 2;</code>
+     * <code>repeated uint32 transaction_out_points_index = 2;</code>
      *
      * <pre>
      * Index of transaction output used by this input.
      * </pre>
      */
-    int getTransactionOutPointIndex();
-
-    // required bytes script_bytes = 3;
+    int getTransactionOutPointsIndexCount();
     /**
-     * <code>required bytes script_bytes = 3;</code>
+     * <code>repeated uint32 transaction_out_points_index = 2;</code>
+     *
+     * <pre>
+     * Index of transaction output used by this input.
+     * </pre>
+     */
+    int getTransactionOutPointsIndex(int index);
+
+    /**
+     * <code>optional uint32 realIndex = 3;</code>
+     */
+    boolean hasRealIndex();
+    /**
+     * <code>optional uint32 realIndex = 3;</code>
+     */
+    int getRealIndex();
+
+    /**
+     * <code>required bytes script_bytes = 4;</code>
      *
      * <pre>
      * Script that contains the signatures/pubkeys.
@@ -4922,7 +4892,7 @@ public final class Protos {
      */
     boolean hasScriptBytes();
     /**
-     * <code>required bytes script_bytes = 3;</code>
+     * <code>required bytes script_bytes = 4;</code>
      *
      * <pre>
      * Script that contains the signatures/pubkeys.
@@ -4930,9 +4900,8 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getScriptBytes();
 
-    // optional uint32 sequence = 4;
     /**
-     * <code>optional uint32 sequence = 4;</code>
+     * <code>optional uint32 sequence = 5;</code>
      *
      * <pre>
      * Sequence number.
@@ -4940,7 +4909,7 @@ public final class Protos {
      */
     boolean hasSequence();
     /**
-     * <code>optional uint32 sequence = 4;</code>
+     * <code>optional uint32 sequence = 5;</code>
      *
      * <pre>
      * Sequence number.
@@ -4948,9 +4917,8 @@ public final class Protos {
      */
     int getSequence();
 
-    // optional int64 value = 5;
     /**
-     * <code>optional int64 value = 5;</code>
+     * <code>optional int64 value = 6;</code>
      *
      * <pre>
      * Value of connected output, if known
@@ -4958,20 +4926,66 @@ public final class Protos {
      */
     boolean hasValue();
     /**
-     * <code>optional int64 value = 5;</code>
+     * <code>optional int64 value = 6;</code>
      *
      * <pre>
      * Value of connected output, if known
      * </pre>
      */
     long getValue();
+
+    /**
+     * <code>optional bytes s = 7;</code>
+     */
+    boolean hasS();
+    /**
+     * <code>optional bytes s = 7;</code>
+     */
+    com.google.protobuf.ByteString getS();
+
+    /**
+     * <code>optional bytes R = 8;</code>
+     */
+    boolean hasR();
+    /**
+     * <code>optional bytes R = 8;</code>
+     */
+    com.google.protobuf.ByteString getR();
+
+    /**
+     * <code>optional bytes encryptionKey = 9;</code>
+     */
+    boolean hasEncryptionKey();
+    /**
+     * <code>optional bytes encryptionKey = 9;</code>
+     */
+    com.google.protobuf.ByteString getEncryptionKey();
+
+    /**
+     * <code>optional bytes keyImage = 10;</code>
+     */
+    boolean hasKeyImage();
+    /**
+     * <code>optional bytes keyImage = 10;</code>
+     */
+    com.google.protobuf.ByteString getKeyImage();
+
+    /**
+     * <code>optional bytes masternodeStealthAddress = 11;</code>
+     */
+    boolean hasMasternodeStealthAddress();
+    /**
+     * <code>optional bytes masternodeStealthAddress = 11;</code>
+     */
+    com.google.protobuf.ByteString getMasternodeStealthAddress();
   }
   /**
    * Protobuf type {@code wallet.TransactionInput}
    */
   public static final class TransactionInput extends
-      com.google.protobuf.GeneratedMessage
-      implements TransactionInputOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.TransactionInput)
+      TransactionInputOrBuilder {
     // Use TransactionInput.newBuilder() to construct.
     private TransactionInput(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -5018,28 +5032,77 @@ public final class Protos {
               break;
             }
             case 10: {
-              bitField0_ |= 0x00000001;
-              transactionOutPointHash_ = input.readBytes();
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                transactionOutPointsHash_ = new java.util.ArrayList<com.google.protobuf.ByteString>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              transactionOutPointsHash_.add(input.readBytes());
               break;
             }
             case 16: {
-              bitField0_ |= 0x00000002;
-              transactionOutPointIndex_ = input.readUInt32();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                transactionOutPointsIndex_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              transactionOutPointsIndex_.add(input.readUInt32());
               break;
             }
-            case 26: {
-              bitField0_ |= 0x00000004;
+            case 18: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+                transactionOutPointsIndex_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                transactionOutPointsIndex_.add(input.readUInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000001;
+              realIndex_ = input.readUInt32();
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000002;
               scriptBytes_ = input.readBytes();
               break;
             }
-            case 32: {
-              bitField0_ |= 0x00000008;
+            case 40: {
+              bitField0_ |= 0x00000004;
               sequence_ = input.readUInt32();
               break;
             }
-            case 40: {
-              bitField0_ |= 0x00000010;
+            case 48: {
+              bitField0_ |= 0x00000008;
               value_ = input.readInt64();
+              break;
+            }
+            case 58: {
+              bitField0_ |= 0x00000010;
+              s_ = input.readBytes();
+              break;
+            }
+            case 66: {
+              bitField0_ |= 0x00000020;
+              r_ = input.readBytes();
+              break;
+            }
+            case 74: {
+              bitField0_ |= 0x00000040;
+              encryptionKey_ = input.readBytes();
+              break;
+            }
+            case 82: {
+              bitField0_ |= 0x00000080;
+              keyImage_ = input.readBytes();
+              break;
+            }
+            case 90: {
+              bitField0_ |= 0x00000100;
+              masternodeStealthAddress_ = input.readBytes();
               break;
             }
           }
@@ -5050,6 +5113,12 @@ public final class Protos {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          transactionOutPointsHash_ = java.util.Collections.unmodifiableList(transactionOutPointsHash_);
+        }
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          transactionOutPointsIndex_ = java.util.Collections.unmodifiableList(transactionOutPointsIndex_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -5082,69 +5151,103 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required bytes transaction_out_point_hash = 1;
-    public static final int TRANSACTION_OUT_POINT_HASH_FIELD_NUMBER = 1;
-    private com.google.protobuf.ByteString transactionOutPointHash_;
+    public static final int TRANSACTION_OUT_POINTS_HASH_FIELD_NUMBER = 1;
+    private java.util.List<com.google.protobuf.ByteString> transactionOutPointsHash_;
     /**
-     * <code>required bytes transaction_out_point_hash = 1;</code>
+     * <code>repeated bytes transaction_out_points_hash = 1;</code>
      *
      * <pre>
      * Hash of the transaction this input is using.
      * </pre>
      */
-    public boolean hasTransactionOutPointHash() {
+    public java.util.List<com.google.protobuf.ByteString>
+        getTransactionOutPointsHashList() {
+      return transactionOutPointsHash_;
+    }
+    /**
+     * <code>repeated bytes transaction_out_points_hash = 1;</code>
+     *
+     * <pre>
+     * Hash of the transaction this input is using.
+     * </pre>
+     */
+    public int getTransactionOutPointsHashCount() {
+      return transactionOutPointsHash_.size();
+    }
+    /**
+     * <code>repeated bytes transaction_out_points_hash = 1;</code>
+     *
+     * <pre>
+     * Hash of the transaction this input is using.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString getTransactionOutPointsHash(int index) {
+      return transactionOutPointsHash_.get(index);
+    }
+
+    public static final int TRANSACTION_OUT_POINTS_INDEX_FIELD_NUMBER = 2;
+    private java.util.List<java.lang.Integer> transactionOutPointsIndex_;
+    /**
+     * <code>repeated uint32 transaction_out_points_index = 2;</code>
+     *
+     * <pre>
+     * Index of transaction output used by this input.
+     * </pre>
+     */
+    public java.util.List<java.lang.Integer>
+        getTransactionOutPointsIndexList() {
+      return transactionOutPointsIndex_;
+    }
+    /**
+     * <code>repeated uint32 transaction_out_points_index = 2;</code>
+     *
+     * <pre>
+     * Index of transaction output used by this input.
+     * </pre>
+     */
+    public int getTransactionOutPointsIndexCount() {
+      return transactionOutPointsIndex_.size();
+    }
+    /**
+     * <code>repeated uint32 transaction_out_points_index = 2;</code>
+     *
+     * <pre>
+     * Index of transaction output used by this input.
+     * </pre>
+     */
+    public int getTransactionOutPointsIndex(int index) {
+      return transactionOutPointsIndex_.get(index);
+    }
+
+    public static final int REALINDEX_FIELD_NUMBER = 3;
+    private int realIndex_;
+    /**
+     * <code>optional uint32 realIndex = 3;</code>
+     */
+    public boolean hasRealIndex() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required bytes transaction_out_point_hash = 1;</code>
-     *
-     * <pre>
-     * Hash of the transaction this input is using.
-     * </pre>
+     * <code>optional uint32 realIndex = 3;</code>
      */
-    public com.google.protobuf.ByteString getTransactionOutPointHash() {
-      return transactionOutPointHash_;
+    public int getRealIndex() {
+      return realIndex_;
     }
 
-    // required uint32 transaction_out_point_index = 2;
-    public static final int TRANSACTION_OUT_POINT_INDEX_FIELD_NUMBER = 2;
-    private int transactionOutPointIndex_;
-    /**
-     * <code>required uint32 transaction_out_point_index = 2;</code>
-     *
-     * <pre>
-     * Index of transaction output used by this input.
-     * </pre>
-     */
-    public boolean hasTransactionOutPointIndex() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required uint32 transaction_out_point_index = 2;</code>
-     *
-     * <pre>
-     * Index of transaction output used by this input.
-     * </pre>
-     */
-    public int getTransactionOutPointIndex() {
-      return transactionOutPointIndex_;
-    }
-
-    // required bytes script_bytes = 3;
-    public static final int SCRIPT_BYTES_FIELD_NUMBER = 3;
+    public static final int SCRIPT_BYTES_FIELD_NUMBER = 4;
     private com.google.protobuf.ByteString scriptBytes_;
     /**
-     * <code>required bytes script_bytes = 3;</code>
+     * <code>required bytes script_bytes = 4;</code>
      *
      * <pre>
      * Script that contains the signatures/pubkeys.
      * </pre>
      */
     public boolean hasScriptBytes() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required bytes script_bytes = 3;</code>
+     * <code>required bytes script_bytes = 4;</code>
      *
      * <pre>
      * Script that contains the signatures/pubkeys.
@@ -5154,21 +5257,20 @@ public final class Protos {
       return scriptBytes_;
     }
 
-    // optional uint32 sequence = 4;
-    public static final int SEQUENCE_FIELD_NUMBER = 4;
+    public static final int SEQUENCE_FIELD_NUMBER = 5;
     private int sequence_;
     /**
-     * <code>optional uint32 sequence = 4;</code>
+     * <code>optional uint32 sequence = 5;</code>
      *
      * <pre>
      * Sequence number.
      * </pre>
      */
     public boolean hasSequence() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional uint32 sequence = 4;</code>
+     * <code>optional uint32 sequence = 5;</code>
      *
      * <pre>
      * Sequence number.
@@ -5178,21 +5280,20 @@ public final class Protos {
       return sequence_;
     }
 
-    // optional int64 value = 5;
-    public static final int VALUE_FIELD_NUMBER = 5;
+    public static final int VALUE_FIELD_NUMBER = 6;
     private long value_;
     /**
-     * <code>optional int64 value = 5;</code>
+     * <code>optional int64 value = 6;</code>
      *
      * <pre>
      * Value of connected output, if known
      * </pre>
      */
     public boolean hasValue() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional int64 value = 5;</code>
+     * <code>optional int64 value = 6;</code>
      *
      * <pre>
      * Value of connected output, if known
@@ -5202,26 +5303,100 @@ public final class Protos {
       return value_;
     }
 
+    public static final int S_FIELD_NUMBER = 7;
+    private com.google.protobuf.ByteString s_;
+    /**
+     * <code>optional bytes s = 7;</code>
+     */
+    public boolean hasS() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional bytes s = 7;</code>
+     */
+    public com.google.protobuf.ByteString getS() {
+      return s_;
+    }
+
+    public static final int R_FIELD_NUMBER = 8;
+    private com.google.protobuf.ByteString r_;
+    /**
+     * <code>optional bytes R = 8;</code>
+     */
+    public boolean hasR() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>optional bytes R = 8;</code>
+     */
+    public com.google.protobuf.ByteString getR() {
+      return r_;
+    }
+
+    public static final int ENCRYPTIONKEY_FIELD_NUMBER = 9;
+    private com.google.protobuf.ByteString encryptionKey_;
+    /**
+     * <code>optional bytes encryptionKey = 9;</code>
+     */
+    public boolean hasEncryptionKey() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>optional bytes encryptionKey = 9;</code>
+     */
+    public com.google.protobuf.ByteString getEncryptionKey() {
+      return encryptionKey_;
+    }
+
+    public static final int KEYIMAGE_FIELD_NUMBER = 10;
+    private com.google.protobuf.ByteString keyImage_;
+    /**
+     * <code>optional bytes keyImage = 10;</code>
+     */
+    public boolean hasKeyImage() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    /**
+     * <code>optional bytes keyImage = 10;</code>
+     */
+    public com.google.protobuf.ByteString getKeyImage() {
+      return keyImage_;
+    }
+
+    public static final int MASTERNODESTEALTHADDRESS_FIELD_NUMBER = 11;
+    private com.google.protobuf.ByteString masternodeStealthAddress_;
+    /**
+     * <code>optional bytes masternodeStealthAddress = 11;</code>
+     */
+    public boolean hasMasternodeStealthAddress() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    /**
+     * <code>optional bytes masternodeStealthAddress = 11;</code>
+     */
+    public com.google.protobuf.ByteString getMasternodeStealthAddress() {
+      return masternodeStealthAddress_;
+    }
+
     private void initFields() {
-      transactionOutPointHash_ = com.google.protobuf.ByteString.EMPTY;
-      transactionOutPointIndex_ = 0;
+      transactionOutPointsHash_ = java.util.Collections.emptyList();
+      transactionOutPointsIndex_ = java.util.Collections.emptyList();
+      realIndex_ = 0;
       scriptBytes_ = com.google.protobuf.ByteString.EMPTY;
       sequence_ = 0;
       value_ = 0L;
+      s_ = com.google.protobuf.ByteString.EMPTY;
+      r_ = com.google.protobuf.ByteString.EMPTY;
+      encryptionKey_ = com.google.protobuf.ByteString.EMPTY;
+      keyImage_ = com.google.protobuf.ByteString.EMPTY;
+      masternodeStealthAddress_ = com.google.protobuf.ByteString.EMPTY;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
-      if (!hasTransactionOutPointHash()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasTransactionOutPointIndex()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       if (!hasScriptBytes()) {
         memoizedIsInitialized = 0;
         return false;
@@ -5233,20 +5408,38 @@ public final class Protos {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
+      for (int i = 0; i < transactionOutPointsHash_.size(); i++) {
+        output.writeBytes(1, transactionOutPointsHash_.get(i));
+      }
+      for (int i = 0; i < transactionOutPointsIndex_.size(); i++) {
+        output.writeUInt32(2, transactionOutPointsIndex_.get(i));
+      }
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, transactionOutPointHash_);
+        output.writeUInt32(3, realIndex_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeUInt32(2, transactionOutPointIndex_);
+        output.writeBytes(4, scriptBytes_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeBytes(3, scriptBytes_);
+        output.writeUInt32(5, sequence_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeUInt32(4, sequence_);
+        output.writeInt64(6, value_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeInt64(5, value_);
+        output.writeBytes(7, s_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeBytes(8, r_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeBytes(9, encryptionKey_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        output.writeBytes(10, keyImage_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeBytes(11, masternodeStealthAddress_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -5257,25 +5450,59 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
+      {
+        int dataSize = 0;
+        for (int i = 0; i < transactionOutPointsHash_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(transactionOutPointsHash_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getTransactionOutPointsHashList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < transactionOutPointsIndex_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeUInt32SizeNoTag(transactionOutPointsIndex_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getTransactionOutPointsIndexList().size();
+      }
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, transactionOutPointHash_);
+          .computeUInt32Size(3, realIndex_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, transactionOutPointIndex_);
+          .computeBytesSize(4, scriptBytes_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(3, scriptBytes_);
+          .computeUInt32Size(5, sequence_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(4, sequence_);
+          .computeInt64Size(6, value_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(5, value_);
+          .computeBytesSize(7, s_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(8, r_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(9, encryptionKey_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(10, keyImage_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(11, masternodeStealthAddress_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -5359,8 +5586,9 @@ public final class Protos {
      * Protobuf type {@code wallet.TransactionInput}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.TransactionInputOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.TransactionInput)
+        org.pivxj.wallet.Protos.TransactionInputOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_TransactionInput_descriptor;
@@ -5393,16 +5621,28 @@ public final class Protos {
 
       public Builder clear() {
         super.clear();
-        transactionOutPointHash_ = com.google.protobuf.ByteString.EMPTY;
+        transactionOutPointsHash_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000001);
-        transactionOutPointIndex_ = 0;
+        transactionOutPointsIndex_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
-        scriptBytes_ = com.google.protobuf.ByteString.EMPTY;
+        realIndex_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
-        sequence_ = 0;
+        scriptBytes_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000008);
-        value_ = 0L;
+        sequence_ = 0;
         bitField0_ = (bitField0_ & ~0x00000010);
+        value_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        s_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000040);
+        r_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000080);
+        encryptionKey_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000100);
+        keyImage_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000200);
+        masternodeStealthAddress_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
       }
 
@@ -5431,26 +5671,52 @@ public final class Protos {
         org.pivxj.wallet.Protos.TransactionInput result = new org.pivxj.wallet.Protos.TransactionInput(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          transactionOutPointsHash_ = java.util.Collections.unmodifiableList(transactionOutPointsHash_);
+          bitField0_ = (bitField0_ & ~0x00000001);
+        }
+        result.transactionOutPointsHash_ = transactionOutPointsHash_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          transactionOutPointsIndex_ = java.util.Collections.unmodifiableList(transactionOutPointsIndex_);
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.transactionOutPointsIndex_ = transactionOutPointsIndex_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.transactionOutPointHash_ = transactionOutPointHash_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+        result.realIndex_ = realIndex_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.transactionOutPointIndex_ = transactionOutPointIndex_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+        result.scriptBytes_ = scriptBytes_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.scriptBytes_ = scriptBytes_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+        result.sequence_ = sequence_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000008;
         }
-        result.sequence_ = sequence_;
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+        result.value_ = value_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
           to_bitField0_ |= 0x00000010;
         }
-        result.value_ = value_;
+        result.s_ = s_;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.r_ = r_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.encryptionKey_ = encryptionKey_;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000080;
+        }
+        result.keyImage_ = keyImage_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.masternodeStealthAddress_ = masternodeStealthAddress_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -5467,11 +5733,28 @@ public final class Protos {
 
       public Builder mergeFrom(org.pivxj.wallet.Protos.TransactionInput other) {
         if (other == org.pivxj.wallet.Protos.TransactionInput.getDefaultInstance()) return this;
-        if (other.hasTransactionOutPointHash()) {
-          setTransactionOutPointHash(other.getTransactionOutPointHash());
+        if (!other.transactionOutPointsHash_.isEmpty()) {
+          if (transactionOutPointsHash_.isEmpty()) {
+            transactionOutPointsHash_ = other.transactionOutPointsHash_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            ensureTransactionOutPointsHashIsMutable();
+            transactionOutPointsHash_.addAll(other.transactionOutPointsHash_);
+          }
+          onChanged();
         }
-        if (other.hasTransactionOutPointIndex()) {
-          setTransactionOutPointIndex(other.getTransactionOutPointIndex());
+        if (!other.transactionOutPointsIndex_.isEmpty()) {
+          if (transactionOutPointsIndex_.isEmpty()) {
+            transactionOutPointsIndex_ = other.transactionOutPointsIndex_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureTransactionOutPointsIndexIsMutable();
+            transactionOutPointsIndex_.addAll(other.transactionOutPointsIndex_);
+          }
+          onChanged();
+        }
+        if (other.hasRealIndex()) {
+          setRealIndex(other.getRealIndex());
         }
         if (other.hasScriptBytes()) {
           setScriptBytes(other.getScriptBytes());
@@ -5482,19 +5765,26 @@ public final class Protos {
         if (other.hasValue()) {
           setValue(other.getValue());
         }
+        if (other.hasS()) {
+          setS(other.getS());
+        }
+        if (other.hasR()) {
+          setR(other.getR());
+        }
+        if (other.hasEncryptionKey()) {
+          setEncryptionKey(other.getEncryptionKey());
+        }
+        if (other.hasKeyImage()) {
+          setKeyImage(other.getKeyImage());
+        }
+        if (other.hasMasternodeStealthAddress()) {
+          setMasternodeStealthAddress(other.getMasternodeStealthAddress());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
-        if (!hasTransactionOutPointHash()) {
-          
-          return false;
-        }
-        if (!hasTransactionOutPointIndex()) {
-          
-          return false;
-        }
         if (!hasScriptBytes()) {
           
           return false;
@@ -5521,121 +5811,245 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required bytes transaction_out_point_hash = 1;
-      private com.google.protobuf.ByteString transactionOutPointHash_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>required bytes transaction_out_point_hash = 1;</code>
-       *
-       * <pre>
-       * Hash of the transaction this input is using.
-       * </pre>
-       */
-      public boolean hasTransactionOutPointHash() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+      private java.util.List<com.google.protobuf.ByteString> transactionOutPointsHash_ = java.util.Collections.emptyList();
+      private void ensureTransactionOutPointsHashIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          transactionOutPointsHash_ = new java.util.ArrayList<com.google.protobuf.ByteString>(transactionOutPointsHash_);
+          bitField0_ |= 0x00000001;
+         }
       }
       /**
-       * <code>required bytes transaction_out_point_hash = 1;</code>
+       * <code>repeated bytes transaction_out_points_hash = 1;</code>
        *
        * <pre>
        * Hash of the transaction this input is using.
        * </pre>
        */
-      public com.google.protobuf.ByteString getTransactionOutPointHash() {
-        return transactionOutPointHash_;
+      public java.util.List<com.google.protobuf.ByteString>
+          getTransactionOutPointsHashList() {
+        return java.util.Collections.unmodifiableList(transactionOutPointsHash_);
       }
       /**
-       * <code>required bytes transaction_out_point_hash = 1;</code>
+       * <code>repeated bytes transaction_out_points_hash = 1;</code>
        *
        * <pre>
        * Hash of the transaction this input is using.
        * </pre>
        */
-      public Builder setTransactionOutPointHash(com.google.protobuf.ByteString value) {
+      public int getTransactionOutPointsHashCount() {
+        return transactionOutPointsHash_.size();
+      }
+      /**
+       * <code>repeated bytes transaction_out_points_hash = 1;</code>
+       *
+       * <pre>
+       * Hash of the transaction this input is using.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString getTransactionOutPointsHash(int index) {
+        return transactionOutPointsHash_.get(index);
+      }
+      /**
+       * <code>repeated bytes transaction_out_points_hash = 1;</code>
+       *
+       * <pre>
+       * Hash of the transaction this input is using.
+       * </pre>
+       */
+      public Builder setTransactionOutPointsHash(
+          int index, com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000001;
-        transactionOutPointHash_ = value;
+  ensureTransactionOutPointsHashIsMutable();
+        transactionOutPointsHash_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>required bytes transaction_out_point_hash = 1;</code>
+       * <code>repeated bytes transaction_out_points_hash = 1;</code>
        *
        * <pre>
        * Hash of the transaction this input is using.
        * </pre>
        */
-      public Builder clearTransactionOutPointHash() {
+      public Builder addTransactionOutPointsHash(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureTransactionOutPointsHashIsMutable();
+        transactionOutPointsHash_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated bytes transaction_out_points_hash = 1;</code>
+       *
+       * <pre>
+       * Hash of the transaction this input is using.
+       * </pre>
+       */
+      public Builder addAllTransactionOutPointsHash(
+          java.lang.Iterable<? extends com.google.protobuf.ByteString> values) {
+        ensureTransactionOutPointsHashIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, transactionOutPointsHash_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated bytes transaction_out_points_hash = 1;</code>
+       *
+       * <pre>
+       * Hash of the transaction this input is using.
+       * </pre>
+       */
+      public Builder clearTransactionOutPointsHash() {
+        transactionOutPointsHash_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000001);
-        transactionOutPointHash_ = getDefaultInstance().getTransactionOutPointHash();
         onChanged();
         return this;
       }
 
-      // required uint32 transaction_out_point_index = 2;
-      private int transactionOutPointIndex_ ;
-      /**
-       * <code>required uint32 transaction_out_point_index = 2;</code>
-       *
-       * <pre>
-       * Index of transaction output used by this input.
-       * </pre>
-       */
-      public boolean hasTransactionOutPointIndex() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+      private java.util.List<java.lang.Integer> transactionOutPointsIndex_ = java.util.Collections.emptyList();
+      private void ensureTransactionOutPointsIndexIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          transactionOutPointsIndex_ = new java.util.ArrayList<java.lang.Integer>(transactionOutPointsIndex_);
+          bitField0_ |= 0x00000002;
+         }
       }
       /**
-       * <code>required uint32 transaction_out_point_index = 2;</code>
+       * <code>repeated uint32 transaction_out_points_index = 2;</code>
        *
        * <pre>
        * Index of transaction output used by this input.
        * </pre>
        */
-      public int getTransactionOutPointIndex() {
-        return transactionOutPointIndex_;
+      public java.util.List<java.lang.Integer>
+          getTransactionOutPointsIndexList() {
+        return java.util.Collections.unmodifiableList(transactionOutPointsIndex_);
       }
       /**
-       * <code>required uint32 transaction_out_point_index = 2;</code>
+       * <code>repeated uint32 transaction_out_points_index = 2;</code>
        *
        * <pre>
        * Index of transaction output used by this input.
        * </pre>
        */
-      public Builder setTransactionOutPointIndex(int value) {
-        bitField0_ |= 0x00000002;
-        transactionOutPointIndex_ = value;
+      public int getTransactionOutPointsIndexCount() {
+        return transactionOutPointsIndex_.size();
+      }
+      /**
+       * <code>repeated uint32 transaction_out_points_index = 2;</code>
+       *
+       * <pre>
+       * Index of transaction output used by this input.
+       * </pre>
+       */
+      public int getTransactionOutPointsIndex(int index) {
+        return transactionOutPointsIndex_.get(index);
+      }
+      /**
+       * <code>repeated uint32 transaction_out_points_index = 2;</code>
+       *
+       * <pre>
+       * Index of transaction output used by this input.
+       * </pre>
+       */
+      public Builder setTransactionOutPointsIndex(
+          int index, int value) {
+        ensureTransactionOutPointsIndexIsMutable();
+        transactionOutPointsIndex_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>required uint32 transaction_out_point_index = 2;</code>
+       * <code>repeated uint32 transaction_out_points_index = 2;</code>
        *
        * <pre>
        * Index of transaction output used by this input.
        * </pre>
        */
-      public Builder clearTransactionOutPointIndex() {
+      public Builder addTransactionOutPointsIndex(int value) {
+        ensureTransactionOutPointsIndexIsMutable();
+        transactionOutPointsIndex_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated uint32 transaction_out_points_index = 2;</code>
+       *
+       * <pre>
+       * Index of transaction output used by this input.
+       * </pre>
+       */
+      public Builder addAllTransactionOutPointsIndex(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureTransactionOutPointsIndexIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, transactionOutPointsIndex_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated uint32 transaction_out_points_index = 2;</code>
+       *
+       * <pre>
+       * Index of transaction output used by this input.
+       * </pre>
+       */
+      public Builder clearTransactionOutPointsIndex() {
+        transactionOutPointsIndex_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
-        transactionOutPointIndex_ = 0;
         onChanged();
         return this;
       }
 
-      // required bytes script_bytes = 3;
+      private int realIndex_ ;
+      /**
+       * <code>optional uint32 realIndex = 3;</code>
+       */
+      public boolean hasRealIndex() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional uint32 realIndex = 3;</code>
+       */
+      public int getRealIndex() {
+        return realIndex_;
+      }
+      /**
+       * <code>optional uint32 realIndex = 3;</code>
+       */
+      public Builder setRealIndex(int value) {
+        bitField0_ |= 0x00000004;
+        realIndex_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 realIndex = 3;</code>
+       */
+      public Builder clearRealIndex() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        realIndex_ = 0;
+        onChanged();
+        return this;
+      }
+
       private com.google.protobuf.ByteString scriptBytes_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>required bytes script_bytes = 3;</code>
+       * <code>required bytes script_bytes = 4;</code>
        *
        * <pre>
        * Script that contains the signatures/pubkeys.
        * </pre>
        */
       public boolean hasScriptBytes() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>required bytes script_bytes = 3;</code>
+       * <code>required bytes script_bytes = 4;</code>
        *
        * <pre>
        * Script that contains the signatures/pubkeys.
@@ -5645,7 +6059,7 @@ public final class Protos {
         return scriptBytes_;
       }
       /**
-       * <code>required bytes script_bytes = 3;</code>
+       * <code>required bytes script_bytes = 4;</code>
        *
        * <pre>
        * Script that contains the signatures/pubkeys.
@@ -5655,39 +6069,38 @@ public final class Protos {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  bitField0_ |= 0x00000008;
         scriptBytes_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required bytes script_bytes = 3;</code>
+       * <code>required bytes script_bytes = 4;</code>
        *
        * <pre>
        * Script that contains the signatures/pubkeys.
        * </pre>
        */
       public Builder clearScriptBytes() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         scriptBytes_ = getDefaultInstance().getScriptBytes();
         onChanged();
         return this;
       }
 
-      // optional uint32 sequence = 4;
       private int sequence_ ;
       /**
-       * <code>optional uint32 sequence = 4;</code>
+       * <code>optional uint32 sequence = 5;</code>
        *
        * <pre>
        * Sequence number.
        * </pre>
        */
       public boolean hasSequence() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional uint32 sequence = 4;</code>
+       * <code>optional uint32 sequence = 5;</code>
        *
        * <pre>
        * Sequence number.
@@ -5697,46 +6110,45 @@ public final class Protos {
         return sequence_;
       }
       /**
-       * <code>optional uint32 sequence = 4;</code>
+       * <code>optional uint32 sequence = 5;</code>
        *
        * <pre>
        * Sequence number.
        * </pre>
        */
       public Builder setSequence(int value) {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         sequence_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional uint32 sequence = 4;</code>
+       * <code>optional uint32 sequence = 5;</code>
        *
        * <pre>
        * Sequence number.
        * </pre>
        */
       public Builder clearSequence() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         sequence_ = 0;
         onChanged();
         return this;
       }
 
-      // optional int64 value = 5;
       private long value_ ;
       /**
-       * <code>optional int64 value = 5;</code>
+       * <code>optional int64 value = 6;</code>
        *
        * <pre>
        * Value of connected output, if known
        * </pre>
        */
       public boolean hasValue() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional int64 value = 5;</code>
+       * <code>optional int64 value = 6;</code>
        *
        * <pre>
        * Value of connected output, if known
@@ -5746,28 +6158,203 @@ public final class Protos {
         return value_;
       }
       /**
-       * <code>optional int64 value = 5;</code>
+       * <code>optional int64 value = 6;</code>
        *
        * <pre>
        * Value of connected output, if known
        * </pre>
        */
       public Builder setValue(long value) {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         value_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int64 value = 5;</code>
+       * <code>optional int64 value = 6;</code>
        *
        * <pre>
        * Value of connected output, if known
        * </pre>
        */
       public Builder clearValue() {
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         value_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString s_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes s = 7;</code>
+       */
+      public boolean hasS() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>optional bytes s = 7;</code>
+       */
+      public com.google.protobuf.ByteString getS() {
+        return s_;
+      }
+      /**
+       * <code>optional bytes s = 7;</code>
+       */
+      public Builder setS(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000040;
+        s_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes s = 7;</code>
+       */
+      public Builder clearS() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        s_ = getDefaultInstance().getS();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString r_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes R = 8;</code>
+       */
+      public boolean hasR() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      /**
+       * <code>optional bytes R = 8;</code>
+       */
+      public com.google.protobuf.ByteString getR() {
+        return r_;
+      }
+      /**
+       * <code>optional bytes R = 8;</code>
+       */
+      public Builder setR(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000080;
+        r_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes R = 8;</code>
+       */
+      public Builder clearR() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        r_ = getDefaultInstance().getR();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString encryptionKey_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes encryptionKey = 9;</code>
+       */
+      public boolean hasEncryptionKey() {
+        return ((bitField0_ & 0x00000100) == 0x00000100);
+      }
+      /**
+       * <code>optional bytes encryptionKey = 9;</code>
+       */
+      public com.google.protobuf.ByteString getEncryptionKey() {
+        return encryptionKey_;
+      }
+      /**
+       * <code>optional bytes encryptionKey = 9;</code>
+       */
+      public Builder setEncryptionKey(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000100;
+        encryptionKey_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes encryptionKey = 9;</code>
+       */
+      public Builder clearEncryptionKey() {
+        bitField0_ = (bitField0_ & ~0x00000100);
+        encryptionKey_ = getDefaultInstance().getEncryptionKey();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString keyImage_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes keyImage = 10;</code>
+       */
+      public boolean hasKeyImage() {
+        return ((bitField0_ & 0x00000200) == 0x00000200);
+      }
+      /**
+       * <code>optional bytes keyImage = 10;</code>
+       */
+      public com.google.protobuf.ByteString getKeyImage() {
+        return keyImage_;
+      }
+      /**
+       * <code>optional bytes keyImage = 10;</code>
+       */
+      public Builder setKeyImage(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000200;
+        keyImage_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes keyImage = 10;</code>
+       */
+      public Builder clearKeyImage() {
+        bitField0_ = (bitField0_ & ~0x00000200);
+        keyImage_ = getDefaultInstance().getKeyImage();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString masternodeStealthAddress_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes masternodeStealthAddress = 11;</code>
+       */
+      public boolean hasMasternodeStealthAddress() {
+        return ((bitField0_ & 0x00000400) == 0x00000400);
+      }
+      /**
+       * <code>optional bytes masternodeStealthAddress = 11;</code>
+       */
+      public com.google.protobuf.ByteString getMasternodeStealthAddress() {
+        return masternodeStealthAddress_;
+      }
+      /**
+       * <code>optional bytes masternodeStealthAddress = 11;</code>
+       */
+      public Builder setMasternodeStealthAddress(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000400;
+        masternodeStealthAddress_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes masternodeStealthAddress = 11;</code>
+       */
+      public Builder clearMasternodeStealthAddress() {
+        bitField0_ = (bitField0_ & ~0x00000400);
+        masternodeStealthAddress_ = getDefaultInstance().getMasternodeStealthAddress();
         onChanged();
         return this;
       }
@@ -5783,10 +6370,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.TransactionInput)
   }
 
-  public interface TransactionOutputOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface TransactionOutputOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.TransactionOutput)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required int64 value = 1;
     /**
      * <code>required int64 value = 1;</code>
      */
@@ -5796,7 +6383,6 @@ public final class Protos {
      */
     long getValue();
 
-    // required bytes script_bytes = 2;
     /**
      * <code>required bytes script_bytes = 2;</code>
      *
@@ -5814,7 +6400,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getScriptBytes();
 
-    // optional bytes spent_by_transaction_hash = 3;
     /**
      * <code>optional bytes spent_by_transaction_hash = 3;</code>
      *
@@ -5832,7 +6417,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getSpentByTransactionHash();
 
-    // optional int32 spent_by_transaction_index = 4;
     /**
      * <code>optional int32 spent_by_transaction_index = 4;</code>
      *
@@ -5849,13 +6433,95 @@ public final class Protos {
      * </pre>
      */
     int getSpentByTransactionIndex();
+
+    /**
+     * <code>required int32 realIndex = 5;</code>
+     */
+    boolean hasRealIndex();
+    /**
+     * <code>required int32 realIndex = 5;</code>
+     */
+    int getRealIndex();
+
+    /**
+     * <code>optional bytes txPriv = 6;</code>
+     */
+    boolean hasTxPriv();
+    /**
+     * <code>optional bytes txPriv = 6;</code>
+     */
+    com.google.protobuf.ByteString getTxPriv();
+
+    /**
+     * <code>required bytes txPub = 7;</code>
+     */
+    boolean hasTxPub();
+    /**
+     * <code>required bytes txPub = 7;</code>
+     */
+    com.google.protobuf.ByteString getTxPub();
+
+    /**
+     * <code>required bytes commitment = 8;</code>
+     */
+    boolean hasCommitment();
+    /**
+     * <code>required bytes commitment = 8;</code>
+     */
+    com.google.protobuf.ByteString getCommitment();
+
+    /**
+     * <code>required bytes mask = 9;</code>
+     */
+    boolean hasMask();
+    /**
+     * <code>required bytes mask = 9;</code>
+     */
+    com.google.protobuf.ByteString getMask();
+
+    /**
+     * <code>optional bytes masternodeStealthAddress = 10;</code>
+     */
+    boolean hasMasternodeStealthAddress();
+    /**
+     * <code>optional bytes masternodeStealthAddress = 10;</code>
+     */
+    com.google.protobuf.ByteString getMasternodeStealthAddress();
+
+    /**
+     * <code>required bytes amount = 11;</code>
+     */
+    boolean hasAmount();
+    /**
+     * <code>required bytes amount = 11;</code>
+     */
+    com.google.protobuf.ByteString getAmount();
+
+    /**
+     * <code>required bytes decodedMask = 12;</code>
+     */
+    boolean hasDecodedMask();
+    /**
+     * <code>required bytes decodedMask = 12;</code>
+     */
+    com.google.protobuf.ByteString getDecodedMask();
+
+    /**
+     * <code>required int64 decodedAmount = 13;</code>
+     */
+    boolean hasDecodedAmount();
+    /**
+     * <code>required int64 decodedAmount = 13;</code>
+     */
+    long getDecodedAmount();
   }
   /**
    * Protobuf type {@code wallet.TransactionOutput}
    */
   public static final class TransactionOutput extends
-      com.google.protobuf.GeneratedMessage
-      implements TransactionOutputOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.TransactionOutput)
+      TransactionOutputOrBuilder {
     // Use TransactionOutput.newBuilder() to construct.
     private TransactionOutput(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -5921,6 +6587,51 @@ public final class Protos {
               spentByTransactionIndex_ = input.readInt32();
               break;
             }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              realIndex_ = input.readInt32();
+              break;
+            }
+            case 50: {
+              bitField0_ |= 0x00000020;
+              txPriv_ = input.readBytes();
+              break;
+            }
+            case 58: {
+              bitField0_ |= 0x00000040;
+              txPub_ = input.readBytes();
+              break;
+            }
+            case 66: {
+              bitField0_ |= 0x00000080;
+              commitment_ = input.readBytes();
+              break;
+            }
+            case 74: {
+              bitField0_ |= 0x00000100;
+              mask_ = input.readBytes();
+              break;
+            }
+            case 82: {
+              bitField0_ |= 0x00000200;
+              masternodeStealthAddress_ = input.readBytes();
+              break;
+            }
+            case 90: {
+              bitField0_ |= 0x00000400;
+              amount_ = input.readBytes();
+              break;
+            }
+            case 98: {
+              bitField0_ |= 0x00000800;
+              decodedMask_ = input.readBytes();
+              break;
+            }
+            case 104: {
+              bitField0_ |= 0x00001000;
+              decodedAmount_ = input.readInt64();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -5961,7 +6672,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required int64 value = 1;
     public static final int VALUE_FIELD_NUMBER = 1;
     private long value_;
     /**
@@ -5977,7 +6687,6 @@ public final class Protos {
       return value_;
     }
 
-    // required bytes script_bytes = 2;
     public static final int SCRIPT_BYTES_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString scriptBytes_;
     /**
@@ -6001,7 +6710,6 @@ public final class Protos {
       return scriptBytes_;
     }
 
-    // optional bytes spent_by_transaction_hash = 3;
     public static final int SPENT_BY_TRANSACTION_HASH_FIELD_NUMBER = 3;
     private com.google.protobuf.ByteString spentByTransactionHash_;
     /**
@@ -6025,7 +6733,6 @@ public final class Protos {
       return spentByTransactionHash_;
     }
 
-    // optional int32 spent_by_transaction_index = 4;
     public static final int SPENT_BY_TRANSACTION_INDEX_FIELD_NUMBER = 4;
     private int spentByTransactionIndex_;
     /**
@@ -6049,22 +6756,195 @@ public final class Protos {
       return spentByTransactionIndex_;
     }
 
+    public static final int REALINDEX_FIELD_NUMBER = 5;
+    private int realIndex_;
+    /**
+     * <code>required int32 realIndex = 5;</code>
+     */
+    public boolean hasRealIndex() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>required int32 realIndex = 5;</code>
+     */
+    public int getRealIndex() {
+      return realIndex_;
+    }
+
+    public static final int TXPRIV_FIELD_NUMBER = 6;
+    private com.google.protobuf.ByteString txPriv_;
+    /**
+     * <code>optional bytes txPriv = 6;</code>
+     */
+    public boolean hasTxPriv() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>optional bytes txPriv = 6;</code>
+     */
+    public com.google.protobuf.ByteString getTxPriv() {
+      return txPriv_;
+    }
+
+    public static final int TXPUB_FIELD_NUMBER = 7;
+    private com.google.protobuf.ByteString txPub_;
+    /**
+     * <code>required bytes txPub = 7;</code>
+     */
+    public boolean hasTxPub() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>required bytes txPub = 7;</code>
+     */
+    public com.google.protobuf.ByteString getTxPub() {
+      return txPub_;
+    }
+
+    public static final int COMMITMENT_FIELD_NUMBER = 8;
+    private com.google.protobuf.ByteString commitment_;
+    /**
+     * <code>required bytes commitment = 8;</code>
+     */
+    public boolean hasCommitment() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    /**
+     * <code>required bytes commitment = 8;</code>
+     */
+    public com.google.protobuf.ByteString getCommitment() {
+      return commitment_;
+    }
+
+    public static final int MASK_FIELD_NUMBER = 9;
+    private com.google.protobuf.ByteString mask_;
+    /**
+     * <code>required bytes mask = 9;</code>
+     */
+    public boolean hasMask() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    /**
+     * <code>required bytes mask = 9;</code>
+     */
+    public com.google.protobuf.ByteString getMask() {
+      return mask_;
+    }
+
+    public static final int MASTERNODESTEALTHADDRESS_FIELD_NUMBER = 10;
+    private com.google.protobuf.ByteString masternodeStealthAddress_;
+    /**
+     * <code>optional bytes masternodeStealthAddress = 10;</code>
+     */
+    public boolean hasMasternodeStealthAddress() {
+      return ((bitField0_ & 0x00000200) == 0x00000200);
+    }
+    /**
+     * <code>optional bytes masternodeStealthAddress = 10;</code>
+     */
+    public com.google.protobuf.ByteString getMasternodeStealthAddress() {
+      return masternodeStealthAddress_;
+    }
+
+    public static final int AMOUNT_FIELD_NUMBER = 11;
+    private com.google.protobuf.ByteString amount_;
+    /**
+     * <code>required bytes amount = 11;</code>
+     */
+    public boolean hasAmount() {
+      return ((bitField0_ & 0x00000400) == 0x00000400);
+    }
+    /**
+     * <code>required bytes amount = 11;</code>
+     */
+    public com.google.protobuf.ByteString getAmount() {
+      return amount_;
+    }
+
+    public static final int DECODEDMASK_FIELD_NUMBER = 12;
+    private com.google.protobuf.ByteString decodedMask_;
+    /**
+     * <code>required bytes decodedMask = 12;</code>
+     */
+    public boolean hasDecodedMask() {
+      return ((bitField0_ & 0x00000800) == 0x00000800);
+    }
+    /**
+     * <code>required bytes decodedMask = 12;</code>
+     */
+    public com.google.protobuf.ByteString getDecodedMask() {
+      return decodedMask_;
+    }
+
+    public static final int DECODEDAMOUNT_FIELD_NUMBER = 13;
+    private long decodedAmount_;
+    /**
+     * <code>required int64 decodedAmount = 13;</code>
+     */
+    public boolean hasDecodedAmount() {
+      return ((bitField0_ & 0x00001000) == 0x00001000);
+    }
+    /**
+     * <code>required int64 decodedAmount = 13;</code>
+     */
+    public long getDecodedAmount() {
+      return decodedAmount_;
+    }
+
     private void initFields() {
       value_ = 0L;
       scriptBytes_ = com.google.protobuf.ByteString.EMPTY;
       spentByTransactionHash_ = com.google.protobuf.ByteString.EMPTY;
       spentByTransactionIndex_ = 0;
+      realIndex_ = 0;
+      txPriv_ = com.google.protobuf.ByteString.EMPTY;
+      txPub_ = com.google.protobuf.ByteString.EMPTY;
+      commitment_ = com.google.protobuf.ByteString.EMPTY;
+      mask_ = com.google.protobuf.ByteString.EMPTY;
+      masternodeStealthAddress_ = com.google.protobuf.ByteString.EMPTY;
+      amount_ = com.google.protobuf.ByteString.EMPTY;
+      decodedMask_ = com.google.protobuf.ByteString.EMPTY;
+      decodedAmount_ = 0L;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasValue()) {
         memoizedIsInitialized = 0;
         return false;
       }
       if (!hasScriptBytes()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasRealIndex()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasTxPub()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasCommitment()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasMask()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasAmount()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasDecodedMask()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasDecodedAmount()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -6086,6 +6966,33 @@ public final class Protos {
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeInt32(4, spentByTransactionIndex_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(5, realIndex_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeBytes(6, txPriv_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeBytes(7, txPub_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        output.writeBytes(8, commitment_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeBytes(9, mask_);
+      }
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        output.writeBytes(10, masternodeStealthAddress_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeBytes(11, amount_);
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        output.writeBytes(12, decodedMask_);
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        output.writeInt64(13, decodedAmount_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -6111,6 +7018,42 @@ public final class Protos {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, spentByTransactionIndex_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, realIndex_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(6, txPriv_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(7, txPub_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(8, commitment_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(9, mask_);
+      }
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(10, masternodeStealthAddress_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(11, amount_);
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(12, decodedMask_);
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(13, decodedAmount_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -6194,8 +7137,9 @@ public final class Protos {
      * Protobuf type {@code wallet.TransactionOutput}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.TransactionOutputOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.TransactionOutput)
+        org.pivxj.wallet.Protos.TransactionOutputOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_TransactionOutput_descriptor;
@@ -6236,6 +7180,24 @@ public final class Protos {
         bitField0_ = (bitField0_ & ~0x00000004);
         spentByTransactionIndex_ = 0;
         bitField0_ = (bitField0_ & ~0x00000008);
+        realIndex_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        txPriv_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        txPub_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000040);
+        commitment_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000080);
+        mask_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000100);
+        masternodeStealthAddress_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000200);
+        amount_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000400);
+        decodedMask_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000800);
+        decodedAmount_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00001000);
         return this;
       }
 
@@ -6280,6 +7242,42 @@ public final class Protos {
           to_bitField0_ |= 0x00000008;
         }
         result.spentByTransactionIndex_ = spentByTransactionIndex_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.realIndex_ = realIndex_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.txPriv_ = txPriv_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.txPub_ = txPub_;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000080;
+        }
+        result.commitment_ = commitment_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.mask_ = mask_;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000200;
+        }
+        result.masternodeStealthAddress_ = masternodeStealthAddress_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
+        }
+        result.amount_ = amount_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
+        }
+        result.decodedMask_ = decodedMask_;
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+          to_bitField0_ |= 0x00001000;
+        }
+        result.decodedAmount_ = decodedAmount_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -6308,6 +7306,33 @@ public final class Protos {
         if (other.hasSpentByTransactionIndex()) {
           setSpentByTransactionIndex(other.getSpentByTransactionIndex());
         }
+        if (other.hasRealIndex()) {
+          setRealIndex(other.getRealIndex());
+        }
+        if (other.hasTxPriv()) {
+          setTxPriv(other.getTxPriv());
+        }
+        if (other.hasTxPub()) {
+          setTxPub(other.getTxPub());
+        }
+        if (other.hasCommitment()) {
+          setCommitment(other.getCommitment());
+        }
+        if (other.hasMask()) {
+          setMask(other.getMask());
+        }
+        if (other.hasMasternodeStealthAddress()) {
+          setMasternodeStealthAddress(other.getMasternodeStealthAddress());
+        }
+        if (other.hasAmount()) {
+          setAmount(other.getAmount());
+        }
+        if (other.hasDecodedMask()) {
+          setDecodedMask(other.getDecodedMask());
+        }
+        if (other.hasDecodedAmount()) {
+          setDecodedAmount(other.getDecodedAmount());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -6318,6 +7343,34 @@ public final class Protos {
           return false;
         }
         if (!hasScriptBytes()) {
+          
+          return false;
+        }
+        if (!hasRealIndex()) {
+          
+          return false;
+        }
+        if (!hasTxPub()) {
+          
+          return false;
+        }
+        if (!hasCommitment()) {
+          
+          return false;
+        }
+        if (!hasMask()) {
+          
+          return false;
+        }
+        if (!hasAmount()) {
+          
+          return false;
+        }
+        if (!hasDecodedMask()) {
+          
+          return false;
+        }
+        if (!hasDecodedAmount()) {
           
           return false;
         }
@@ -6343,7 +7396,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required int64 value = 1;
       private long value_ ;
       /**
        * <code>required int64 value = 1;</code>
@@ -6376,7 +7428,6 @@ public final class Protos {
         return this;
       }
 
-      // required bytes script_bytes = 2;
       private com.google.protobuf.ByteString scriptBytes_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes script_bytes = 2;</code>
@@ -6428,7 +7479,6 @@ public final class Protos {
         return this;
       }
 
-      // optional bytes spent_by_transaction_hash = 3;
       private com.google.protobuf.ByteString spentByTransactionHash_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes spent_by_transaction_hash = 3;</code>
@@ -6480,7 +7530,6 @@ public final class Protos {
         return this;
       }
 
-      // optional int32 spent_by_transaction_index = 4;
       private int spentByTransactionIndex_ ;
       /**
        * <code>optional int32 spent_by_transaction_index = 4;</code>
@@ -6529,6 +7578,315 @@ public final class Protos {
         return this;
       }
 
+      private int realIndex_ ;
+      /**
+       * <code>required int32 realIndex = 5;</code>
+       */
+      public boolean hasRealIndex() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>required int32 realIndex = 5;</code>
+       */
+      public int getRealIndex() {
+        return realIndex_;
+      }
+      /**
+       * <code>required int32 realIndex = 5;</code>
+       */
+      public Builder setRealIndex(int value) {
+        bitField0_ |= 0x00000010;
+        realIndex_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 realIndex = 5;</code>
+       */
+      public Builder clearRealIndex() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        realIndex_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString txPriv_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes txPriv = 6;</code>
+       */
+      public boolean hasTxPriv() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>optional bytes txPriv = 6;</code>
+       */
+      public com.google.protobuf.ByteString getTxPriv() {
+        return txPriv_;
+      }
+      /**
+       * <code>optional bytes txPriv = 6;</code>
+       */
+      public Builder setTxPriv(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        txPriv_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes txPriv = 6;</code>
+       */
+      public Builder clearTxPriv() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        txPriv_ = getDefaultInstance().getTxPriv();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString txPub_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>required bytes txPub = 7;</code>
+       */
+      public boolean hasTxPub() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>required bytes txPub = 7;</code>
+       */
+      public com.google.protobuf.ByteString getTxPub() {
+        return txPub_;
+      }
+      /**
+       * <code>required bytes txPub = 7;</code>
+       */
+      public Builder setTxPub(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000040;
+        txPub_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bytes txPub = 7;</code>
+       */
+      public Builder clearTxPub() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        txPub_ = getDefaultInstance().getTxPub();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString commitment_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>required bytes commitment = 8;</code>
+       */
+      public boolean hasCommitment() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      /**
+       * <code>required bytes commitment = 8;</code>
+       */
+      public com.google.protobuf.ByteString getCommitment() {
+        return commitment_;
+      }
+      /**
+       * <code>required bytes commitment = 8;</code>
+       */
+      public Builder setCommitment(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000080;
+        commitment_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bytes commitment = 8;</code>
+       */
+      public Builder clearCommitment() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        commitment_ = getDefaultInstance().getCommitment();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString mask_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>required bytes mask = 9;</code>
+       */
+      public boolean hasMask() {
+        return ((bitField0_ & 0x00000100) == 0x00000100);
+      }
+      /**
+       * <code>required bytes mask = 9;</code>
+       */
+      public com.google.protobuf.ByteString getMask() {
+        return mask_;
+      }
+      /**
+       * <code>required bytes mask = 9;</code>
+       */
+      public Builder setMask(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000100;
+        mask_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bytes mask = 9;</code>
+       */
+      public Builder clearMask() {
+        bitField0_ = (bitField0_ & ~0x00000100);
+        mask_ = getDefaultInstance().getMask();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString masternodeStealthAddress_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes masternodeStealthAddress = 10;</code>
+       */
+      public boolean hasMasternodeStealthAddress() {
+        return ((bitField0_ & 0x00000200) == 0x00000200);
+      }
+      /**
+       * <code>optional bytes masternodeStealthAddress = 10;</code>
+       */
+      public com.google.protobuf.ByteString getMasternodeStealthAddress() {
+        return masternodeStealthAddress_;
+      }
+      /**
+       * <code>optional bytes masternodeStealthAddress = 10;</code>
+       */
+      public Builder setMasternodeStealthAddress(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000200;
+        masternodeStealthAddress_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes masternodeStealthAddress = 10;</code>
+       */
+      public Builder clearMasternodeStealthAddress() {
+        bitField0_ = (bitField0_ & ~0x00000200);
+        masternodeStealthAddress_ = getDefaultInstance().getMasternodeStealthAddress();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString amount_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>required bytes amount = 11;</code>
+       */
+      public boolean hasAmount() {
+        return ((bitField0_ & 0x00000400) == 0x00000400);
+      }
+      /**
+       * <code>required bytes amount = 11;</code>
+       */
+      public com.google.protobuf.ByteString getAmount() {
+        return amount_;
+      }
+      /**
+       * <code>required bytes amount = 11;</code>
+       */
+      public Builder setAmount(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000400;
+        amount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bytes amount = 11;</code>
+       */
+      public Builder clearAmount() {
+        bitField0_ = (bitField0_ & ~0x00000400);
+        amount_ = getDefaultInstance().getAmount();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString decodedMask_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>required bytes decodedMask = 12;</code>
+       */
+      public boolean hasDecodedMask() {
+        return ((bitField0_ & 0x00000800) == 0x00000800);
+      }
+      /**
+       * <code>required bytes decodedMask = 12;</code>
+       */
+      public com.google.protobuf.ByteString getDecodedMask() {
+        return decodedMask_;
+      }
+      /**
+       * <code>required bytes decodedMask = 12;</code>
+       */
+      public Builder setDecodedMask(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        decodedMask_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bytes decodedMask = 12;</code>
+       */
+      public Builder clearDecodedMask() {
+        bitField0_ = (bitField0_ & ~0x00000800);
+        decodedMask_ = getDefaultInstance().getDecodedMask();
+        onChanged();
+        return this;
+      }
+
+      private long decodedAmount_ ;
+      /**
+       * <code>required int64 decodedAmount = 13;</code>
+       */
+      public boolean hasDecodedAmount() {
+        return ((bitField0_ & 0x00001000) == 0x00001000);
+      }
+      /**
+       * <code>required int64 decodedAmount = 13;</code>
+       */
+      public long getDecodedAmount() {
+        return decodedAmount_;
+      }
+      /**
+       * <code>required int64 decodedAmount = 13;</code>
+       */
+      public Builder setDecodedAmount(long value) {
+        bitField0_ |= 0x00001000;
+        decodedAmount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int64 decodedAmount = 13;</code>
+       */
+      public Builder clearDecodedAmount() {
+        bitField0_ = (bitField0_ & ~0x00001000);
+        decodedAmount_ = 0L;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:wallet.TransactionOutput)
     }
 
@@ -6540,10 +7898,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.TransactionOutput)
   }
 
-  public interface TransactionConfidenceOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface TransactionConfidenceOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.TransactionConfidence)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional .wallet.TransactionConfidence.Type type = 1;
     /**
      * <code>optional .wallet.TransactionConfidence.Type type = 1;</code>
      *
@@ -6561,7 +7919,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.TransactionConfidence.Type getType();
 
-    // optional int32 appeared_at_height = 2;
     /**
      * <code>optional int32 appeared_at_height = 2;</code>
      *
@@ -6579,7 +7936,6 @@ public final class Protos {
      */
     int getAppearedAtHeight();
 
-    // optional bytes overriding_transaction = 3;
     /**
      * <code>optional bytes overriding_transaction = 3;</code>
      *
@@ -6601,7 +7957,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getOverridingTransaction();
 
-    // optional int32 depth = 4;
     /**
      * <code>optional int32 depth = 4;</code>
      *
@@ -6621,11 +7976,10 @@ public final class Protos {
      */
     int getDepth();
 
-    // repeated .wallet.PeerAddress broadcast_by = 6;
     /**
      * <code>repeated .wallet.PeerAddress broadcast_by = 6;</code>
      */
-    java.util.List<org.pivxj.wallet.Protos.PeerAddress>
+    java.util.List<org.pivxj.wallet.Protos.PeerAddress> 
         getBroadcastByList();
     /**
      * <code>repeated .wallet.PeerAddress broadcast_by = 6;</code>
@@ -6638,7 +7992,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.PeerAddress broadcast_by = 6;</code>
      */
-    java.util.List<? extends org.pivxj.wallet.Protos.PeerAddressOrBuilder>
+    java.util.List<? extends org.pivxj.wallet.Protos.PeerAddressOrBuilder> 
         getBroadcastByOrBuilderList();
     /**
      * <code>repeated .wallet.PeerAddress broadcast_by = 6;</code>
@@ -6646,7 +8000,6 @@ public final class Protos {
     org.pivxj.wallet.Protos.PeerAddressOrBuilder getBroadcastByOrBuilder(
         int index);
 
-    // optional int64 last_broadcasted_at = 8;
     /**
      * <code>optional int64 last_broadcasted_at = 8;</code>
      *
@@ -6664,7 +8017,6 @@ public final class Protos {
      */
     long getLastBroadcastedAt();
 
-    // optional .wallet.TransactionConfidence.Source source = 7;
     /**
      * <code>optional .wallet.TransactionConfidence.Source source = 7;</code>
      */
@@ -6674,7 +8026,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.TransactionConfidence.Source getSource();
 
-    // optional .wallet.TransactionConfidence.IXType ixType = 19 [default = IX_NONE];
     /**
      * <code>optional .wallet.TransactionConfidence.IXType ixType = 19 [default = IX_NONE];</code>
      */
@@ -6690,14 +8041,14 @@ public final class Protos {
    * <pre>
    **
    * A description of the confidence we have that a transaction cannot be reversed in the future.
-   *
    * Parsing should be lenient, since this could change for different applications yet we should
    * maintain backward compatibility.
    * </pre>
    */
   public static final class TransactionConfidence extends
-      com.google.protobuf.GeneratedMessage
-      implements TransactionConfidenceOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.TransactionConfidence)
+      TransactionConfidenceOrBuilder {
     // Use TransactionConfidence.newBuilder() to construct.
     private TransactionConfidence(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -7223,7 +8574,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // optional .wallet.TransactionConfidence.Type type = 1;
     public static final int TYPE_FIELD_NUMBER = 1;
     private org.pivxj.wallet.Protos.TransactionConfidence.Type type_;
     /**
@@ -7247,7 +8597,6 @@ public final class Protos {
       return type_;
     }
 
-    // optional int32 appeared_at_height = 2;
     public static final int APPEARED_AT_HEIGHT_FIELD_NUMBER = 2;
     private int appearedAtHeight_;
     /**
@@ -7271,7 +8620,6 @@ public final class Protos {
       return appearedAtHeight_;
     }
 
-    // optional bytes overriding_transaction = 3;
     public static final int OVERRIDING_TRANSACTION_FIELD_NUMBER = 3;
     private com.google.protobuf.ByteString overridingTransaction_;
     /**
@@ -7299,7 +8647,6 @@ public final class Protos {
       return overridingTransaction_;
     }
 
-    // optional int32 depth = 4;
     public static final int DEPTH_FIELD_NUMBER = 4;
     private int depth_;
     /**
@@ -7325,7 +8672,6 @@ public final class Protos {
       return depth_;
     }
 
-    // repeated .wallet.PeerAddress broadcast_by = 6;
     public static final int BROADCAST_BY_FIELD_NUMBER = 6;
     private java.util.List<org.pivxj.wallet.Protos.PeerAddress> broadcastBy_;
     /**
@@ -7337,7 +8683,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.PeerAddress broadcast_by = 6;</code>
      */
-    public java.util.List<? extends org.pivxj.wallet.Protos.PeerAddressOrBuilder>
+    public java.util.List<? extends org.pivxj.wallet.Protos.PeerAddressOrBuilder> 
         getBroadcastByOrBuilderList() {
       return broadcastBy_;
     }
@@ -7361,7 +8707,6 @@ public final class Protos {
       return broadcastBy_.get(index);
     }
 
-    // optional int64 last_broadcasted_at = 8;
     public static final int LAST_BROADCASTED_AT_FIELD_NUMBER = 8;
     private long lastBroadcastedAt_;
     /**
@@ -7385,7 +8730,6 @@ public final class Protos {
       return lastBroadcastedAt_;
     }
 
-    // optional .wallet.TransactionConfidence.Source source = 7;
     public static final int SOURCE_FIELD_NUMBER = 7;
     private org.pivxj.wallet.Protos.TransactionConfidence.Source source_;
     /**
@@ -7401,7 +8745,6 @@ public final class Protos {
       return source_;
     }
 
-    // optional .wallet.TransactionConfidence.IXType ixType = 19 [default = IX_NONE];
     public static final int IXTYPE_FIELD_NUMBER = 19;
     private org.pivxj.wallet.Protos.TransactionConfidence.IXType ixType_;
     /**
@@ -7430,7 +8773,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       for (int i = 0; i < getBroadcastByCount(); i++) {
         if (!getBroadcastBy(i).isInitialized()) {
@@ -7594,14 +8938,14 @@ public final class Protos {
      * <pre>
      **
      * A description of the confidence we have that a transaction cannot be reversed in the future.
-     *
      * Parsing should be lenient, since this could change for different applications yet we should
      * maintain backward compatibility.
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.TransactionConfidenceOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.TransactionConfidence)
+        org.pivxj.wallet.Protos.TransactionConfidenceOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_TransactionConfidence_descriptor;
@@ -7816,7 +9160,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // optional .wallet.TransactionConfidence.Type type = 1;
       private org.pivxj.wallet.Protos.TransactionConfidence.Type type_ = org.pivxj.wallet.Protos.TransactionConfidence.Type.UNKNOWN;
       /**
        * <code>optional .wallet.TransactionConfidence.Type type = 1;</code>
@@ -7868,7 +9211,6 @@ public final class Protos {
         return this;
       }
 
-      // optional int32 appeared_at_height = 2;
       private int appearedAtHeight_ ;
       /**
        * <code>optional int32 appeared_at_height = 2;</code>
@@ -7917,7 +9259,6 @@ public final class Protos {
         return this;
       }
 
-      // optional bytes overriding_transaction = 3;
       private com.google.protobuf.ByteString overridingTransaction_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes overriding_transaction = 3;</code>
@@ -7977,7 +9318,6 @@ public final class Protos {
         return this;
       }
 
-      // optional int32 depth = 4;
       private int depth_ ;
       /**
        * <code>optional int32 depth = 4;</code>
@@ -8030,7 +9370,6 @@ public final class Protos {
         return this;
       }
 
-      // repeated .wallet.PeerAddress broadcast_by = 6;
       private java.util.List<org.pivxj.wallet.Protos.PeerAddress> broadcastBy_ =
         java.util.Collections.emptyList();
       private void ensureBroadcastByIsMutable() {
@@ -8172,7 +9511,8 @@ public final class Protos {
           java.lang.Iterable<? extends org.pivxj.wallet.Protos.PeerAddress> values) {
         if (broadcastByBuilder_ == null) {
           ensureBroadcastByIsMutable();
-          super.addAll(values, broadcastBy_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, broadcastBy_);
           onChanged();
         } else {
           broadcastByBuilder_.addAllMessages(values);
@@ -8225,7 +9565,7 @@ public final class Protos {
       /**
        * <code>repeated .wallet.PeerAddress broadcast_by = 6;</code>
        */
-      public java.util.List<? extends org.pivxj.wallet.Protos.PeerAddressOrBuilder>
+      public java.util.List<? extends org.pivxj.wallet.Protos.PeerAddressOrBuilder> 
            getBroadcastByOrBuilderList() {
         if (broadcastByBuilder_ != null) {
           return broadcastByBuilder_.getMessageOrBuilderList();
@@ -8251,12 +9591,12 @@ public final class Protos {
       /**
        * <code>repeated .wallet.PeerAddress broadcast_by = 6;</code>
        */
-      public java.util.List<org.pivxj.wallet.Protos.PeerAddress.Builder>
+      public java.util.List<org.pivxj.wallet.Protos.PeerAddress.Builder> 
            getBroadcastByBuilderList() {
         return getBroadcastByFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.pivxj.wallet.Protos.PeerAddress, org.pivxj.wallet.Protos.PeerAddress.Builder, org.pivxj.wallet.Protos.PeerAddressOrBuilder>
+          org.pivxj.wallet.Protos.PeerAddress, org.pivxj.wallet.Protos.PeerAddress.Builder, org.pivxj.wallet.Protos.PeerAddressOrBuilder> 
           getBroadcastByFieldBuilder() {
         if (broadcastByBuilder_ == null) {
           broadcastByBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -8270,7 +9610,6 @@ public final class Protos {
         return broadcastByBuilder_;
       }
 
-      // optional int64 last_broadcasted_at = 8;
       private long lastBroadcastedAt_ ;
       /**
        * <code>optional int64 last_broadcasted_at = 8;</code>
@@ -8319,7 +9658,6 @@ public final class Protos {
         return this;
       }
 
-      // optional .wallet.TransactionConfidence.Source source = 7;
       private org.pivxj.wallet.Protos.TransactionConfidence.Source source_ = org.pivxj.wallet.Protos.TransactionConfidence.Source.SOURCE_UNKNOWN;
       /**
        * <code>optional .wallet.TransactionConfidence.Source source = 7;</code>
@@ -8355,7 +9693,6 @@ public final class Protos {
         return this;
       }
 
-      // optional .wallet.TransactionConfidence.IXType ixType = 19 [default = IX_NONE];
       private org.pivxj.wallet.Protos.TransactionConfidence.IXType ixType_ = org.pivxj.wallet.Protos.TransactionConfidence.IXType.IX_NONE;
       /**
        * <code>optional .wallet.TransactionConfidence.IXType ixType = 19 [default = IX_NONE];</code>
@@ -8402,10 +9739,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.TransactionConfidence)
   }
 
-  public interface TransactionOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface TransactionOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.Transaction)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required int32 version = 1;
     /**
      * <code>required int32 version = 1;</code>
      *
@@ -8423,7 +9760,6 @@ public final class Protos {
      */
     int getVersion();
 
-    // required bytes hash = 2;
     /**
      * <code>required bytes hash = 2;</code>
      */
@@ -8433,7 +9769,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getHash();
 
-    // optional .wallet.Transaction.Pool pool = 3;
     /**
      * <code>optional .wallet.Transaction.Pool pool = 3;</code>
      *
@@ -8457,7 +9792,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.Transaction.Pool getPool();
 
-    // optional uint32 lock_time = 4;
     /**
      * <code>optional uint32 lock_time = 4;</code>
      *
@@ -8475,7 +9809,6 @@ public final class Protos {
      */
     int getLockTime();
 
-    // optional int64 updated_at = 5;
     /**
      * <code>optional int64 updated_at = 5;</code>
      *
@@ -8493,11 +9826,10 @@ public final class Protos {
      */
     long getUpdatedAt();
 
-    // repeated .wallet.TransactionInput transaction_input = 6;
     /**
      * <code>repeated .wallet.TransactionInput transaction_input = 6;</code>
      */
-    java.util.List<org.pivxj.wallet.Protos.TransactionInput>
+    java.util.List<org.pivxj.wallet.Protos.TransactionInput> 
         getTransactionInputList();
     /**
      * <code>repeated .wallet.TransactionInput transaction_input = 6;</code>
@@ -8510,7 +9842,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.TransactionInput transaction_input = 6;</code>
      */
-    java.util.List<? extends org.pivxj.wallet.Protos.TransactionInputOrBuilder>
+    java.util.List<? extends org.pivxj.wallet.Protos.TransactionInputOrBuilder> 
         getTransactionInputOrBuilderList();
     /**
      * <code>repeated .wallet.TransactionInput transaction_input = 6;</code>
@@ -8518,11 +9850,10 @@ public final class Protos {
     org.pivxj.wallet.Protos.TransactionInputOrBuilder getTransactionInputOrBuilder(
         int index);
 
-    // repeated .wallet.TransactionOutput transaction_output = 7;
     /**
      * <code>repeated .wallet.TransactionOutput transaction_output = 7;</code>
      */
-    java.util.List<org.pivxj.wallet.Protos.TransactionOutput>
+    java.util.List<org.pivxj.wallet.Protos.TransactionOutput> 
         getTransactionOutputList();
     /**
      * <code>repeated .wallet.TransactionOutput transaction_output = 7;</code>
@@ -8535,7 +9866,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.TransactionOutput transaction_output = 7;</code>
      */
-    java.util.List<? extends org.pivxj.wallet.Protos.TransactionOutputOrBuilder>
+    java.util.List<? extends org.pivxj.wallet.Protos.TransactionOutputOrBuilder> 
         getTransactionOutputOrBuilderList();
     /**
      * <code>repeated .wallet.TransactionOutput transaction_output = 7;</code>
@@ -8543,7 +9874,6 @@ public final class Protos {
     org.pivxj.wallet.Protos.TransactionOutputOrBuilder getTransactionOutputOrBuilder(
         int index);
 
-    // repeated bytes block_hash = 8;
     /**
      * <code>repeated bytes block_hash = 8;</code>
      *
@@ -8572,7 +9902,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getBlockHash(int index);
 
-    // repeated int32 block_relativity_offsets = 11;
     /**
      * <code>repeated int32 block_relativity_offsets = 11;</code>
      */
@@ -8586,7 +9915,6 @@ public final class Protos {
      */
     int getBlockRelativityOffsets(int index);
 
-    // optional .wallet.TransactionConfidence confidence = 9;
     /**
      * <code>optional .wallet.TransactionConfidence confidence = 9;</code>
      *
@@ -8612,7 +9940,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.TransactionConfidenceOrBuilder getConfidenceOrBuilder();
 
-    // optional .wallet.Transaction.Purpose purpose = 10 [default = UNKNOWN];
     /**
      * <code>optional .wallet.Transaction.Purpose purpose = 10 [default = UNKNOWN];</code>
      */
@@ -8622,7 +9949,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.Transaction.Purpose getPurpose();
 
-    // optional .wallet.ExchangeRate exchange_rate = 12;
     /**
      * <code>optional .wallet.ExchangeRate exchange_rate = 12;</code>
      *
@@ -8648,7 +9974,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.ExchangeRateOrBuilder getExchangeRateOrBuilder();
 
-    // optional string memo = 13;
     /**
      * <code>optional string memo = 13;</code>
      *
@@ -8682,8 +10007,9 @@ public final class Protos {
    * Protobuf type {@code wallet.Transaction}
    */
   public static final class Transaction extends
-      com.google.protobuf.GeneratedMessage
-      implements TransactionOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.Transaction)
+      TransactionOrBuilder {
     // Use Transaction.newBuilder() to construct.
     private Transaction(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -8843,8 +10169,9 @@ public final class Protos {
               break;
             }
             case 106: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000100;
-              memo_ = input.readBytes();
+              memo_ = bs;
               break;
             }
           }
@@ -9249,7 +10576,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required int32 version = 1;
     public static final int VERSION_FIELD_NUMBER = 1;
     private int version_;
     /**
@@ -9273,7 +10599,6 @@ public final class Protos {
       return version_;
     }
 
-    // required bytes hash = 2;
     public static final int HASH_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString hash_;
     /**
@@ -9289,7 +10614,6 @@ public final class Protos {
       return hash_;
     }
 
-    // optional .wallet.Transaction.Pool pool = 3;
     public static final int POOL_FIELD_NUMBER = 3;
     private org.pivxj.wallet.Protos.Transaction.Pool pool_;
     /**
@@ -9319,7 +10643,6 @@ public final class Protos {
       return pool_;
     }
 
-    // optional uint32 lock_time = 4;
     public static final int LOCK_TIME_FIELD_NUMBER = 4;
     private int lockTime_;
     /**
@@ -9343,7 +10666,6 @@ public final class Protos {
       return lockTime_;
     }
 
-    // optional int64 updated_at = 5;
     public static final int UPDATED_AT_FIELD_NUMBER = 5;
     private long updatedAt_;
     /**
@@ -9367,7 +10689,6 @@ public final class Protos {
       return updatedAt_;
     }
 
-    // repeated .wallet.TransactionInput transaction_input = 6;
     public static final int TRANSACTION_INPUT_FIELD_NUMBER = 6;
     private java.util.List<org.pivxj.wallet.Protos.TransactionInput> transactionInput_;
     /**
@@ -9379,7 +10700,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.TransactionInput transaction_input = 6;</code>
      */
-    public java.util.List<? extends org.pivxj.wallet.Protos.TransactionInputOrBuilder>
+    public java.util.List<? extends org.pivxj.wallet.Protos.TransactionInputOrBuilder> 
         getTransactionInputOrBuilderList() {
       return transactionInput_;
     }
@@ -9403,7 +10724,6 @@ public final class Protos {
       return transactionInput_.get(index);
     }
 
-    // repeated .wallet.TransactionOutput transaction_output = 7;
     public static final int TRANSACTION_OUTPUT_FIELD_NUMBER = 7;
     private java.util.List<org.pivxj.wallet.Protos.TransactionOutput> transactionOutput_;
     /**
@@ -9415,7 +10735,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.TransactionOutput transaction_output = 7;</code>
      */
-    public java.util.List<? extends org.pivxj.wallet.Protos.TransactionOutputOrBuilder>
+    public java.util.List<? extends org.pivxj.wallet.Protos.TransactionOutputOrBuilder> 
         getTransactionOutputOrBuilderList() {
       return transactionOutput_;
     }
@@ -9439,7 +10759,6 @@ public final class Protos {
       return transactionOutput_.get(index);
     }
 
-    // repeated bytes block_hash = 8;
     public static final int BLOCK_HASH_FIELD_NUMBER = 8;
     private java.util.List<com.google.protobuf.ByteString> blockHash_;
     /**
@@ -9477,7 +10796,6 @@ public final class Protos {
       return blockHash_.get(index);
     }
 
-    // repeated int32 block_relativity_offsets = 11;
     public static final int BLOCK_RELATIVITY_OFFSETS_FIELD_NUMBER = 11;
     private java.util.List<java.lang.Integer> blockRelativityOffsets_;
     /**
@@ -9500,7 +10818,6 @@ public final class Protos {
       return blockRelativityOffsets_.get(index);
     }
 
-    // optional .wallet.TransactionConfidence confidence = 9;
     public static final int CONFIDENCE_FIELD_NUMBER = 9;
     private org.pivxj.wallet.Protos.TransactionConfidence confidence_;
     /**
@@ -9534,7 +10851,6 @@ public final class Protos {
       return confidence_;
     }
 
-    // optional .wallet.Transaction.Purpose purpose = 10 [default = UNKNOWN];
     public static final int PURPOSE_FIELD_NUMBER = 10;
     private org.pivxj.wallet.Protos.Transaction.Purpose purpose_;
     /**
@@ -9550,7 +10866,6 @@ public final class Protos {
       return purpose_;
     }
 
-    // optional .wallet.ExchangeRate exchange_rate = 12;
     public static final int EXCHANGE_RATE_FIELD_NUMBER = 12;
     private org.pivxj.wallet.Protos.ExchangeRate exchangeRate_;
     /**
@@ -9584,7 +10899,6 @@ public final class Protos {
       return exchangeRate_;
     }
 
-    // optional string memo = 13;
     public static final int MEMO_FIELD_NUMBER = 13;
     private java.lang.Object memo_;
     /**
@@ -9660,7 +10974,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasVersion()) {
         memoizedIsInitialized = 0;
@@ -9893,8 +11208,9 @@ public final class Protos {
      * Protobuf type {@code wallet.Transaction}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.TransactionOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.Transaction)
+        org.pivxj.wallet.Protos.TransactionOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_Transaction_descriptor;
@@ -10249,7 +11565,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required int32 version = 1;
       private int version_ ;
       /**
        * <code>required int32 version = 1;</code>
@@ -10298,7 +11613,6 @@ public final class Protos {
         return this;
       }
 
-      // required bytes hash = 2;
       private com.google.protobuf.ByteString hash_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes hash = 2;</code>
@@ -10334,7 +11648,6 @@ public final class Protos {
         return this;
       }
 
-      // optional .wallet.Transaction.Pool pool = 3;
       private org.pivxj.wallet.Protos.Transaction.Pool pool_ = org.pivxj.wallet.Protos.Transaction.Pool.UNSPENT;
       /**
        * <code>optional .wallet.Transaction.Pool pool = 3;</code>
@@ -10398,7 +11711,6 @@ public final class Protos {
         return this;
       }
 
-      // optional uint32 lock_time = 4;
       private int lockTime_ ;
       /**
        * <code>optional uint32 lock_time = 4;</code>
@@ -10447,7 +11759,6 @@ public final class Protos {
         return this;
       }
 
-      // optional int64 updated_at = 5;
       private long updatedAt_ ;
       /**
        * <code>optional int64 updated_at = 5;</code>
@@ -10496,7 +11807,6 @@ public final class Protos {
         return this;
       }
 
-      // repeated .wallet.TransactionInput transaction_input = 6;
       private java.util.List<org.pivxj.wallet.Protos.TransactionInput> transactionInput_ =
         java.util.Collections.emptyList();
       private void ensureTransactionInputIsMutable() {
@@ -10638,7 +11948,8 @@ public final class Protos {
           java.lang.Iterable<? extends org.pivxj.wallet.Protos.TransactionInput> values) {
         if (transactionInputBuilder_ == null) {
           ensureTransactionInputIsMutable();
-          super.addAll(values, transactionInput_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, transactionInput_);
           onChanged();
         } else {
           transactionInputBuilder_.addAllMessages(values);
@@ -10691,7 +12002,7 @@ public final class Protos {
       /**
        * <code>repeated .wallet.TransactionInput transaction_input = 6;</code>
        */
-      public java.util.List<? extends org.pivxj.wallet.Protos.TransactionInputOrBuilder>
+      public java.util.List<? extends org.pivxj.wallet.Protos.TransactionInputOrBuilder> 
            getTransactionInputOrBuilderList() {
         if (transactionInputBuilder_ != null) {
           return transactionInputBuilder_.getMessageOrBuilderList();
@@ -10717,12 +12028,12 @@ public final class Protos {
       /**
        * <code>repeated .wallet.TransactionInput transaction_input = 6;</code>
        */
-      public java.util.List<org.pivxj.wallet.Protos.TransactionInput.Builder>
+      public java.util.List<org.pivxj.wallet.Protos.TransactionInput.Builder> 
            getTransactionInputBuilderList() {
         return getTransactionInputFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.pivxj.wallet.Protos.TransactionInput, org.pivxj.wallet.Protos.TransactionInput.Builder, org.pivxj.wallet.Protos.TransactionInputOrBuilder>
+          org.pivxj.wallet.Protos.TransactionInput, org.pivxj.wallet.Protos.TransactionInput.Builder, org.pivxj.wallet.Protos.TransactionInputOrBuilder> 
           getTransactionInputFieldBuilder() {
         if (transactionInputBuilder_ == null) {
           transactionInputBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -10736,7 +12047,6 @@ public final class Protos {
         return transactionInputBuilder_;
       }
 
-      // repeated .wallet.TransactionOutput transaction_output = 7;
       private java.util.List<org.pivxj.wallet.Protos.TransactionOutput> transactionOutput_ =
         java.util.Collections.emptyList();
       private void ensureTransactionOutputIsMutable() {
@@ -10878,7 +12188,8 @@ public final class Protos {
           java.lang.Iterable<? extends org.pivxj.wallet.Protos.TransactionOutput> values) {
         if (transactionOutputBuilder_ == null) {
           ensureTransactionOutputIsMutable();
-          super.addAll(values, transactionOutput_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, transactionOutput_);
           onChanged();
         } else {
           transactionOutputBuilder_.addAllMessages(values);
@@ -10931,7 +12242,7 @@ public final class Protos {
       /**
        * <code>repeated .wallet.TransactionOutput transaction_output = 7;</code>
        */
-      public java.util.List<? extends org.pivxj.wallet.Protos.TransactionOutputOrBuilder>
+      public java.util.List<? extends org.pivxj.wallet.Protos.TransactionOutputOrBuilder> 
            getTransactionOutputOrBuilderList() {
         if (transactionOutputBuilder_ != null) {
           return transactionOutputBuilder_.getMessageOrBuilderList();
@@ -10957,12 +12268,12 @@ public final class Protos {
       /**
        * <code>repeated .wallet.TransactionOutput transaction_output = 7;</code>
        */
-      public java.util.List<org.pivxj.wallet.Protos.TransactionOutput.Builder>
+      public java.util.List<org.pivxj.wallet.Protos.TransactionOutput.Builder> 
            getTransactionOutputBuilderList() {
         return getTransactionOutputFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.pivxj.wallet.Protos.TransactionOutput, org.pivxj.wallet.Protos.TransactionOutput.Builder, org.pivxj.wallet.Protos.TransactionOutputOrBuilder>
+          org.pivxj.wallet.Protos.TransactionOutput, org.pivxj.wallet.Protos.TransactionOutput.Builder, org.pivxj.wallet.Protos.TransactionOutputOrBuilder> 
           getTransactionOutputFieldBuilder() {
         if (transactionOutputBuilder_ == null) {
           transactionOutputBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -10976,7 +12287,6 @@ public final class Protos {
         return transactionOutputBuilder_;
       }
 
-      // repeated bytes block_hash = 8;
       private java.util.List<com.google.protobuf.ByteString> blockHash_ = java.util.Collections.emptyList();
       private void ensureBlockHashIsMutable() {
         if (!((bitField0_ & 0x00000080) == 0x00000080)) {
@@ -11064,7 +12374,8 @@ public final class Protos {
       public Builder addAllBlockHash(
           java.lang.Iterable<? extends com.google.protobuf.ByteString> values) {
         ensureBlockHashIsMutable();
-        super.addAll(values, blockHash_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, blockHash_);
         onChanged();
         return this;
       }
@@ -11083,7 +12394,6 @@ public final class Protos {
         return this;
       }
 
-      // repeated int32 block_relativity_offsets = 11;
       private java.util.List<java.lang.Integer> blockRelativityOffsets_ = java.util.Collections.emptyList();
       private void ensureBlockRelativityOffsetsIsMutable() {
         if (!((bitField0_ & 0x00000100) == 0x00000100)) {
@@ -11135,7 +12445,8 @@ public final class Protos {
       public Builder addAllBlockRelativityOffsets(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureBlockRelativityOffsetsIsMutable();
-        super.addAll(values, blockRelativityOffsets_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, blockRelativityOffsets_);
         onChanged();
         return this;
       }
@@ -11149,7 +12460,6 @@ public final class Protos {
         return this;
       }
 
-      // optional .wallet.TransactionConfidence confidence = 9;
       private org.pivxj.wallet.Protos.TransactionConfidence confidence_ = org.pivxj.wallet.Protos.TransactionConfidence.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.pivxj.wallet.Protos.TransactionConfidence, org.pivxj.wallet.Protos.TransactionConfidence.Builder, org.pivxj.wallet.Protos.TransactionConfidenceOrBuilder> confidenceBuilder_;
@@ -11289,12 +12599,12 @@ public final class Protos {
        * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          org.pivxj.wallet.Protos.TransactionConfidence, org.pivxj.wallet.Protos.TransactionConfidence.Builder, org.pivxj.wallet.Protos.TransactionConfidenceOrBuilder>
+          org.pivxj.wallet.Protos.TransactionConfidence, org.pivxj.wallet.Protos.TransactionConfidence.Builder, org.pivxj.wallet.Protos.TransactionConfidenceOrBuilder> 
           getConfidenceFieldBuilder() {
         if (confidenceBuilder_ == null) {
           confidenceBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.pivxj.wallet.Protos.TransactionConfidence, org.pivxj.wallet.Protos.TransactionConfidence.Builder, org.pivxj.wallet.Protos.TransactionConfidenceOrBuilder>(
-                  confidence_,
+                  getConfidence(),
                   getParentForChildren(),
                   isClean());
           confidence_ = null;
@@ -11302,7 +12612,6 @@ public final class Protos {
         return confidenceBuilder_;
       }
 
-      // optional .wallet.Transaction.Purpose purpose = 10 [default = UNKNOWN];
       private org.pivxj.wallet.Protos.Transaction.Purpose purpose_ = org.pivxj.wallet.Protos.Transaction.Purpose.UNKNOWN;
       /**
        * <code>optional .wallet.Transaction.Purpose purpose = 10 [default = UNKNOWN];</code>
@@ -11338,7 +12647,6 @@ public final class Protos {
         return this;
       }
 
-      // optional .wallet.ExchangeRate exchange_rate = 12;
       private org.pivxj.wallet.Protos.ExchangeRate exchangeRate_ = org.pivxj.wallet.Protos.ExchangeRate.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.pivxj.wallet.Protos.ExchangeRate, org.pivxj.wallet.Protos.ExchangeRate.Builder, org.pivxj.wallet.Protos.ExchangeRateOrBuilder> exchangeRateBuilder_;
@@ -11478,12 +12786,12 @@ public final class Protos {
        * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          org.pivxj.wallet.Protos.ExchangeRate, org.pivxj.wallet.Protos.ExchangeRate.Builder, org.pivxj.wallet.Protos.ExchangeRateOrBuilder>
+          org.pivxj.wallet.Protos.ExchangeRate, org.pivxj.wallet.Protos.ExchangeRate.Builder, org.pivxj.wallet.Protos.ExchangeRateOrBuilder> 
           getExchangeRateFieldBuilder() {
         if (exchangeRateBuilder_ == null) {
           exchangeRateBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.pivxj.wallet.Protos.ExchangeRate, org.pivxj.wallet.Protos.ExchangeRate.Builder, org.pivxj.wallet.Protos.ExchangeRateOrBuilder>(
-                  exchangeRate_,
+                  getExchangeRate(),
                   getParentForChildren(),
                   isClean());
           exchangeRate_ = null;
@@ -11491,7 +12799,6 @@ public final class Protos {
         return exchangeRateBuilder_;
       }
 
-      // optional string memo = 13;
       private java.lang.Object memo_ = "";
       /**
        * <code>optional string memo = 13;</code>
@@ -11515,9 +12822,12 @@ public final class Protos {
       public java.lang.String getMemo() {
         java.lang.Object ref = memo_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          memo_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            memo_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -11606,10 +12916,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.Transaction)
   }
 
-  public interface ScryptParametersOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ScryptParametersOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.ScryptParameters)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required bytes salt = 1;
     /**
      * <code>required bytes salt = 1;</code>
      *
@@ -11627,7 +12937,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getSalt();
 
-    // optional int64 n = 2 [default = 16384];
     /**
      * <code>optional int64 n = 2 [default = 16384];</code>
      *
@@ -11645,7 +12954,6 @@ public final class Protos {
      */
     long getN();
 
-    // optional int32 r = 3 [default = 8];
     /**
      * <code>optional int32 r = 3 [default = 8];</code>
      *
@@ -11663,7 +12971,6 @@ public final class Protos {
      */
     int getR();
 
-    // optional int32 p = 4 [default = 1];
     /**
      * <code>optional int32 p = 4 [default = 1];</code>
      *
@@ -11693,8 +13000,9 @@ public final class Protos {
    * </pre>
    */
   public static final class ScryptParameters extends
-      com.google.protobuf.GeneratedMessage
-      implements ScryptParametersOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.ScryptParameters)
+      ScryptParametersOrBuilder {
     // Use ScryptParameters.newBuilder() to construct.
     private ScryptParameters(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11800,7 +13108,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required bytes salt = 1;
     public static final int SALT_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString salt_;
     /**
@@ -11824,7 +13131,6 @@ public final class Protos {
       return salt_;
     }
 
-    // optional int64 n = 2 [default = 16384];
     public static final int N_FIELD_NUMBER = 2;
     private long n_;
     /**
@@ -11848,7 +13154,6 @@ public final class Protos {
       return n_;
     }
 
-    // optional int32 r = 3 [default = 8];
     public static final int R_FIELD_NUMBER = 3;
     private int r_;
     /**
@@ -11872,7 +13177,6 @@ public final class Protos {
       return r_;
     }
 
-    // optional int32 p = 4 [default = 1];
     public static final int P_FIELD_NUMBER = 4;
     private int p_;
     /**
@@ -11905,7 +13209,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasSalt()) {
         memoizedIsInitialized = 0;
@@ -12045,8 +13350,9 @@ public final class Protos {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.ScryptParametersOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.ScryptParameters)
+        org.pivxj.wallet.Protos.ScryptParametersOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_ScryptParameters_descriptor;
@@ -12190,7 +13496,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required bytes salt = 1;
       private com.google.protobuf.ByteString salt_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes salt = 1;</code>
@@ -12242,7 +13547,6 @@ public final class Protos {
         return this;
       }
 
-      // optional int64 n = 2 [default = 16384];
       private long n_ = 16384L;
       /**
        * <code>optional int64 n = 2 [default = 16384];</code>
@@ -12291,7 +13595,6 @@ public final class Protos {
         return this;
       }
 
-      // optional int32 r = 3 [default = 8];
       private int r_ = 8;
       /**
        * <code>optional int32 r = 3 [default = 8];</code>
@@ -12340,7 +13643,6 @@ public final class Protos {
         return this;
       }
 
-      // optional int32 p = 4 [default = 1];
       private int p_ = 1;
       /**
        * <code>optional int32 p = 4 [default = 1];</code>
@@ -12400,10 +13702,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.ScryptParameters)
   }
 
-  public interface ExtensionOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ExtensionOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.Extension)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required string id = 1;
     /**
      * <code>required string id = 1;</code>
      *
@@ -12430,7 +13732,6 @@ public final class Protos {
     com.google.protobuf.ByteString
         getIdBytes();
 
-    // required bytes data = 2;
     /**
      * <code>required bytes data = 2;</code>
      */
@@ -12440,7 +13741,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getData();
 
-    // required bool mandatory = 3;
     /**
      * <code>required bool mandatory = 3;</code>
      *
@@ -12470,8 +13770,9 @@ public final class Protos {
    * </pre>
    */
   public static final class Extension extends
-      com.google.protobuf.GeneratedMessage
-      implements ExtensionOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.Extension)
+      ExtensionOrBuilder {
     // Use Extension.newBuilder() to construct.
     private Extension(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -12518,8 +13819,9 @@ public final class Protos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = input.readBytes();
+              id_ = bs;
               break;
             }
             case 18: {
@@ -12572,7 +13874,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required string id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object id_;
     /**
@@ -12627,7 +13928,6 @@ public final class Protos {
       }
     }
 
-    // required bytes data = 2;
     public static final int DATA_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString data_;
     /**
@@ -12643,7 +13943,6 @@ public final class Protos {
       return data_;
     }
 
-    // required bool mandatory = 3;
     public static final int MANDATORY_FIELD_NUMBER = 3;
     private boolean mandatory_;
     /**
@@ -12679,7 +13978,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -12816,8 +14116,9 @@ public final class Protos {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.ExtensionOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.Extension)
+        org.pivxj.wallet.Protos.ExtensionOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_Extension_descriptor;
@@ -12962,7 +14263,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required string id = 1;
       private java.lang.Object id_ = "";
       /**
        * <code>required string id = 1;</code>
@@ -12984,9 +14284,12 @@ public final class Protos {
       public java.lang.String getId() {
         java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          id_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            id_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -13060,7 +14363,6 @@ public final class Protos {
         return this;
       }
 
-      // required bytes data = 2;
       private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes data = 2;</code>
@@ -13096,7 +14398,6 @@ public final class Protos {
         return this;
       }
 
-      // required bool mandatory = 3;
       private boolean mandatory_ ;
       /**
        * <code>required bool mandatory = 3;</code>
@@ -13164,10 +14465,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.Extension)
   }
 
-  public interface TagOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface TagOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.Tag)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required string tag = 1;
     /**
      * <code>required string tag = 1;</code>
      */
@@ -13182,7 +14483,6 @@ public final class Protos {
     com.google.protobuf.ByteString
         getTagBytes();
 
-    // required bytes data = 2;
     /**
      * <code>required bytes data = 2;</code>
      */
@@ -13203,8 +14503,9 @@ public final class Protos {
    * </pre>
    */
   public static final class Tag extends
-      com.google.protobuf.GeneratedMessage
-      implements TagOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.Tag)
+      TagOrBuilder {
     // Use Tag.newBuilder() to construct.
     private Tag(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -13251,8 +14552,9 @@ public final class Protos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              tag_ = input.readBytes();
+              tag_ = bs;
               break;
             }
             case 18: {
@@ -13300,7 +14602,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required string tag = 1;
     public static final int TAG_FIELD_NUMBER = 1;
     private java.lang.Object tag_;
     /**
@@ -13343,7 +14644,6 @@ public final class Protos {
       }
     }
 
-    // required bytes data = 2;
     public static final int DATA_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString data_;
     /**
@@ -13366,7 +14666,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasTag()) {
         memoizedIsInitialized = 0;
@@ -13495,8 +14796,9 @@ public final class Protos {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.TagOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.Tag)
+        org.pivxj.wallet.Protos.TagOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_Tag_descriptor;
@@ -13628,7 +14930,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required string tag = 1;
       private java.lang.Object tag_ = "";
       /**
        * <code>required string tag = 1;</code>
@@ -13642,9 +14943,12 @@ public final class Protos {
       public java.lang.String getTag() {
         java.lang.Object ref = tag_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          tag_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            tag_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -13702,7 +15006,6 @@ public final class Protos {
         return this;
       }
 
-      // required bytes data = 2;
       private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes data = 2;</code>
@@ -13749,10 +15052,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.Tag)
   }
 
-  public interface TransactionSignerOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface TransactionSignerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.TransactionSigner)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required string class_name = 1;
     /**
      * <code>required string class_name = 1;</code>
      *
@@ -13779,7 +15082,6 @@ public final class Protos {
     com.google.protobuf.ByteString
         getClassNameBytes();
 
-    // optional bytes data = 2;
     /**
      * <code>optional bytes data = 2;</code>
      *
@@ -13806,8 +15108,9 @@ public final class Protos {
    * </pre>
    */
   public static final class TransactionSigner extends
-      com.google.protobuf.GeneratedMessage
-      implements TransactionSignerOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.TransactionSigner)
+      TransactionSignerOrBuilder {
     // Use TransactionSigner.newBuilder() to construct.
     private TransactionSigner(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -13854,8 +15157,9 @@ public final class Protos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              className_ = input.readBytes();
+              className_ = bs;
               break;
             }
             case 18: {
@@ -13903,7 +15207,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required string class_name = 1;
     public static final int CLASS_NAME_FIELD_NUMBER = 1;
     private java.lang.Object className_;
     /**
@@ -13958,7 +15261,6 @@ public final class Protos {
       }
     }
 
-    // optional bytes data = 2;
     public static final int DATA_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString data_;
     /**
@@ -13989,7 +15291,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasClassName()) {
         memoizedIsInitialized = 0;
@@ -14112,8 +15415,9 @@ public final class Protos {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.TransactionSignerOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.TransactionSigner)
+        org.pivxj.wallet.Protos.TransactionSignerOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_TransactionSigner_descriptor;
@@ -14241,7 +15545,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required string class_name = 1;
       private java.lang.Object className_ = "";
       /**
        * <code>required string class_name = 1;</code>
@@ -14263,9 +15566,12 @@ public final class Protos {
       public java.lang.String getClassName() {
         java.lang.Object ref = className_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          className_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            className_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -14339,7 +15645,6 @@ public final class Protos {
         return this;
       }
 
-      // optional bytes data = 2;
       private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes data = 2;</code>
@@ -14402,10 +15707,682 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.TransactionSigner)
   }
 
-  public interface WalletOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface DecoyOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.Decoy)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required string network_identifier = 1;
+    /**
+     * <code>required bytes hash = 1;</code>
+     */
+    boolean hasHash();
+    /**
+     * <code>required bytes hash = 1;</code>
+     */
+    com.google.protobuf.ByteString getHash();
+
+    /**
+     * <code>required uint32 index = 2;</code>
+     */
+    boolean hasIndex();
+    /**
+     * <code>required uint32 index = 2;</code>
+     */
+    int getIndex();
+
+    /**
+     * <code>required bytes commitment = 3;</code>
+     */
+    boolean hasCommitment();
+    /**
+     * <code>required bytes commitment = 3;</code>
+     */
+    com.google.protobuf.ByteString getCommitment();
+
+    /**
+     * <code>required bytes pubkey = 4;</code>
+     */
+    boolean hasPubkey();
+    /**
+     * <code>required bytes pubkey = 4;</code>
+     */
+    com.google.protobuf.ByteString getPubkey();
+  }
+  /**
+   * Protobuf type {@code wallet.Decoy}
+   */
+  public static final class Decoy extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.Decoy)
+      DecoyOrBuilder {
+    // Use Decoy.newBuilder() to construct.
+    private Decoy(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Decoy(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Decoy defaultInstance;
+    public static Decoy getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Decoy getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Decoy(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              hash_ = input.readBytes();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              index_ = input.readUInt32();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              commitment_ = input.readBytes();
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000008;
+              pubkey_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.pivxj.wallet.Protos.internal_static_wallet_Decoy_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.pivxj.wallet.Protos.internal_static_wallet_Decoy_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.pivxj.wallet.Protos.Decoy.class, org.pivxj.wallet.Protos.Decoy.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Decoy> PARSER =
+        new com.google.protobuf.AbstractParser<Decoy>() {
+      public Decoy parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Decoy(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Decoy> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int HASH_FIELD_NUMBER = 1;
+    private com.google.protobuf.ByteString hash_;
+    /**
+     * <code>required bytes hash = 1;</code>
+     */
+    public boolean hasHash() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required bytes hash = 1;</code>
+     */
+    public com.google.protobuf.ByteString getHash() {
+      return hash_;
+    }
+
+    public static final int INDEX_FIELD_NUMBER = 2;
+    private int index_;
+    /**
+     * <code>required uint32 index = 2;</code>
+     */
+    public boolean hasIndex() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required uint32 index = 2;</code>
+     */
+    public int getIndex() {
+      return index_;
+    }
+
+    public static final int COMMITMENT_FIELD_NUMBER = 3;
+    private com.google.protobuf.ByteString commitment_;
+    /**
+     * <code>required bytes commitment = 3;</code>
+     */
+    public boolean hasCommitment() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required bytes commitment = 3;</code>
+     */
+    public com.google.protobuf.ByteString getCommitment() {
+      return commitment_;
+    }
+
+    public static final int PUBKEY_FIELD_NUMBER = 4;
+    private com.google.protobuf.ByteString pubkey_;
+    /**
+     * <code>required bytes pubkey = 4;</code>
+     */
+    public boolean hasPubkey() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required bytes pubkey = 4;</code>
+     */
+    public com.google.protobuf.ByteString getPubkey() {
+      return pubkey_;
+    }
+
+    private void initFields() {
+      hash_ = com.google.protobuf.ByteString.EMPTY;
+      index_ = 0;
+      commitment_ = com.google.protobuf.ByteString.EMPTY;
+      pubkey_ = com.google.protobuf.ByteString.EMPTY;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasHash()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasIndex()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasCommitment()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasPubkey()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, hash_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeUInt32(2, index_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, commitment_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, pubkey_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, hash_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, index_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, commitment_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, pubkey_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static org.pivxj.wallet.Protos.Decoy parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.pivxj.wallet.Protos.Decoy parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.pivxj.wallet.Protos.Decoy parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.pivxj.wallet.Protos.Decoy parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.pivxj.wallet.Protos.Decoy parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static org.pivxj.wallet.Protos.Decoy parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static org.pivxj.wallet.Protos.Decoy parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static org.pivxj.wallet.Protos.Decoy parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static org.pivxj.wallet.Protos.Decoy parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static org.pivxj.wallet.Protos.Decoy parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(org.pivxj.wallet.Protos.Decoy prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code wallet.Decoy}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.Decoy)
+        org.pivxj.wallet.Protos.DecoyOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.pivxj.wallet.Protos.internal_static_wallet_Decoy_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.pivxj.wallet.Protos.internal_static_wallet_Decoy_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.pivxj.wallet.Protos.Decoy.class, org.pivxj.wallet.Protos.Decoy.Builder.class);
+      }
+
+      // Construct using org.pivxj.wallet.Protos.Decoy.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        hash_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        index_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        commitment_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        pubkey_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.pivxj.wallet.Protos.internal_static_wallet_Decoy_descriptor;
+      }
+
+      public org.pivxj.wallet.Protos.Decoy getDefaultInstanceForType() {
+        return org.pivxj.wallet.Protos.Decoy.getDefaultInstance();
+      }
+
+      public org.pivxj.wallet.Protos.Decoy build() {
+        org.pivxj.wallet.Protos.Decoy result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.pivxj.wallet.Protos.Decoy buildPartial() {
+        org.pivxj.wallet.Protos.Decoy result = new org.pivxj.wallet.Protos.Decoy(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.hash_ = hash_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.index_ = index_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.commitment_ = commitment_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.pubkey_ = pubkey_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.pivxj.wallet.Protos.Decoy) {
+          return mergeFrom((org.pivxj.wallet.Protos.Decoy)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.pivxj.wallet.Protos.Decoy other) {
+        if (other == org.pivxj.wallet.Protos.Decoy.getDefaultInstance()) return this;
+        if (other.hasHash()) {
+          setHash(other.getHash());
+        }
+        if (other.hasIndex()) {
+          setIndex(other.getIndex());
+        }
+        if (other.hasCommitment()) {
+          setCommitment(other.getCommitment());
+        }
+        if (other.hasPubkey()) {
+          setPubkey(other.getPubkey());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasHash()) {
+          
+          return false;
+        }
+        if (!hasIndex()) {
+          
+          return false;
+        }
+        if (!hasCommitment()) {
+          
+          return false;
+        }
+        if (!hasPubkey()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.pivxj.wallet.Protos.Decoy parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.pivxj.wallet.Protos.Decoy) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private com.google.protobuf.ByteString hash_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>required bytes hash = 1;</code>
+       */
+      public boolean hasHash() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required bytes hash = 1;</code>
+       */
+      public com.google.protobuf.ByteString getHash() {
+        return hash_;
+      }
+      /**
+       * <code>required bytes hash = 1;</code>
+       */
+      public Builder setHash(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        hash_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bytes hash = 1;</code>
+       */
+      public Builder clearHash() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        hash_ = getDefaultInstance().getHash();
+        onChanged();
+        return this;
+      }
+
+      private int index_ ;
+      /**
+       * <code>required uint32 index = 2;</code>
+       */
+      public boolean hasIndex() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required uint32 index = 2;</code>
+       */
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <code>required uint32 index = 2;</code>
+       */
+      public Builder setIndex(int value) {
+        bitField0_ |= 0x00000002;
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required uint32 index = 2;</code>
+       */
+      public Builder clearIndex() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        index_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString commitment_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>required bytes commitment = 3;</code>
+       */
+      public boolean hasCommitment() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required bytes commitment = 3;</code>
+       */
+      public com.google.protobuf.ByteString getCommitment() {
+        return commitment_;
+      }
+      /**
+       * <code>required bytes commitment = 3;</code>
+       */
+      public Builder setCommitment(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        commitment_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bytes commitment = 3;</code>
+       */
+      public Builder clearCommitment() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        commitment_ = getDefaultInstance().getCommitment();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString pubkey_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>required bytes pubkey = 4;</code>
+       */
+      public boolean hasPubkey() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required bytes pubkey = 4;</code>
+       */
+      public com.google.protobuf.ByteString getPubkey() {
+        return pubkey_;
+      }
+      /**
+       * <code>required bytes pubkey = 4;</code>
+       */
+      public Builder setPubkey(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        pubkey_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bytes pubkey = 4;</code>
+       */
+      public Builder clearPubkey() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        pubkey_ = getDefaultInstance().getPubkey();
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:wallet.Decoy)
+    }
+
+    static {
+      defaultInstance = new Decoy(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:wallet.Decoy)
+  }
+
+  public interface WalletOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.Wallet)
+      com.google.protobuf.MessageOrBuilder {
+
     /**
      * <code>required string network_identifier = 1;</code>
      *
@@ -14432,7 +16409,6 @@ public final class Protos {
     com.google.protobuf.ByteString
         getNetworkIdentifierBytes();
 
-    // optional bytes last_seen_block_hash = 2;
     /**
      * <code>optional bytes last_seen_block_hash = 2;</code>
      *
@@ -14450,7 +16426,6 @@ public final class Protos {
      */
     com.google.protobuf.ByteString getLastSeenBlockHash();
 
-    // optional uint32 last_seen_block_height = 12;
     /**
      * <code>optional uint32 last_seen_block_height = 12;</code>
      *
@@ -14468,7 +16443,6 @@ public final class Protos {
      */
     int getLastSeenBlockHeight();
 
-    // optional int64 last_seen_block_time_secs = 14;
     /**
      * <code>optional int64 last_seen_block_time_secs = 14;</code>
      */
@@ -14478,11 +16452,10 @@ public final class Protos {
      */
     long getLastSeenBlockTimeSecs();
 
-    // repeated .wallet.Key key = 3;
     /**
      * <code>repeated .wallet.Key key = 3;</code>
      */
-    java.util.List<org.pivxj.wallet.Protos.Key>
+    java.util.List<org.pivxj.wallet.Protos.Key> 
         getKeyList();
     /**
      * <code>repeated .wallet.Key key = 3;</code>
@@ -14495,7 +16468,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Key key = 3;</code>
      */
-    java.util.List<? extends org.pivxj.wallet.Protos.KeyOrBuilder>
+    java.util.List<? extends org.pivxj.wallet.Protos.KeyOrBuilder> 
         getKeyOrBuilderList();
     /**
      * <code>repeated .wallet.Key key = 3;</code>
@@ -14503,11 +16476,10 @@ public final class Protos {
     org.pivxj.wallet.Protos.KeyOrBuilder getKeyOrBuilder(
         int index);
 
-    // repeated .wallet.Transaction transaction = 4;
     /**
      * <code>repeated .wallet.Transaction transaction = 4;</code>
      */
-    java.util.List<org.pivxj.wallet.Protos.Transaction>
+    java.util.List<org.pivxj.wallet.Protos.Transaction> 
         getTransactionList();
     /**
      * <code>repeated .wallet.Transaction transaction = 4;</code>
@@ -14520,7 +16492,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Transaction transaction = 4;</code>
      */
-    java.util.List<? extends org.pivxj.wallet.Protos.TransactionOrBuilder>
+    java.util.List<? extends org.pivxj.wallet.Protos.TransactionOrBuilder> 
         getTransactionOrBuilderList();
     /**
      * <code>repeated .wallet.Transaction transaction = 4;</code>
@@ -14528,11 +16500,10 @@ public final class Protos {
     org.pivxj.wallet.Protos.TransactionOrBuilder getTransactionOrBuilder(
         int index);
 
-    // repeated .wallet.Script watched_script = 15;
     /**
      * <code>repeated .wallet.Script watched_script = 15;</code>
      */
-    java.util.List<org.pivxj.wallet.Protos.Script>
+    java.util.List<org.pivxj.wallet.Protos.Script> 
         getWatchedScriptList();
     /**
      * <code>repeated .wallet.Script watched_script = 15;</code>
@@ -14545,7 +16516,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Script watched_script = 15;</code>
      */
-    java.util.List<? extends org.pivxj.wallet.Protos.ScriptOrBuilder>
+    java.util.List<? extends org.pivxj.wallet.Protos.ScriptOrBuilder> 
         getWatchedScriptOrBuilderList();
     /**
      * <code>repeated .wallet.Script watched_script = 15;</code>
@@ -14553,7 +16524,6 @@ public final class Protos {
     org.pivxj.wallet.Protos.ScriptOrBuilder getWatchedScriptOrBuilder(
         int index);
 
-    // optional .wallet.Wallet.EncryptionType encryption_type = 5 [default = UNENCRYPTED];
     /**
      * <code>optional .wallet.Wallet.EncryptionType encryption_type = 5 [default = UNENCRYPTED];</code>
      */
@@ -14563,7 +16533,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.Wallet.EncryptionType getEncryptionType();
 
-    // optional .wallet.ScryptParameters encryption_parameters = 6;
     /**
      * <code>optional .wallet.ScryptParameters encryption_parameters = 6;</code>
      */
@@ -14577,7 +16546,6 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.ScryptParametersOrBuilder getEncryptionParametersOrBuilder();
 
-    // optional int32 version = 7 [default = 1];
     /**
      * <code>optional int32 version = 7 [default = 1];</code>
      *
@@ -14599,11 +16567,10 @@ public final class Protos {
      */
     int getVersion();
 
-    // repeated .wallet.Extension extension = 10;
     /**
      * <code>repeated .wallet.Extension extension = 10;</code>
      */
-    java.util.List<org.pivxj.wallet.Protos.Extension>
+    java.util.List<org.pivxj.wallet.Protos.Extension> 
         getExtensionList();
     /**
      * <code>repeated .wallet.Extension extension = 10;</code>
@@ -14616,7 +16583,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Extension extension = 10;</code>
      */
-    java.util.List<? extends org.pivxj.wallet.Protos.ExtensionOrBuilder>
+    java.util.List<? extends org.pivxj.wallet.Protos.ExtensionOrBuilder> 
         getExtensionOrBuilderList();
     /**
      * <code>repeated .wallet.Extension extension = 10;</code>
@@ -14624,7 +16591,6 @@ public final class Protos {
     org.pivxj.wallet.Protos.ExtensionOrBuilder getExtensionOrBuilder(
         int index);
 
-    // optional string description = 11;
     /**
      * <code>optional string description = 11;</code>
      *
@@ -14651,7 +16617,6 @@ public final class Protos {
     com.google.protobuf.ByteString
         getDescriptionBytes();
 
-    // optional uint64 key_rotation_time = 13;
     /**
      * <code>optional uint64 key_rotation_time = 13;</code>
      *
@@ -14673,11 +16638,10 @@ public final class Protos {
      */
     long getKeyRotationTime();
 
-    // repeated .wallet.Tag tags = 16;
     /**
      * <code>repeated .wallet.Tag tags = 16;</code>
      */
-    java.util.List<org.pivxj.wallet.Protos.Tag>
+    java.util.List<org.pivxj.wallet.Protos.Tag> 
         getTagsList();
     /**
      * <code>repeated .wallet.Tag tags = 16;</code>
@@ -14690,7 +16654,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Tag tags = 16;</code>
      */
-    java.util.List<? extends org.pivxj.wallet.Protos.TagOrBuilder>
+    java.util.List<? extends org.pivxj.wallet.Protos.TagOrBuilder> 
         getTagsOrBuilderList();
     /**
      * <code>repeated .wallet.Tag tags = 16;</code>
@@ -14698,7 +16662,6 @@ public final class Protos {
     org.pivxj.wallet.Protos.TagOrBuilder getTagsOrBuilder(
         int index);
 
-    // repeated .wallet.TransactionSigner transaction_signers = 17;
     /**
      * <code>repeated .wallet.TransactionSigner transaction_signers = 17;</code>
      *
@@ -14706,7 +16669,7 @@ public final class Protos {
      * transaction signers added to the wallet
      * </pre>
      */
-    java.util.List<org.pivxj.wallet.Protos.TransactionSigner>
+    java.util.List<org.pivxj.wallet.Protos.TransactionSigner> 
         getTransactionSignersList();
     /**
      * <code>repeated .wallet.TransactionSigner transaction_signers = 17;</code>
@@ -14731,7 +16694,7 @@ public final class Protos {
      * transaction signers added to the wallet
      * </pre>
      */
-    java.util.List<? extends org.pivxj.wallet.Protos.TransactionSignerOrBuilder>
+    java.util.List<? extends org.pivxj.wallet.Protos.TransactionSignerOrBuilder> 
         getTransactionSignersOrBuilderList();
     /**
      * <code>repeated .wallet.TransactionSigner transaction_signers = 17;</code>
@@ -14742,6 +16705,30 @@ public final class Protos {
      */
     org.pivxj.wallet.Protos.TransactionSignerOrBuilder getTransactionSignersOrBuilder(
         int index);
+
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    java.util.List<org.pivxj.wallet.Protos.Decoy> 
+        getDecoysSetList();
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    org.pivxj.wallet.Protos.Decoy getDecoysSet(int index);
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    int getDecoysSetCount();
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    java.util.List<? extends org.pivxj.wallet.Protos.DecoyOrBuilder> 
+        getDecoysSetOrBuilderList();
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    org.pivxj.wallet.Protos.DecoyOrBuilder getDecoysSetOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code wallet.Wallet}
@@ -14751,8 +16738,9 @@ public final class Protos {
    * </pre>
    */
   public static final class Wallet extends
-      com.google.protobuf.GeneratedMessage
-      implements WalletOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.Wallet)
+      WalletOrBuilder {
     // Use Wallet.newBuilder() to construct.
     private Wallet(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -14799,8 +16787,9 @@ public final class Protos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              networkIdentifier_ = input.readBytes();
+              networkIdentifier_ = bs;
               break;
             }
             case 18: {
@@ -14862,8 +16851,9 @@ public final class Protos {
               break;
             }
             case 90: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000080;
-              description_ = input.readBytes();
+              description_ = bs;
               break;
             }
             case 96: {
@@ -14905,6 +16895,14 @@ public final class Protos {
               transactionSigners_.add(input.readMessage(org.pivxj.wallet.Protos.TransactionSigner.PARSER, extensionRegistry));
               break;
             }
+            case 146: {
+              if (!((mutable_bitField0_ & 0x00008000) == 0x00008000)) {
+                decoysSet_ = new java.util.ArrayList<org.pivxj.wallet.Protos.Decoy>();
+                mutable_bitField0_ |= 0x00008000;
+              }
+              decoysSet_.add(input.readMessage(org.pivxj.wallet.Protos.Decoy.PARSER, extensionRegistry));
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -14930,6 +16928,9 @@ public final class Protos {
         }
         if (((mutable_bitField0_ & 0x00004000) == 0x00004000)) {
           transactionSigners_ = java.util.Collections.unmodifiableList(transactionSigners_);
+        }
+        if (((mutable_bitField0_ & 0x00008000) == 0x00008000)) {
+          decoysSet_ = java.util.Collections.unmodifiableList(decoysSet_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -14968,7 +16969,6 @@ public final class Protos {
      * <pre>
      **
      * The encryption type of the wallet.
-     *
      * The encryption type is UNENCRYPTED for wallets where the wallet does not support encryption - wallets prior to
      * encryption support are grandfathered in as this wallet type.
      * When a wallet is ENCRYPTED_SCRYPT_AES the keys are either encrypted with the wallet password or are unencrypted.
@@ -15070,7 +17070,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required string network_identifier = 1;
     public static final int NETWORK_IDENTIFIER_FIELD_NUMBER = 1;
     private java.lang.Object networkIdentifier_;
     /**
@@ -15125,7 +17124,6 @@ public final class Protos {
       }
     }
 
-    // optional bytes last_seen_block_hash = 2;
     public static final int LAST_SEEN_BLOCK_HASH_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString lastSeenBlockHash_;
     /**
@@ -15149,7 +17147,6 @@ public final class Protos {
       return lastSeenBlockHash_;
     }
 
-    // optional uint32 last_seen_block_height = 12;
     public static final int LAST_SEEN_BLOCK_HEIGHT_FIELD_NUMBER = 12;
     private int lastSeenBlockHeight_;
     /**
@@ -15173,7 +17170,6 @@ public final class Protos {
       return lastSeenBlockHeight_;
     }
 
-    // optional int64 last_seen_block_time_secs = 14;
     public static final int LAST_SEEN_BLOCK_TIME_SECS_FIELD_NUMBER = 14;
     private long lastSeenBlockTimeSecs_;
     /**
@@ -15189,7 +17185,6 @@ public final class Protos {
       return lastSeenBlockTimeSecs_;
     }
 
-    // repeated .wallet.Key key = 3;
     public static final int KEY_FIELD_NUMBER = 3;
     private java.util.List<org.pivxj.wallet.Protos.Key> key_;
     /**
@@ -15201,7 +17196,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Key key = 3;</code>
      */
-    public java.util.List<? extends org.pivxj.wallet.Protos.KeyOrBuilder>
+    public java.util.List<? extends org.pivxj.wallet.Protos.KeyOrBuilder> 
         getKeyOrBuilderList() {
       return key_;
     }
@@ -15225,7 +17220,6 @@ public final class Protos {
       return key_.get(index);
     }
 
-    // repeated .wallet.Transaction transaction = 4;
     public static final int TRANSACTION_FIELD_NUMBER = 4;
     private java.util.List<org.pivxj.wallet.Protos.Transaction> transaction_;
     /**
@@ -15237,7 +17231,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Transaction transaction = 4;</code>
      */
-    public java.util.List<? extends org.pivxj.wallet.Protos.TransactionOrBuilder>
+    public java.util.List<? extends org.pivxj.wallet.Protos.TransactionOrBuilder> 
         getTransactionOrBuilderList() {
       return transaction_;
     }
@@ -15261,7 +17255,6 @@ public final class Protos {
       return transaction_.get(index);
     }
 
-    // repeated .wallet.Script watched_script = 15;
     public static final int WATCHED_SCRIPT_FIELD_NUMBER = 15;
     private java.util.List<org.pivxj.wallet.Protos.Script> watchedScript_;
     /**
@@ -15273,7 +17266,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Script watched_script = 15;</code>
      */
-    public java.util.List<? extends org.pivxj.wallet.Protos.ScriptOrBuilder>
+    public java.util.List<? extends org.pivxj.wallet.Protos.ScriptOrBuilder> 
         getWatchedScriptOrBuilderList() {
       return watchedScript_;
     }
@@ -15297,7 +17290,6 @@ public final class Protos {
       return watchedScript_.get(index);
     }
 
-    // optional .wallet.Wallet.EncryptionType encryption_type = 5 [default = UNENCRYPTED];
     public static final int ENCRYPTION_TYPE_FIELD_NUMBER = 5;
     private org.pivxj.wallet.Protos.Wallet.EncryptionType encryptionType_;
     /**
@@ -15313,7 +17305,6 @@ public final class Protos {
       return encryptionType_;
     }
 
-    // optional .wallet.ScryptParameters encryption_parameters = 6;
     public static final int ENCRYPTION_PARAMETERS_FIELD_NUMBER = 6;
     private org.pivxj.wallet.Protos.ScryptParameters encryptionParameters_;
     /**
@@ -15335,7 +17326,6 @@ public final class Protos {
       return encryptionParameters_;
     }
 
-    // optional int32 version = 7 [default = 1];
     public static final int VERSION_FIELD_NUMBER = 7;
     private int version_;
     /**
@@ -15363,7 +17353,6 @@ public final class Protos {
       return version_;
     }
 
-    // repeated .wallet.Extension extension = 10;
     public static final int EXTENSION_FIELD_NUMBER = 10;
     private java.util.List<org.pivxj.wallet.Protos.Extension> extension_;
     /**
@@ -15375,7 +17364,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Extension extension = 10;</code>
      */
-    public java.util.List<? extends org.pivxj.wallet.Protos.ExtensionOrBuilder>
+    public java.util.List<? extends org.pivxj.wallet.Protos.ExtensionOrBuilder> 
         getExtensionOrBuilderList() {
       return extension_;
     }
@@ -15399,7 +17388,6 @@ public final class Protos {
       return extension_.get(index);
     }
 
-    // optional string description = 11;
     public static final int DESCRIPTION_FIELD_NUMBER = 11;
     private java.lang.Object description_;
     /**
@@ -15454,7 +17442,6 @@ public final class Protos {
       }
     }
 
-    // optional uint64 key_rotation_time = 13;
     public static final int KEY_ROTATION_TIME_FIELD_NUMBER = 13;
     private long keyRotationTime_;
     /**
@@ -15482,7 +17469,6 @@ public final class Protos {
       return keyRotationTime_;
     }
 
-    // repeated .wallet.Tag tags = 16;
     public static final int TAGS_FIELD_NUMBER = 16;
     private java.util.List<org.pivxj.wallet.Protos.Tag> tags_;
     /**
@@ -15494,7 +17480,7 @@ public final class Protos {
     /**
      * <code>repeated .wallet.Tag tags = 16;</code>
      */
-    public java.util.List<? extends org.pivxj.wallet.Protos.TagOrBuilder>
+    public java.util.List<? extends org.pivxj.wallet.Protos.TagOrBuilder> 
         getTagsOrBuilderList() {
       return tags_;
     }
@@ -15518,7 +17504,6 @@ public final class Protos {
       return tags_.get(index);
     }
 
-    // repeated .wallet.TransactionSigner transaction_signers = 17;
     public static final int TRANSACTION_SIGNERS_FIELD_NUMBER = 17;
     private java.util.List<org.pivxj.wallet.Protos.TransactionSigner> transactionSigners_;
     /**
@@ -15538,7 +17523,7 @@ public final class Protos {
      * transaction signers added to the wallet
      * </pre>
      */
-    public java.util.List<? extends org.pivxj.wallet.Protos.TransactionSignerOrBuilder>
+    public java.util.List<? extends org.pivxj.wallet.Protos.TransactionSignerOrBuilder> 
         getTransactionSignersOrBuilderList() {
       return transactionSigners_;
     }
@@ -15574,6 +17559,41 @@ public final class Protos {
       return transactionSigners_.get(index);
     }
 
+    public static final int DECOYSSET_FIELD_NUMBER = 18;
+    private java.util.List<org.pivxj.wallet.Protos.Decoy> decoysSet_;
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    public java.util.List<org.pivxj.wallet.Protos.Decoy> getDecoysSetList() {
+      return decoysSet_;
+    }
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    public java.util.List<? extends org.pivxj.wallet.Protos.DecoyOrBuilder> 
+        getDecoysSetOrBuilderList() {
+      return decoysSet_;
+    }
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    public int getDecoysSetCount() {
+      return decoysSet_.size();
+    }
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    public org.pivxj.wallet.Protos.Decoy getDecoysSet(int index) {
+      return decoysSet_.get(index);
+    }
+    /**
+     * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+     */
+    public org.pivxj.wallet.Protos.DecoyOrBuilder getDecoysSetOrBuilder(
+        int index) {
+      return decoysSet_.get(index);
+    }
+
     private void initFields() {
       networkIdentifier_ = "";
       lastSeenBlockHash_ = com.google.protobuf.ByteString.EMPTY;
@@ -15590,11 +17610,13 @@ public final class Protos {
       keyRotationTime_ = 0L;
       tags_ = java.util.Collections.emptyList();
       transactionSigners_ = java.util.Collections.emptyList();
+      decoysSet_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasNetworkIdentifier()) {
         memoizedIsInitialized = 0;
@@ -15638,6 +17660,12 @@ public final class Protos {
       }
       for (int i = 0; i < getTransactionSignersCount(); i++) {
         if (!getTransactionSigners(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      for (int i = 0; i < getDecoysSetCount(); i++) {
+        if (!getDecoysSet(i).isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -15693,6 +17721,9 @@ public final class Protos {
       }
       for (int i = 0; i < transactionSigners_.size(); i++) {
         output.writeMessage(17, transactionSigners_.get(i));
+      }
+      for (int i = 0; i < decoysSet_.size(); i++) {
+        output.writeMessage(18, decoysSet_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -15762,6 +17793,10 @@ public final class Protos {
       for (int i = 0; i < transactionSigners_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(17, transactionSigners_.get(i));
+      }
+      for (int i = 0; i < decoysSet_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(18, decoysSet_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -15849,8 +17884,9 @@ public final class Protos {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.WalletOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.Wallet)
+        org.pivxj.wallet.Protos.WalletOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_Wallet_descriptor;
@@ -15882,6 +17918,7 @@ public final class Protos {
           getExtensionFieldBuilder();
           getTagsFieldBuilder();
           getTransactionSignersFieldBuilder();
+          getDecoysSetFieldBuilder();
         }
       }
       private static Builder create() {
@@ -15947,6 +17984,12 @@ public final class Protos {
           bitField0_ = (bitField0_ & ~0x00004000);
         } else {
           transactionSignersBuilder_.clear();
+        }
+        if (decoysSetBuilder_ == null) {
+          decoysSet_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00008000);
+        } else {
+          decoysSetBuilder_.clear();
         }
         return this;
       }
@@ -16069,6 +18112,15 @@ public final class Protos {
           result.transactionSigners_ = transactionSigners_;
         } else {
           result.transactionSigners_ = transactionSignersBuilder_.build();
+        }
+        if (decoysSetBuilder_ == null) {
+          if (((bitField0_ & 0x00008000) == 0x00008000)) {
+            decoysSet_ = java.util.Collections.unmodifiableList(decoysSet_);
+            bitField0_ = (bitField0_ & ~0x00008000);
+          }
+          result.decoysSet_ = decoysSet_;
+        } else {
+          result.decoysSet_ = decoysSetBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -16273,6 +18325,32 @@ public final class Protos {
             }
           }
         }
+        if (decoysSetBuilder_ == null) {
+          if (!other.decoysSet_.isEmpty()) {
+            if (decoysSet_.isEmpty()) {
+              decoysSet_ = other.decoysSet_;
+              bitField0_ = (bitField0_ & ~0x00008000);
+            } else {
+              ensureDecoysSetIsMutable();
+              decoysSet_.addAll(other.decoysSet_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.decoysSet_.isEmpty()) {
+            if (decoysSetBuilder_.isEmpty()) {
+              decoysSetBuilder_.dispose();
+              decoysSetBuilder_ = null;
+              decoysSet_ = other.decoysSet_;
+              bitField0_ = (bitField0_ & ~0x00008000);
+              decoysSetBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getDecoysSetFieldBuilder() : null;
+            } else {
+              decoysSetBuilder_.addAllMessages(other.decoysSet_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -16324,6 +18402,12 @@ public final class Protos {
             return false;
           }
         }
+        for (int i = 0; i < getDecoysSetCount(); i++) {
+          if (!getDecoysSet(i).isInitialized()) {
+            
+            return false;
+          }
+        }
         return true;
       }
 
@@ -16346,7 +18430,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required string network_identifier = 1;
       private java.lang.Object networkIdentifier_ = "";
       /**
        * <code>required string network_identifier = 1;</code>
@@ -16368,9 +18451,12 @@ public final class Protos {
       public java.lang.String getNetworkIdentifier() {
         java.lang.Object ref = networkIdentifier_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          networkIdentifier_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            networkIdentifier_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -16444,7 +18530,6 @@ public final class Protos {
         return this;
       }
 
-      // optional bytes last_seen_block_hash = 2;
       private com.google.protobuf.ByteString lastSeenBlockHash_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes last_seen_block_hash = 2;</code>
@@ -16496,7 +18581,6 @@ public final class Protos {
         return this;
       }
 
-      // optional uint32 last_seen_block_height = 12;
       private int lastSeenBlockHeight_ ;
       /**
        * <code>optional uint32 last_seen_block_height = 12;</code>
@@ -16545,7 +18629,6 @@ public final class Protos {
         return this;
       }
 
-      // optional int64 last_seen_block_time_secs = 14;
       private long lastSeenBlockTimeSecs_ ;
       /**
        * <code>optional int64 last_seen_block_time_secs = 14;</code>
@@ -16578,7 +18661,6 @@ public final class Protos {
         return this;
       }
 
-      // repeated .wallet.Key key = 3;
       private java.util.List<org.pivxj.wallet.Protos.Key> key_ =
         java.util.Collections.emptyList();
       private void ensureKeyIsMutable() {
@@ -16720,7 +18802,8 @@ public final class Protos {
           java.lang.Iterable<? extends org.pivxj.wallet.Protos.Key> values) {
         if (keyBuilder_ == null) {
           ensureKeyIsMutable();
-          super.addAll(values, key_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, key_);
           onChanged();
         } else {
           keyBuilder_.addAllMessages(values);
@@ -16773,7 +18856,7 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Key key = 3;</code>
        */
-      public java.util.List<? extends org.pivxj.wallet.Protos.KeyOrBuilder>
+      public java.util.List<? extends org.pivxj.wallet.Protos.KeyOrBuilder> 
            getKeyOrBuilderList() {
         if (keyBuilder_ != null) {
           return keyBuilder_.getMessageOrBuilderList();
@@ -16799,12 +18882,12 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Key key = 3;</code>
        */
-      public java.util.List<org.pivxj.wallet.Protos.Key.Builder>
+      public java.util.List<org.pivxj.wallet.Protos.Key.Builder> 
            getKeyBuilderList() {
         return getKeyFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.pivxj.wallet.Protos.Key, org.pivxj.wallet.Protos.Key.Builder, org.pivxj.wallet.Protos.KeyOrBuilder>
+          org.pivxj.wallet.Protos.Key, org.pivxj.wallet.Protos.Key.Builder, org.pivxj.wallet.Protos.KeyOrBuilder> 
           getKeyFieldBuilder() {
         if (keyBuilder_ == null) {
           keyBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -16818,7 +18901,6 @@ public final class Protos {
         return keyBuilder_;
       }
 
-      // repeated .wallet.Transaction transaction = 4;
       private java.util.List<org.pivxj.wallet.Protos.Transaction> transaction_ =
         java.util.Collections.emptyList();
       private void ensureTransactionIsMutable() {
@@ -16960,7 +19042,8 @@ public final class Protos {
           java.lang.Iterable<? extends org.pivxj.wallet.Protos.Transaction> values) {
         if (transactionBuilder_ == null) {
           ensureTransactionIsMutable();
-          super.addAll(values, transaction_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, transaction_);
           onChanged();
         } else {
           transactionBuilder_.addAllMessages(values);
@@ -17013,7 +19096,7 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Transaction transaction = 4;</code>
        */
-      public java.util.List<? extends org.pivxj.wallet.Protos.TransactionOrBuilder>
+      public java.util.List<? extends org.pivxj.wallet.Protos.TransactionOrBuilder> 
            getTransactionOrBuilderList() {
         if (transactionBuilder_ != null) {
           return transactionBuilder_.getMessageOrBuilderList();
@@ -17039,12 +19122,12 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Transaction transaction = 4;</code>
        */
-      public java.util.List<org.pivxj.wallet.Protos.Transaction.Builder>
+      public java.util.List<org.pivxj.wallet.Protos.Transaction.Builder> 
            getTransactionBuilderList() {
         return getTransactionFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.pivxj.wallet.Protos.Transaction, org.pivxj.wallet.Protos.Transaction.Builder, org.pivxj.wallet.Protos.TransactionOrBuilder>
+          org.pivxj.wallet.Protos.Transaction, org.pivxj.wallet.Protos.Transaction.Builder, org.pivxj.wallet.Protos.TransactionOrBuilder> 
           getTransactionFieldBuilder() {
         if (transactionBuilder_ == null) {
           transactionBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -17058,7 +19141,6 @@ public final class Protos {
         return transactionBuilder_;
       }
 
-      // repeated .wallet.Script watched_script = 15;
       private java.util.List<org.pivxj.wallet.Protos.Script> watchedScript_ =
         java.util.Collections.emptyList();
       private void ensureWatchedScriptIsMutable() {
@@ -17200,7 +19282,8 @@ public final class Protos {
           java.lang.Iterable<? extends org.pivxj.wallet.Protos.Script> values) {
         if (watchedScriptBuilder_ == null) {
           ensureWatchedScriptIsMutable();
-          super.addAll(values, watchedScript_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, watchedScript_);
           onChanged();
         } else {
           watchedScriptBuilder_.addAllMessages(values);
@@ -17253,7 +19336,7 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Script watched_script = 15;</code>
        */
-      public java.util.List<? extends org.pivxj.wallet.Protos.ScriptOrBuilder>
+      public java.util.List<? extends org.pivxj.wallet.Protos.ScriptOrBuilder> 
            getWatchedScriptOrBuilderList() {
         if (watchedScriptBuilder_ != null) {
           return watchedScriptBuilder_.getMessageOrBuilderList();
@@ -17279,12 +19362,12 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Script watched_script = 15;</code>
        */
-      public java.util.List<org.pivxj.wallet.Protos.Script.Builder>
+      public java.util.List<org.pivxj.wallet.Protos.Script.Builder> 
            getWatchedScriptBuilderList() {
         return getWatchedScriptFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.pivxj.wallet.Protos.Script, org.pivxj.wallet.Protos.Script.Builder, org.pivxj.wallet.Protos.ScriptOrBuilder>
+          org.pivxj.wallet.Protos.Script, org.pivxj.wallet.Protos.Script.Builder, org.pivxj.wallet.Protos.ScriptOrBuilder> 
           getWatchedScriptFieldBuilder() {
         if (watchedScriptBuilder_ == null) {
           watchedScriptBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -17298,7 +19381,6 @@ public final class Protos {
         return watchedScriptBuilder_;
       }
 
-      // optional .wallet.Wallet.EncryptionType encryption_type = 5 [default = UNENCRYPTED];
       private org.pivxj.wallet.Protos.Wallet.EncryptionType encryptionType_ = org.pivxj.wallet.Protos.Wallet.EncryptionType.UNENCRYPTED;
       /**
        * <code>optional .wallet.Wallet.EncryptionType encryption_type = 5 [default = UNENCRYPTED];</code>
@@ -17334,7 +19416,6 @@ public final class Protos {
         return this;
       }
 
-      // optional .wallet.ScryptParameters encryption_parameters = 6;
       private org.pivxj.wallet.Protos.ScryptParameters encryptionParameters_ = org.pivxj.wallet.Protos.ScryptParameters.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.pivxj.wallet.Protos.ScryptParameters, org.pivxj.wallet.Protos.ScryptParameters.Builder, org.pivxj.wallet.Protos.ScryptParametersOrBuilder> encryptionParametersBuilder_;
@@ -17438,12 +19519,12 @@ public final class Protos {
        * <code>optional .wallet.ScryptParameters encryption_parameters = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          org.pivxj.wallet.Protos.ScryptParameters, org.pivxj.wallet.Protos.ScryptParameters.Builder, org.pivxj.wallet.Protos.ScryptParametersOrBuilder>
+          org.pivxj.wallet.Protos.ScryptParameters, org.pivxj.wallet.Protos.ScryptParameters.Builder, org.pivxj.wallet.Protos.ScryptParametersOrBuilder> 
           getEncryptionParametersFieldBuilder() {
         if (encryptionParametersBuilder_ == null) {
           encryptionParametersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.pivxj.wallet.Protos.ScryptParameters, org.pivxj.wallet.Protos.ScryptParameters.Builder, org.pivxj.wallet.Protos.ScryptParametersOrBuilder>(
-                  encryptionParameters_,
+                  getEncryptionParameters(),
                   getParentForChildren(),
                   isClean());
           encryptionParameters_ = null;
@@ -17451,7 +19532,6 @@ public final class Protos {
         return encryptionParametersBuilder_;
       }
 
-      // optional int32 version = 7 [default = 1];
       private int version_ = 1;
       /**
        * <code>optional int32 version = 7 [default = 1];</code>
@@ -17508,7 +19588,6 @@ public final class Protos {
         return this;
       }
 
-      // repeated .wallet.Extension extension = 10;
       private java.util.List<org.pivxj.wallet.Protos.Extension> extension_ =
         java.util.Collections.emptyList();
       private void ensureExtensionIsMutable() {
@@ -17650,7 +19729,8 @@ public final class Protos {
           java.lang.Iterable<? extends org.pivxj.wallet.Protos.Extension> values) {
         if (extensionBuilder_ == null) {
           ensureExtensionIsMutable();
-          super.addAll(values, extension_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, extension_);
           onChanged();
         } else {
           extensionBuilder_.addAllMessages(values);
@@ -17703,7 +19783,7 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Extension extension = 10;</code>
        */
-      public java.util.List<? extends org.pivxj.wallet.Protos.ExtensionOrBuilder>
+      public java.util.List<? extends org.pivxj.wallet.Protos.ExtensionOrBuilder> 
            getExtensionOrBuilderList() {
         if (extensionBuilder_ != null) {
           return extensionBuilder_.getMessageOrBuilderList();
@@ -17729,12 +19809,12 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Extension extension = 10;</code>
        */
-      public java.util.List<org.pivxj.wallet.Protos.Extension.Builder>
+      public java.util.List<org.pivxj.wallet.Protos.Extension.Builder> 
            getExtensionBuilderList() {
         return getExtensionFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.pivxj.wallet.Protos.Extension, org.pivxj.wallet.Protos.Extension.Builder, org.pivxj.wallet.Protos.ExtensionOrBuilder>
+          org.pivxj.wallet.Protos.Extension, org.pivxj.wallet.Protos.Extension.Builder, org.pivxj.wallet.Protos.ExtensionOrBuilder> 
           getExtensionFieldBuilder() {
         if (extensionBuilder_ == null) {
           extensionBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -17748,7 +19828,6 @@ public final class Protos {
         return extensionBuilder_;
       }
 
-      // optional string description = 11;
       private java.lang.Object description_ = "";
       /**
        * <code>optional string description = 11;</code>
@@ -17770,9 +19849,12 @@ public final class Protos {
       public java.lang.String getDescription() {
         java.lang.Object ref = description_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          description_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            description_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -17846,7 +19928,6 @@ public final class Protos {
         return this;
       }
 
-      // optional uint64 key_rotation_time = 13;
       private long keyRotationTime_ ;
       /**
        * <code>optional uint64 key_rotation_time = 13;</code>
@@ -17903,7 +19984,6 @@ public final class Protos {
         return this;
       }
 
-      // repeated .wallet.Tag tags = 16;
       private java.util.List<org.pivxj.wallet.Protos.Tag> tags_ =
         java.util.Collections.emptyList();
       private void ensureTagsIsMutable() {
@@ -18045,7 +20125,8 @@ public final class Protos {
           java.lang.Iterable<? extends org.pivxj.wallet.Protos.Tag> values) {
         if (tagsBuilder_ == null) {
           ensureTagsIsMutable();
-          super.addAll(values, tags_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, tags_);
           onChanged();
         } else {
           tagsBuilder_.addAllMessages(values);
@@ -18098,7 +20179,7 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Tag tags = 16;</code>
        */
-      public java.util.List<? extends org.pivxj.wallet.Protos.TagOrBuilder>
+      public java.util.List<? extends org.pivxj.wallet.Protos.TagOrBuilder> 
            getTagsOrBuilderList() {
         if (tagsBuilder_ != null) {
           return tagsBuilder_.getMessageOrBuilderList();
@@ -18124,12 +20205,12 @@ public final class Protos {
       /**
        * <code>repeated .wallet.Tag tags = 16;</code>
        */
-      public java.util.List<org.pivxj.wallet.Protos.Tag.Builder>
+      public java.util.List<org.pivxj.wallet.Protos.Tag.Builder> 
            getTagsBuilderList() {
         return getTagsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.pivxj.wallet.Protos.Tag, org.pivxj.wallet.Protos.Tag.Builder, org.pivxj.wallet.Protos.TagOrBuilder>
+          org.pivxj.wallet.Protos.Tag, org.pivxj.wallet.Protos.Tag.Builder, org.pivxj.wallet.Protos.TagOrBuilder> 
           getTagsFieldBuilder() {
         if (tagsBuilder_ == null) {
           tagsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -18143,7 +20224,6 @@ public final class Protos {
         return tagsBuilder_;
       }
 
-      // repeated .wallet.TransactionSigner transaction_signers = 17;
       private java.util.List<org.pivxj.wallet.Protos.TransactionSigner> transactionSigners_ =
         java.util.Collections.emptyList();
       private void ensureTransactionSignersIsMutable() {
@@ -18325,7 +20405,8 @@ public final class Protos {
           java.lang.Iterable<? extends org.pivxj.wallet.Protos.TransactionSigner> values) {
         if (transactionSignersBuilder_ == null) {
           ensureTransactionSignersIsMutable();
-          super.addAll(values, transactionSigners_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, transactionSigners_);
           onChanged();
         } else {
           transactionSignersBuilder_.addAllMessages(values);
@@ -18398,7 +20479,7 @@ public final class Protos {
        * transaction signers added to the wallet
        * </pre>
        */
-      public java.util.List<? extends org.pivxj.wallet.Protos.TransactionSignerOrBuilder>
+      public java.util.List<? extends org.pivxj.wallet.Protos.TransactionSignerOrBuilder> 
            getTransactionSignersOrBuilderList() {
         if (transactionSignersBuilder_ != null) {
           return transactionSignersBuilder_.getMessageOrBuilderList();
@@ -18436,12 +20517,12 @@ public final class Protos {
        * transaction signers added to the wallet
        * </pre>
        */
-      public java.util.List<org.pivxj.wallet.Protos.TransactionSigner.Builder>
+      public java.util.List<org.pivxj.wallet.Protos.TransactionSigner.Builder> 
            getTransactionSignersBuilderList() {
         return getTransactionSignersFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.pivxj.wallet.Protos.TransactionSigner, org.pivxj.wallet.Protos.TransactionSigner.Builder, org.pivxj.wallet.Protos.TransactionSignerOrBuilder>
+          org.pivxj.wallet.Protos.TransactionSigner, org.pivxj.wallet.Protos.TransactionSigner.Builder, org.pivxj.wallet.Protos.TransactionSignerOrBuilder> 
           getTransactionSignersFieldBuilder() {
         if (transactionSignersBuilder_ == null) {
           transactionSignersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -18455,6 +20536,246 @@ public final class Protos {
         return transactionSignersBuilder_;
       }
 
+      private java.util.List<org.pivxj.wallet.Protos.Decoy> decoysSet_ =
+        java.util.Collections.emptyList();
+      private void ensureDecoysSetIsMutable() {
+        if (!((bitField0_ & 0x00008000) == 0x00008000)) {
+          decoysSet_ = new java.util.ArrayList<org.pivxj.wallet.Protos.Decoy>(decoysSet_);
+          bitField0_ |= 0x00008000;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          org.pivxj.wallet.Protos.Decoy, org.pivxj.wallet.Protos.Decoy.Builder, org.pivxj.wallet.Protos.DecoyOrBuilder> decoysSetBuilder_;
+
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public java.util.List<org.pivxj.wallet.Protos.Decoy> getDecoysSetList() {
+        if (decoysSetBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(decoysSet_);
+        } else {
+          return decoysSetBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public int getDecoysSetCount() {
+        if (decoysSetBuilder_ == null) {
+          return decoysSet_.size();
+        } else {
+          return decoysSetBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public org.pivxj.wallet.Protos.Decoy getDecoysSet(int index) {
+        if (decoysSetBuilder_ == null) {
+          return decoysSet_.get(index);
+        } else {
+          return decoysSetBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public Builder setDecoysSet(
+          int index, org.pivxj.wallet.Protos.Decoy value) {
+        if (decoysSetBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDecoysSetIsMutable();
+          decoysSet_.set(index, value);
+          onChanged();
+        } else {
+          decoysSetBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public Builder setDecoysSet(
+          int index, org.pivxj.wallet.Protos.Decoy.Builder builderForValue) {
+        if (decoysSetBuilder_ == null) {
+          ensureDecoysSetIsMutable();
+          decoysSet_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          decoysSetBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public Builder addDecoysSet(org.pivxj.wallet.Protos.Decoy value) {
+        if (decoysSetBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDecoysSetIsMutable();
+          decoysSet_.add(value);
+          onChanged();
+        } else {
+          decoysSetBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public Builder addDecoysSet(
+          int index, org.pivxj.wallet.Protos.Decoy value) {
+        if (decoysSetBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDecoysSetIsMutable();
+          decoysSet_.add(index, value);
+          onChanged();
+        } else {
+          decoysSetBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public Builder addDecoysSet(
+          org.pivxj.wallet.Protos.Decoy.Builder builderForValue) {
+        if (decoysSetBuilder_ == null) {
+          ensureDecoysSetIsMutable();
+          decoysSet_.add(builderForValue.build());
+          onChanged();
+        } else {
+          decoysSetBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public Builder addDecoysSet(
+          int index, org.pivxj.wallet.Protos.Decoy.Builder builderForValue) {
+        if (decoysSetBuilder_ == null) {
+          ensureDecoysSetIsMutable();
+          decoysSet_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          decoysSetBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public Builder addAllDecoysSet(
+          java.lang.Iterable<? extends org.pivxj.wallet.Protos.Decoy> values) {
+        if (decoysSetBuilder_ == null) {
+          ensureDecoysSetIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, decoysSet_);
+          onChanged();
+        } else {
+          decoysSetBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public Builder clearDecoysSet() {
+        if (decoysSetBuilder_ == null) {
+          decoysSet_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00008000);
+          onChanged();
+        } else {
+          decoysSetBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public Builder removeDecoysSet(int index) {
+        if (decoysSetBuilder_ == null) {
+          ensureDecoysSetIsMutable();
+          decoysSet_.remove(index);
+          onChanged();
+        } else {
+          decoysSetBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public org.pivxj.wallet.Protos.Decoy.Builder getDecoysSetBuilder(
+          int index) {
+        return getDecoysSetFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public org.pivxj.wallet.Protos.DecoyOrBuilder getDecoysSetOrBuilder(
+          int index) {
+        if (decoysSetBuilder_ == null) {
+          return decoysSet_.get(index);  } else {
+          return decoysSetBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public java.util.List<? extends org.pivxj.wallet.Protos.DecoyOrBuilder> 
+           getDecoysSetOrBuilderList() {
+        if (decoysSetBuilder_ != null) {
+          return decoysSetBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(decoysSet_);
+        }
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public org.pivxj.wallet.Protos.Decoy.Builder addDecoysSetBuilder() {
+        return getDecoysSetFieldBuilder().addBuilder(
+            org.pivxj.wallet.Protos.Decoy.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public org.pivxj.wallet.Protos.Decoy.Builder addDecoysSetBuilder(
+          int index) {
+        return getDecoysSetFieldBuilder().addBuilder(
+            index, org.pivxj.wallet.Protos.Decoy.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .wallet.Decoy decoysSet = 18;</code>
+       */
+      public java.util.List<org.pivxj.wallet.Protos.Decoy.Builder> 
+           getDecoysSetBuilderList() {
+        return getDecoysSetFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          org.pivxj.wallet.Protos.Decoy, org.pivxj.wallet.Protos.Decoy.Builder, org.pivxj.wallet.Protos.DecoyOrBuilder> 
+          getDecoysSetFieldBuilder() {
+        if (decoysSetBuilder_ == null) {
+          decoysSetBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              org.pivxj.wallet.Protos.Decoy, org.pivxj.wallet.Protos.Decoy.Builder, org.pivxj.wallet.Protos.DecoyOrBuilder>(
+                  decoysSet_,
+                  ((bitField0_ & 0x00008000) == 0x00008000),
+                  getParentForChildren(),
+                  isClean());
+          decoysSet_ = null;
+        }
+        return decoysSetBuilder_;
+      }
+
       // @@protoc_insertion_point(builder_scope:wallet.Wallet)
     }
 
@@ -18466,10 +20787,10 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.Wallet)
   }
 
-  public interface ExchangeRateOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ExchangeRateOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:wallet.ExchangeRate)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required int64 coin_value = 1;
     /**
      * <code>required int64 coin_value = 1;</code>
      *
@@ -18487,7 +20808,6 @@ public final class Protos {
      */
     long getCoinValue();
 
-    // required int64 fiat_value = 2;
     /**
      * <code>required int64 fiat_value = 2;</code>
      *
@@ -18505,7 +20825,6 @@ public final class Protos {
      */
     long getFiatValue();
 
-    // required string fiat_currency_code = 3;
     /**
      * <code>required string fiat_currency_code = 3;</code>
      *
@@ -18540,8 +20859,9 @@ public final class Protos {
    * </pre>
    */
   public static final class ExchangeRate extends
-      com.google.protobuf.GeneratedMessage
-      implements ExchangeRateOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:wallet.ExchangeRate)
+      ExchangeRateOrBuilder {
     // Use ExchangeRate.newBuilder() to construct.
     private ExchangeRate(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -18598,8 +20918,9 @@ public final class Protos {
               break;
             }
             case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              fiatCurrencyCode_ = input.readBytes();
+              fiatCurrencyCode_ = bs;
               break;
             }
           }
@@ -18642,7 +20963,6 @@ public final class Protos {
     }
 
     private int bitField0_;
-    // required int64 coin_value = 1;
     public static final int COIN_VALUE_FIELD_NUMBER = 1;
     private long coinValue_;
     /**
@@ -18666,7 +20986,6 @@ public final class Protos {
       return coinValue_;
     }
 
-    // required int64 fiat_value = 2;
     public static final int FIAT_VALUE_FIELD_NUMBER = 2;
     private long fiatValue_;
     /**
@@ -18690,7 +21009,6 @@ public final class Protos {
       return fiatValue_;
     }
 
-    // required string fiat_currency_code = 3;
     public static final int FIAT_CURRENCY_CODE_FIELD_NUMBER = 3;
     private java.lang.Object fiatCurrencyCode_;
     /**
@@ -18753,7 +21071,8 @@ public final class Protos {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasCoinValue()) {
         memoizedIsInitialized = 0;
@@ -18890,8 +21209,9 @@ public final class Protos {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.pivxj.wallet.Protos.ExchangeRateOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:wallet.ExchangeRate)
+        org.pivxj.wallet.Protos.ExchangeRateOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.pivxj.wallet.Protos.internal_static_wallet_ExchangeRate_descriptor;
@@ -19036,7 +21356,6 @@ public final class Protos {
       }
       private int bitField0_;
 
-      // required int64 coin_value = 1;
       private long coinValue_ ;
       /**
        * <code>required int64 coin_value = 1;</code>
@@ -19085,7 +21404,6 @@ public final class Protos {
         return this;
       }
 
-      // required int64 fiat_value = 2;
       private long fiatValue_ ;
       /**
        * <code>required int64 fiat_value = 2;</code>
@@ -19134,7 +21452,6 @@ public final class Protos {
         return this;
       }
 
-      // required string fiat_currency_code = 3;
       private java.lang.Object fiatCurrencyCode_ = "";
       /**
        * <code>required string fiat_currency_code = 3;</code>
@@ -19156,9 +21473,12 @@ public final class Protos {
       public java.lang.String getFiatCurrencyCode() {
         java.lang.Object ref = fiatCurrencyCode_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          fiatCurrencyCode_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            fiatCurrencyCode_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -19243,77 +21563,82 @@ public final class Protos {
     // @@protoc_insertion_point(class_scope:wallet.ExchangeRate)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_PeerAddress_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_PeerAddress_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_EncryptedData_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_EncryptedData_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_DeterministicKey_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_DeterministicKey_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_Key_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_Key_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_Script_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_Script_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_TransactionInput_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_TransactionInput_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_TransactionOutput_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_TransactionOutput_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_TransactionConfidence_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_TransactionConfidence_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_Transaction_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_Transaction_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_ScryptParameters_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_ScryptParameters_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_Extension_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_Extension_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_Tag_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_Tag_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_TransactionSigner_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_TransactionSigner_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_wallet_Decoy_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_wallet_Decoy_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_Wallet_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_wallet_Wallet_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_wallet_ExchangeRate_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -19346,173 +21671,189 @@ public final class Protos {
       "\n\004Type\022\014\n\010ORIGINAL\020\001\022\030\n\024ENCRYPTED_SCRYPT" +
       "_AES\020\002\022\032\n\026DETERMINISTIC_MNEMONIC\020\003\022\025\n\021DE" +
       "TERMINISTIC_KEY\020\004\"5\n\006Script\022\017\n\007program\030\001" +
-      " \002(\014\022\032\n\022creation_timestamp\030\002 \002(\003\"\222\001\n\020Tra",
-      "nsactionInput\022\"\n\032transaction_out_point_h" +
-      "ash\030\001 \002(\014\022#\n\033transaction_out_point_index" +
-      "\030\002 \002(\r\022\024\n\014script_bytes\030\003 \002(\014\022\020\n\010sequence" +
-      "\030\004 \001(\r\022\r\n\005value\030\005 \001(\003\"\177\n\021TransactionOutp" +
-      "ut\022\r\n\005value\030\001 \002(\003\022\024\n\014script_bytes\030\002 \002(\014\022" +
-      "!\n\031spent_by_transaction_hash\030\003 \001(\014\022\"\n\032sp" +
-      "ent_by_transaction_index\030\004 \001(\005\"\254\004\n\025Trans" +
-      "actionConfidence\0220\n\004type\030\001 \001(\0162\".wallet." +
-      "TransactionConfidence.Type\022\032\n\022appeared_a" +
-      "t_height\030\002 \001(\005\022\036\n\026overriding_transaction",
-      "\030\003 \001(\014\022\r\n\005depth\030\004 \001(\005\022)\n\014broadcast_by\030\006 " +
-      "\003(\0132\023.wallet.PeerAddress\022\033\n\023last_broadca" +
-      "sted_at\030\010 \001(\003\0224\n\006source\030\007 \001(\0162$.wallet.T" +
-      "ransactionConfidence.Source\022=\n\006ixType\030\023 " +
-      "\001(\0162$.wallet.TransactionConfidence.IXTyp" +
-      "e:\007IX_NONE\"`\n\004Type\022\013\n\007UNKNOWN\020\000\022\014\n\010BUILD" +
-      "ING\020\001\022\013\n\007PENDING\020\002\022\025\n\021NOT_IN_BEST_CHAIN\020" +
-      "\003\022\010\n\004DEAD\020\004\022\017\n\013IN_CONFLICT\020\005\"A\n\006Source\022\022" +
-      "\n\016SOURCE_UNKNOWN\020\000\022\022\n\016SOURCE_NETWORK\020\001\022\017" +
-      "\n\013SOURCE_SELF\020\002\"4\n\006IXType\022\013\n\007IX_NONE\020\000\022\016",
-      "\n\nIX_REQUEST\020\001\022\r\n\tIX_LOCKED\020\002\"\303\005\n\013Transa" +
-      "ction\022\017\n\007version\030\001 \002(\005\022\014\n\004hash\030\002 \002(\014\022&\n\004" +
-      "pool\030\003 \001(\0162\030.wallet.Transaction.Pool\022\021\n\t" +
-      "lock_time\030\004 \001(\r\022\022\n\nupdated_at\030\005 \001(\003\0223\n\021t" +
-      "ransaction_input\030\006 \003(\0132\030.wallet.Transact" +
-      "ionInput\0225\n\022transaction_output\030\007 \003(\0132\031.w" +
-      "allet.TransactionOutput\022\022\n\nblock_hash\030\010 " +
-      "\003(\014\022 \n\030block_relativity_offsets\030\013 \003(\005\0221\n" +
-      "\nconfidence\030\t \001(\0132\035.wallet.TransactionCo" +
-      "nfidence\0225\n\007purpose\030\n \001(\0162\033.wallet.Trans",
-      "action.Purpose:\007UNKNOWN\022+\n\rexchange_rate" +
-      "\030\014 \001(\0132\024.wallet.ExchangeRate\022\014\n\004memo\030\r \001" +
-      "(\t\"Y\n\004Pool\022\013\n\007UNSPENT\020\004\022\t\n\005SPENT\020\005\022\014\n\010IN" +
-      "ACTIVE\020\002\022\010\n\004DEAD\020\n\022\013\n\007PENDING\020\020\022\024\n\020PENDI" +
-      "NG_INACTIVE\020\022\"\243\001\n\007Purpose\022\013\n\007UNKNOWN\020\000\022\020" +
-      "\n\014USER_PAYMENT\020\001\022\020\n\014KEY_ROTATION\020\002\022\034\n\030AS" +
-      "SURANCE_CONTRACT_CLAIM\020\003\022\035\n\031ASSURANCE_CO" +
-      "NTRACT_PLEDGE\020\004\022\033\n\027ASSURANCE_CONTRACT_ST" +
-      "UB\020\005\022\r\n\tRAISE_FEE\020\006\"N\n\020ScryptParameters\022" +
-      "\014\n\004salt\030\001 \002(\014\022\020\n\001n\030\002 \001(\003:\00516384\022\014\n\001r\030\003 \001",
-      "(\005:\0018\022\014\n\001p\030\004 \001(\005:\0011\"8\n\tExtension\022\n\n\002id\030\001" +
-      " \002(\t\022\014\n\004data\030\002 \002(\014\022\021\n\tmandatory\030\003 \002(\010\" \n" +
-      "\003Tag\022\013\n\003tag\030\001 \002(\t\022\014\n\004data\030\002 \002(\014\"5\n\021Trans" +
-      "actionSigner\022\022\n\nclass_name\030\001 \002(\t\022\014\n\004data" +
-      "\030\002 \001(\014\"\351\004\n\006Wallet\022\032\n\022network_identifier\030" +
-      "\001 \002(\t\022\034\n\024last_seen_block_hash\030\002 \001(\014\022\036\n\026l" +
-      "ast_seen_block_height\030\014 \001(\r\022!\n\031last_seen" +
-      "_block_time_secs\030\016 \001(\003\022\030\n\003key\030\003 \003(\0132\013.wa" +
-      "llet.Key\022(\n\013transaction\030\004 \003(\0132\023.wallet.T" +
-      "ransaction\022&\n\016watched_script\030\017 \003(\0132\016.wal",
-      "let.Script\022C\n\017encryption_type\030\005 \001(\0162\035.wa" +
-      "llet.Wallet.EncryptionType:\013UNENCRYPTED\022" +
-      "7\n\025encryption_parameters\030\006 \001(\0132\030.wallet." +
-      "ScryptParameters\022\022\n\007version\030\007 \001(\005:\0011\022$\n\t" +
-      "extension\030\n \003(\0132\021.wallet.Extension\022\023\n\013de" +
-      "scription\030\013 \001(\t\022\031\n\021key_rotation_time\030\r \001" +
-      "(\004\022\031\n\004tags\030\020 \003(\0132\013.wallet.Tag\0226\n\023transac" +
-      "tion_signers\030\021 \003(\0132\031.wallet.TransactionS" +
-      "igner\";\n\016EncryptionType\022\017\n\013UNENCRYPTED\020\001" +
-      "\022\030\n\024ENCRYPTED_SCRYPT_AES\020\002\"R\n\014ExchangeRa",
-      "te\022\022\n\ncoin_value\030\001 \002(\003\022\022\n\nfiat_value\030\002 \002" +
-      "(\003\022\032\n\022fiat_currency_code\030\003 \002(\tB\035\n\023org.bi" +
-      "tcoinj.walletB\006Protos"
+      " \002(\014\022\032\n\022creation_timestamp\030\002 \002(\003\"\210\002\n\020Tra",
+      "nsactionInput\022#\n\033transaction_out_points_" +
+      "hash\030\001 \003(\014\022$\n\034transaction_out_points_ind" +
+      "ex\030\002 \003(\r\022\021\n\trealIndex\030\003 \001(\r\022\024\n\014script_by" +
+      "tes\030\004 \002(\014\022\020\n\010sequence\030\005 \001(\r\022\r\n\005value\030\006 \001" +
+      "(\003\022\t\n\001s\030\007 \001(\014\022\t\n\001R\030\010 \001(\014\022\025\n\rencryptionKe" +
+      "y\030\t \001(\014\022\020\n\010keyImage\030\n \001(\014\022 \n\030masternodeS" +
+      "tealthAddress\030\013 \001(\014\"\261\002\n\021TransactionOutpu" +
+      "t\022\r\n\005value\030\001 \002(\003\022\024\n\014script_bytes\030\002 \002(\014\022!" +
+      "\n\031spent_by_transaction_hash\030\003 \001(\014\022\"\n\032spe" +
+      "nt_by_transaction_index\030\004 \001(\005\022\021\n\trealInd",
+      "ex\030\005 \002(\005\022\016\n\006txPriv\030\006 \001(\014\022\r\n\005txPub\030\007 \002(\014\022" +
+      "\022\n\ncommitment\030\010 \002(\014\022\014\n\004mask\030\t \002(\014\022 \n\030mas" +
+      "ternodeStealthAddress\030\n \001(\014\022\016\n\006amount\030\013 " +
+      "\002(\014\022\023\n\013decodedMask\030\014 \002(\014\022\025\n\rdecodedAmoun" +
+      "t\030\r \002(\003\"\254\004\n\025TransactionConfidence\0220\n\004typ" +
+      "e\030\001 \001(\0162\".wallet.TransactionConfidence.T" +
+      "ype\022\032\n\022appeared_at_height\030\002 \001(\005\022\036\n\026overr" +
+      "iding_transaction\030\003 \001(\014\022\r\n\005depth\030\004 \001(\005\022)" +
+      "\n\014broadcast_by\030\006 \003(\0132\023.wallet.PeerAddres" +
+      "s\022\033\n\023last_broadcasted_at\030\010 \001(\003\0224\n\006source",
+      "\030\007 \001(\0162$.wallet.TransactionConfidence.So" +
+      "urce\022=\n\006ixType\030\023 \001(\0162$.wallet.Transactio" +
+      "nConfidence.IXType:\007IX_NONE\"`\n\004Type\022\013\n\007U" +
+      "NKNOWN\020\000\022\014\n\010BUILDING\020\001\022\013\n\007PENDING\020\002\022\025\n\021N" +
+      "OT_IN_BEST_CHAIN\020\003\022\010\n\004DEAD\020\004\022\017\n\013IN_CONFL" +
+      "ICT\020\005\"A\n\006Source\022\022\n\016SOURCE_UNKNOWN\020\000\022\022\n\016S" +
+      "OURCE_NETWORK\020\001\022\017\n\013SOURCE_SELF\020\002\"4\n\006IXTy" +
+      "pe\022\013\n\007IX_NONE\020\000\022\016\n\nIX_REQUEST\020\001\022\r\n\tIX_LO" +
+      "CKED\020\002\"\303\005\n\013Transaction\022\017\n\007version\030\001 \002(\005\022" +
+      "\014\n\004hash\030\002 \002(\014\022&\n\004pool\030\003 \001(\0162\030.wallet.Tra",
+      "nsaction.Pool\022\021\n\tlock_time\030\004 \001(\r\022\022\n\nupda" +
+      "ted_at\030\005 \001(\003\0223\n\021transaction_input\030\006 \003(\0132" +
+      "\030.wallet.TransactionInput\0225\n\022transaction" +
+      "_output\030\007 \003(\0132\031.wallet.TransactionOutput" +
+      "\022\022\n\nblock_hash\030\010 \003(\014\022 \n\030block_relativity" +
+      "_offsets\030\013 \003(\005\0221\n\nconfidence\030\t \001(\0132\035.wal" +
+      "let.TransactionConfidence\0225\n\007purpose\030\n \001" +
+      "(\0162\033.wallet.Transaction.Purpose:\007UNKNOWN" +
+      "\022+\n\rexchange_rate\030\014 \001(\0132\024.wallet.Exchang" +
+      "eRate\022\014\n\004memo\030\r \001(\t\"Y\n\004Pool\022\013\n\007UNSPENT\020\004",
+      "\022\t\n\005SPENT\020\005\022\014\n\010INACTIVE\020\002\022\010\n\004DEAD\020\n\022\013\n\007P" +
+      "ENDING\020\020\022\024\n\020PENDING_INACTIVE\020\022\"\243\001\n\007Purpo" +
+      "se\022\013\n\007UNKNOWN\020\000\022\020\n\014USER_PAYMENT\020\001\022\020\n\014KEY" +
+      "_ROTATION\020\002\022\034\n\030ASSURANCE_CONTRACT_CLAIM\020" +
+      "\003\022\035\n\031ASSURANCE_CONTRACT_PLEDGE\020\004\022\033\n\027ASSU" +
+      "RANCE_CONTRACT_STUB\020\005\022\r\n\tRAISE_FEE\020\006\"N\n\020" +
+      "ScryptParameters\022\014\n\004salt\030\001 \002(\014\022\020\n\001n\030\002 \001(" +
+      "\003:\00516384\022\014\n\001r\030\003 \001(\005:\0018\022\014\n\001p\030\004 \001(\005:\0011\"8\n\t" +
+      "Extension\022\n\n\002id\030\001 \002(\t\022\014\n\004data\030\002 \002(\014\022\021\n\tm" +
+      "andatory\030\003 \002(\010\" \n\003Tag\022\013\n\003tag\030\001 \002(\t\022\014\n\004da",
+      "ta\030\002 \002(\014\"5\n\021TransactionSigner\022\022\n\nclass_n" +
+      "ame\030\001 \002(\t\022\014\n\004data\030\002 \001(\014\"H\n\005Decoy\022\014\n\004hash" +
+      "\030\001 \002(\014\022\r\n\005index\030\002 \002(\r\022\022\n\ncommitment\030\003 \002(" +
+      "\014\022\016\n\006pubkey\030\004 \002(\014\"\213\005\n\006Wallet\022\032\n\022network_" +
+      "identifier\030\001 \002(\t\022\034\n\024last_seen_block_hash" +
+      "\030\002 \001(\014\022\036\n\026last_seen_block_height\030\014 \001(\r\022!" +
+      "\n\031last_seen_block_time_secs\030\016 \001(\003\022\030\n\003key" +
+      "\030\003 \003(\0132\013.wallet.Key\022(\n\013transaction\030\004 \003(\013" +
+      "2\023.wallet.Transaction\022&\n\016watched_script\030" +
+      "\017 \003(\0132\016.wallet.Script\022C\n\017encryption_type",
+      "\030\005 \001(\0162\035.wallet.Wallet.EncryptionType:\013U" +
+      "NENCRYPTED\0227\n\025encryption_parameters\030\006 \001(" +
+      "\0132\030.wallet.ScryptParameters\022\022\n\007version\030\007" +
+      " \001(\005:\0011\022$\n\textension\030\n \003(\0132\021.wallet.Exte" +
+      "nsion\022\023\n\013description\030\013 \001(\t\022\031\n\021key_rotati" +
+      "on_time\030\r \001(\004\022\031\n\004tags\030\020 \003(\0132\013.wallet.Tag" +
+      "\0226\n\023transaction_signers\030\021 \003(\0132\031.wallet.T" +
+      "ransactionSigner\022 \n\tdecoysSet\030\022 \003(\0132\r.wa" +
+      "llet.Decoy\";\n\016EncryptionType\022\017\n\013UNENCRYP" +
+      "TED\020\001\022\030\n\024ENCRYPTED_SCRYPT_AES\020\002\"R\n\014Excha",
+      "ngeRate\022\022\n\ncoin_value\030\001 \002(\003\022\022\n\nfiat_valu" +
+      "e\030\002 \002(\003\022\032\n\022fiat_currency_code\030\003 \002(\tB\032\n\020o" +
+      "rg.pivxj.walletB\006Protos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_wallet_PeerAddress_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_wallet_PeerAddress_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_PeerAddress_descriptor,
-              new java.lang.String[] { "IpAddress", "Port", "Services", });
-          internal_static_wallet_EncryptedData_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_wallet_EncryptedData_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_EncryptedData_descriptor,
-              new java.lang.String[] { "InitialisationVector", "EncryptedPrivateKey", });
-          internal_static_wallet_DeterministicKey_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_wallet_DeterministicKey_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_DeterministicKey_descriptor,
-              new java.lang.String[] { "ChainCode", "Path", "IssuedSubkeys", "LookaheadSize", "IsFollowing", "SigsRequiredToSpend", });
-          internal_static_wallet_Key_descriptor =
-            getDescriptor().getMessageTypes().get(3);
-          internal_static_wallet_Key_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_Key_descriptor,
-              new java.lang.String[] { "Type", "SecretBytes", "EncryptedData", "PublicKey", "Label", "CreationTimestamp", "DeterministicKey", "DeterministicSeed", "EncryptedDeterministicSeed", });
-          internal_static_wallet_Script_descriptor =
-            getDescriptor().getMessageTypes().get(4);
-          internal_static_wallet_Script_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_Script_descriptor,
-              new java.lang.String[] { "Program", "CreationTimestamp", });
-          internal_static_wallet_TransactionInput_descriptor =
-            getDescriptor().getMessageTypes().get(5);
-          internal_static_wallet_TransactionInput_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_TransactionInput_descriptor,
-              new java.lang.String[] { "TransactionOutPointHash", "TransactionOutPointIndex", "ScriptBytes", "Sequence", "Value", });
-          internal_static_wallet_TransactionOutput_descriptor =
-            getDescriptor().getMessageTypes().get(6);
-          internal_static_wallet_TransactionOutput_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_TransactionOutput_descriptor,
-              new java.lang.String[] { "Value", "ScriptBytes", "SpentByTransactionHash", "SpentByTransactionIndex", });
-          internal_static_wallet_TransactionConfidence_descriptor =
-            getDescriptor().getMessageTypes().get(7);
-          internal_static_wallet_TransactionConfidence_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_TransactionConfidence_descriptor,
-              new java.lang.String[] { "Type", "AppearedAtHeight", "OverridingTransaction", "Depth", "BroadcastBy", "LastBroadcastedAt", "Source", "IxType", });
-          internal_static_wallet_Transaction_descriptor =
-            getDescriptor().getMessageTypes().get(8);
-          internal_static_wallet_Transaction_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_Transaction_descriptor,
-              new java.lang.String[] { "Version", "Hash", "Pool", "LockTime", "UpdatedAt", "TransactionInput", "TransactionOutput", "BlockHash", "BlockRelativityOffsets", "Confidence", "Purpose", "ExchangeRate", "Memo", });
-          internal_static_wallet_ScryptParameters_descriptor =
-            getDescriptor().getMessageTypes().get(9);
-          internal_static_wallet_ScryptParameters_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_ScryptParameters_descriptor,
-              new java.lang.String[] { "Salt", "N", "R", "P", });
-          internal_static_wallet_Extension_descriptor =
-            getDescriptor().getMessageTypes().get(10);
-          internal_static_wallet_Extension_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_Extension_descriptor,
-              new java.lang.String[] { "Id", "Data", "Mandatory", });
-          internal_static_wallet_Tag_descriptor =
-            getDescriptor().getMessageTypes().get(11);
-          internal_static_wallet_Tag_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_Tag_descriptor,
-              new java.lang.String[] { "Tag", "Data", });
-          internal_static_wallet_TransactionSigner_descriptor =
-            getDescriptor().getMessageTypes().get(12);
-          internal_static_wallet_TransactionSigner_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_TransactionSigner_descriptor,
-              new java.lang.String[] { "ClassName", "Data", });
-          internal_static_wallet_Wallet_descriptor =
-            getDescriptor().getMessageTypes().get(13);
-          internal_static_wallet_Wallet_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_Wallet_descriptor,
-              new java.lang.String[] { "NetworkIdentifier", "LastSeenBlockHash", "LastSeenBlockHeight", "LastSeenBlockTimeSecs", "Key", "Transaction", "WatchedScript", "EncryptionType", "EncryptionParameters", "Version", "Extension", "Description", "KeyRotationTime", "Tags", "TransactionSigners", });
-          internal_static_wallet_ExchangeRate_descriptor =
-            getDescriptor().getMessageTypes().get(14);
-          internal_static_wallet_ExchangeRate_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_wallet_ExchangeRate_descriptor,
-              new java.lang.String[] { "CoinValue", "FiatValue", "FiatCurrencyCode", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_wallet_PeerAddress_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_wallet_PeerAddress_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_PeerAddress_descriptor,
+        new java.lang.String[] { "IpAddress", "Port", "Services", });
+    internal_static_wallet_EncryptedData_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_wallet_EncryptedData_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_EncryptedData_descriptor,
+        new java.lang.String[] { "InitialisationVector", "EncryptedPrivateKey", });
+    internal_static_wallet_DeterministicKey_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_wallet_DeterministicKey_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_DeterministicKey_descriptor,
+        new java.lang.String[] { "ChainCode", "Path", "IssuedSubkeys", "LookaheadSize", "IsFollowing", "SigsRequiredToSpend", });
+    internal_static_wallet_Key_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_wallet_Key_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_Key_descriptor,
+        new java.lang.String[] { "Type", "SecretBytes", "EncryptedData", "PublicKey", "Label", "CreationTimestamp", "DeterministicKey", "DeterministicSeed", "EncryptedDeterministicSeed", });
+    internal_static_wallet_Script_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_wallet_Script_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_Script_descriptor,
+        new java.lang.String[] { "Program", "CreationTimestamp", });
+    internal_static_wallet_TransactionInput_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_wallet_TransactionInput_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_TransactionInput_descriptor,
+        new java.lang.String[] { "TransactionOutPointsHash", "TransactionOutPointsIndex", "RealIndex", "ScriptBytes", "Sequence", "Value", "S", "R", "EncryptionKey", "KeyImage", "MasternodeStealthAddress", });
+    internal_static_wallet_TransactionOutput_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_wallet_TransactionOutput_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_TransactionOutput_descriptor,
+        new java.lang.String[] { "Value", "ScriptBytes", "SpentByTransactionHash", "SpentByTransactionIndex", "RealIndex", "TxPriv", "TxPub", "Commitment", "Mask", "MasternodeStealthAddress", "Amount", "DecodedMask", "DecodedAmount", });
+    internal_static_wallet_TransactionConfidence_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_wallet_TransactionConfidence_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_TransactionConfidence_descriptor,
+        new java.lang.String[] { "Type", "AppearedAtHeight", "OverridingTransaction", "Depth", "BroadcastBy", "LastBroadcastedAt", "Source", "IxType", });
+    internal_static_wallet_Transaction_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_wallet_Transaction_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_Transaction_descriptor,
+        new java.lang.String[] { "Version", "Hash", "Pool", "LockTime", "UpdatedAt", "TransactionInput", "TransactionOutput", "BlockHash", "BlockRelativityOffsets", "Confidence", "Purpose", "ExchangeRate", "Memo", });
+    internal_static_wallet_ScryptParameters_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_wallet_ScryptParameters_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_ScryptParameters_descriptor,
+        new java.lang.String[] { "Salt", "N", "R", "P", });
+    internal_static_wallet_Extension_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_wallet_Extension_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_Extension_descriptor,
+        new java.lang.String[] { "Id", "Data", "Mandatory", });
+    internal_static_wallet_Tag_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_wallet_Tag_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_Tag_descriptor,
+        new java.lang.String[] { "Tag", "Data", });
+    internal_static_wallet_TransactionSigner_descriptor =
+      getDescriptor().getMessageTypes().get(12);
+    internal_static_wallet_TransactionSigner_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_TransactionSigner_descriptor,
+        new java.lang.String[] { "ClassName", "Data", });
+    internal_static_wallet_Decoy_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_wallet_Decoy_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_Decoy_descriptor,
+        new java.lang.String[] { "Hash", "Index", "Commitment", "Pubkey", });
+    internal_static_wallet_Wallet_descriptor =
+      getDescriptor().getMessageTypes().get(14);
+    internal_static_wallet_Wallet_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_Wallet_descriptor,
+        new java.lang.String[] { "NetworkIdentifier", "LastSeenBlockHash", "LastSeenBlockHeight", "LastSeenBlockTimeSecs", "Key", "Transaction", "WatchedScript", "EncryptionType", "EncryptionParameters", "Version", "Extension", "Description", "KeyRotationTime", "Tags", "TransactionSigners", "DecoysSet", });
+    internal_static_wallet_ExchangeRate_descriptor =
+      getDescriptor().getMessageTypes().get(15);
+    internal_static_wallet_ExchangeRate_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_wallet_ExchangeRate_descriptor,
+        new java.lang.String[] { "CoinValue", "FiatValue", "FiatCurrencyCode", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

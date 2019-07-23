@@ -40,12 +40,12 @@ public class FilteringCoinSelector implements CoinSelector {
     }
 
     @Override
-    public CoinSelection select(Coin target, List<TransactionOutput> candidates) {
+    public CoinSelection select(Wallet wallet, Coin target, List<TransactionOutput> candidates) {
         Iterator<TransactionOutput> iter = candidates.iterator();
         while (iter.hasNext()) {
             TransactionOutput output = iter.next();
             if (spent.contains(output.getOutPointFor())) iter.remove();
         }
-        return delegate.select(target, candidates);
+        return delegate.select(wallet, target, candidates);
     }
 }

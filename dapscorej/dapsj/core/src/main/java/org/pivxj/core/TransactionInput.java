@@ -67,7 +67,7 @@ public class TransactionInput extends ChildMessage {
     //ECDH key used for encrypting/decrypting the transaction amount
     //it is only not NULL when the prevout is used for staking to prove the transaction amount
     public byte[] encryptionKey;   //33bytes
-    LazyECPoint keyImage;   
+    public LazyECPoint keyImage;   
     public ArrayList<TransactionOutPoint> decoys;
     public byte[] masternodeStealthAddress;
     

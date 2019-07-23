@@ -102,6 +102,7 @@ public class Wallet extends BaseTaggableObject
     implements NewBestBlockListener, TransactionReceivedInBlockListener, PeerFilterProvider, KeyBag, TransactionBag, ReorganizeListener {
     private static final Logger log = LoggerFactory.getLogger(Wallet.class);
     private static final int MINIMUM_BLOOM_DATA_LENGTH = 8;
+    private static final int MAX_DECOY_SET_SIZE = 300;
 
     // Ordering: lock > keyChainGroupLock. KeyChainGroup is protected separately to allow fast querying of current receive address
     // even if the wallet itself is busy e.g. saving or processing a big reorg. Useful for reducing UI latency.
@@ -134,6 +135,31 @@ public class Wallet extends BaseTaggableObject
 
     // All transactions together.
     protected final Map<Sha256Hash, Transaction> transactions;
+    
+    public static class Decoy {
+    	public Sha256Hash hash;
+    	public int index;
+    	public byte[] commitment;
+    	public byte[] pubKey;
+    	public Decoy(Sha256Hash _hash, int _index, byte[] _commitment, byte[] _pubkey) {
+    		hash = _hash;
+    		index = _index;
+    		commitment = _commitment;
+    		pubKey = _pubkey;
+    	}
+    }
+    
+    public static class ValueMask {
+    	public Coin value;
+    	public byte[] mask;
+    	public ValueMask(Coin c, byte[] m) {
+    		value = c;
+    		mask = m;
+    	}
+    }
+    
+    protected final Map<String, Decoy> decoySet;
+    protected final Map<String, ValueMask> valueMap;
 
     // All the TransactionOutput objects that we could spend (ignoring whether we have the private key or not).
     // Used to speed up various calculations.
@@ -282,6 +308,23 @@ public class Wallet extends BaseTaggableObject
         watchKey.setCreationTimeSeconds(creationTimeSeconds);
         return fromWatchingKey(params, watchKey,keyChainType);
     }
+    
+    public void addToDecoySet(Decoy d) {
+    	decoySet.put(d.hash.toString() + d.index, d);
+    	if (decoySet.size() > MAX_DECOY_SET_SIZE) {
+    		int rand = new Random().nextInt(MAX_DECOY_SET_SIZE);
+    		Decoy[] clone = (Decoy[])decoySet.keySet().toArray().clone();
+    		removeFromDecoySet(clone[rand]);
+    	}
+    }
+    
+    public void removeFromDecoySet(String k) {
+    	decoySet.remove(k);
+    }
+    
+    public void removeFromDecoySet(Decoy d) {
+    	decoySet.remove(d.hash.toString() + d.index);
+    }
 
     /**
      * Creates a wallet containing a given set of keys. All further keys will be derived from the oldest key.
@@ -318,6 +361,8 @@ public class Wallet extends BaseTaggableObject
         pending = new HashMap<Sha256Hash, Transaction>();
         dead = new HashMap<Sha256Hash, Transaction>();
         transactions = new HashMap<Sha256Hash, Transaction>();
+        decoySet = new HashMap<String, Decoy>();
+        valueMap = new HashMap<String, ValueMask>();
         extensions = new HashMap<String, WalletExtension>();
         // Use a linked hash map to ensure ordering of event listeners is correct.
         confidenceChanged = new LinkedHashMap<Transaction, TransactionConfidence.Listener.ChangeReason>();
@@ -440,18 +485,19 @@ public class Wallet extends BaseTaggableObject
     	
     	//test istransactionforme
     	Transaction tx = new Transaction(this.params, Utils.HEX.decode("01000000016d1ee448c3184630046b734eb38ebf6c6f0bc23732c6244a5680fa8c0691f74d0100000000ffffffff0021027626b86bd8d7725dc66a44c26244f3622c20ed2b40b5aab6820f2b80d65e6f6e0be922ea24684c03f7046e77a0a9b1dae1c79bc7c671ed5eabe34fac1de137fe9b010000006d1ee448c3184630046b734eb38ebf6c6f0bc23732c6244a5680fa8c0691f74d020000006d1ee448c3184630046b734eb38ebf6c6f0bc23732c6244a5680fa8c0691f74d030000003874cc282cfca137292203b231964b011368e9dfee9cc46e6ef8183f03a0198e010000003874cc282cfca137292203b231964b011368e9dfee9cc46e6ef8183f03a0198e02000000b744788ac91f9bed772341e6899c7d584a4b0dbc193a8cfd96827e3f18003b5101000000b744788ac91f9bed772341e6899c7d584a4b0dbc193a8cfd96827e3f18003b5102000000b744788ac91f9bed772341e6899c7d584a4b0dbc193a8cfd96827e3f18003b510300000030d79bcbabb28eee026db5de930f097ed44876811ee2710fe2db48ef457f904b0100000030d79bcbabb28eee026db5de930f097ed44876811ee2710fe2db48ef457f904b0200000030d79bcbabb28eee026db5de930f097ed44876811ee2710fe2db48ef457f904b030000000000000200000000000000002321030ce2edce0e3b65f34e45ac0c70c2418397940934ac835592656ef16d4cf79a66ac0021023478b7f0e9a21dbd47ae4611c6d7864fc1da3c38f0f0bd5f10b920d8a82b7552edb191a42a5c72f65d8b2d691891603aa5a0a45a2742b58e7eaebb435a9546255c7947390616c830bc4325d1ae3bed1bd641144b4f924a58dbcfcd1da6c3739930a4ceb9657dc107345ffffe7ce67fcafb7fc5ee004e2d79bef1a15b75f234580021086f1b7c7188ffd1fa3fc8351047596e497ded76a686b274c894cf20703bcc905c00000000000000002321032425097a85828bedf0127adabde60e39a80be25955ec2b5a62677c664d8812caac002103d273265c5dea4f2d34d3a1c40113c27f93ea7f84456858017ceaad3d766dec3132a5968ab5a5816dbd81e9061e9c1b31c603c29f5c7eff28ea14d7eae189cd28ef84271a308d50419edb5f698c4fff9b5216f4eff4e6f6525297f98e6e27397580ed70208223879daeb53c41a0f5b1aff763cd5973e8e49c692ce65e2dfab6ca002109a63752180e165a46d3a8ac33ea095be0630e697394c6062959b90617e30c6ab0000000000000000000fde302f3b63c4fee2861319c8a6ca2aabe08c53d4cdfeb4e039ea5b72a458aa8f116afb334d78a0a317f9f2e16994a0e27703dce30ac04ea0811f518cd66c3f77401a605654a815526dae310b6c822f29c69dbe55260224f5c0ec10d4429c56950212d829d95d28e543d823cdb14e1b289363ffcf9438c2028f177c59c1488508cbdf24e7a8798eb04232c7b8a7672aecb9d5c44f5073cff7ce32425d8bad59fe7dfa81ef116a08aecdd41dc6e67c2df558d8371d1998a7810a8e4cd92a08e0673369834ef8451de0696fce7e8a6241a6d29118309ee19659e07b008642873c66e90c1933e9db8a9aca9802422555630b0e025d39a337f8ebb747de476a161d6aedf1f800cd288c8c0c0e5275785e6935cee37bbadc6a5234cd3d3f2b5ef8c7e2e7b13de4ae3eb867e472ce738fea8fed7f378f3648aea2e56797858770578400015d901e4e9a564ad7c6c68d3510374368d5088e4ae7b896d2e30512b68f3e7238c250f260bf6d9d3ab21376994b76c8d93bc97bfcd8bde008bbd0b2503d79d88209786039b87844ef40ca3e4d964d4316eecc635d4402a0d2fb194b881d24fc70ef2b5ee95fd7d519d04374b507dae80011e059847fb5aa1336d5611f045b8d29e6bc26b5c2da650097ccefc1ebce6b777c12603133c23032ddea50e241b2823c72513d6449872658027c8cd9582a64ffdef007e7206a332d9feef9a6f484994a5809270f6cf2d84927081b7eec298ef788ba2f162ef313a6831029b4323edb206c58f7c88d441e7dceb3422b29b2f73257a46c051d095014bb7a1077a50899f6df5c4b3a739a8d1c96c994c21de4d53573c4ec6b9c527895e915ac5029af85e73b3346257d427229e4c34554042f2f232e698210e54c28f3070ac505b9771592dbdbdf2bc471d7256803a5f570f2ee108b50f97f603c28e049c2aaa8fc3deb593356b64a51dd22b3c70141dd2d9bada4de72293dd1357c05a53312a40974784cd48fb33d1ed69aabb46a53fb0ccfc0656632c060d7670f0c50d07e9162dcb66a9fc7b075a1058d70100000000189dbd0f00e27153460167305e68238c1679162eee6c5daede445492a51aa9a40c02efe6794ddadab3d17a47cdca4313d12830120941ea1820d8eb6e219812e3eaca5d97632a7449f85885d262a51d16bb74db39c6fa6e9a07bdc519bb08e2bdad130229d97989ef8d590dcef06e531d2f33989131f3a6e5c8ffa775516470df74d2ddf5fe0c18a3489ca4c86c9da1f48cf6e4175cf35a497cf912c9b5ddc746b28e1202864f1d7889deb4d5bb1c094bd854a55079955dc64ccbef3e2ffb9aedc3e54f385df59abbba9070f741d05ae0b7a4ec6961627093fcbd330b86c0c4a08a82f0e2028682a6db7e79bb76f06c3ceb6886567ef144e8329aa3b1b070641b1bcd01021050919cd109404569f9eb499d08c6c614dc73b0609363f37a19ecc5ea3e5a728602b374475ead854f56e1aa40b9cf207321b65df2dd6a9d3803e3823ed009f98951d1fadef750044a67432b238ebe0748e7cbce11fd308371a33641705c9f66c88502719498d62a26fca7dd9da7e7b211795b3448add5c27ffa517f7e86bddf335ffa72776bf99a50b2035410137719f3730560000767e18f378814bd69d2b321037c02c2dedf55bc0ab1da2783ac41711d82c6ba5814f9a8049fbb617f34a6bdbfb06bd3bed6b95a43f8983b4c941146a34d6104a8bf5ae8b118be23196cd6a13ce2a202090708215e4ba9764835bff8482a72ac3ce1a644ca3a6dfaebed7bef95cab4ca7e24f929ae93cc87340e2a81d5b8e60e504760a93284e849bd6d7ad1be2dae4e0215f5495ba88fc39fd973cf9b6fa63294aa05b8ef6b3e6dd913ab83e165aa77a5b48474d8844cf2bf1bf7a99bb8529ded5a6981450b33472705c9b212af17124102dc5d2bf48bd037b4a2a6706dca5d2263f7dcf6da5f05c76f7f2e8e7aff208ea24357552de5d176a561ac76866745ce0646888da7d8c3f1508a35adc7442a3c3a0286d806634d68eba0343de37c065c8503e612456c1ecd97049113566e0077ed7a0399fc0c4a9e8245ca162a7f82b25ceef9bbb079e7277916bddf69dcdb119657023b2d07d057a40c651134be949b2c117bbb06b9623b624b77c1beba3d0c254a824156c5c4f5203aab4e41039edce8dc3e5b790b66e2c59884cbe3d688b2195e3921023bf649239b07b283120dc2561980c4e28eb9c3eb302dec6ff226c765649b1c0b"));
-    	if (isTransactionForMe(tx) ) {
+    	if (isTransactionForMe(tx, Sha256Hash.wrap("5bf4bedf85ddb080e17dc32d7b74f1fe5fe3e63321b16fc16d6f46bfeeb1aca1"), 47095) ) {
     		System.out.println("Successfully test");
     	}
     	return addr;
     }
     
-    public boolean isTransactionForMe(Transaction tx) {
+    public boolean isTransactionForMe(Transaction tx, Sha256Hash blockHash, int chainHeight) {
+    	lock.lock();
     	ECKey spend = currentReceiveKey();
     	ECKey view = currentViewKey();
-
+    	boolean found = false;
         for (TransactionOutput out: tx.getOutputs()) {
-            if (out.isEmpty()) {
+            if (out.isEmpty() || out.txPub == null || out.txPub.length == 0) {
                 continue;
             }
             byte[] txPub = out.txPub;
@@ -464,18 +510,82 @@ public class Wallet extends BaseTaggableObject
             LazyECPoint le = new LazyECPoint(ECKey.CURVE.getCurve(), txPub);
            
             ECPoint arEP = le.multiply(view.getPrivKey().mod(ECKey.CURVE.getN()));
+            
             byte[] aR = arEP.getEncoded(true);
             byte[] HS = Sha256Hash.hashTwice(aR);
-                        
-            BigInteger key = new BigInteger(HS).add(spend.getPrivKey()).mod(ECKey.CURVE.getN());
-            
+                                    
+            BigInteger spendB = spend.getPrivKey();
+
+            BigInteger key = ECKey.fromPrivate(Utils.bigIntegerToBytes(spendB, 32), true).getPrivKey().add(ECKey.fromPrivate(HS, true).getPrivKey());
+            System.out.println("KeyB = " + Utils.HEX.encode(Utils.bigIntegerToBytes(key, 32)));
             byte[] outPubKey = out.getScriptPubKey().getPubKey();
-            byte[] temp = expectedDes.getEncoded(true);//ECKey.fromPrivate(key).getPubKey();
-            if (outPubKey == temp) {
-            	importKey(ECKey.fromPrivate(key));
-            }
+            byte[] temp = ECKey.fromPrivate(key, true).getPubKey();
+            if (Arrays.equals(outPubKey, temp)) {
+            	importKey(ECKey.fromPrivate(key, true));
+            	//reveal amount
+                byte[] masked = new byte[32];
+                revealValue(out, masked);
+                found = true;
+            } 
         }
-    	return true;
+        
+        if (found) {
+        	if (blockHash != null) {
+        		TransactionConfidence confidence = Context.get().getConfidenceTable().getOrCreate(tx.getHash());
+        		confidence.setAppearedAtChainHeight(chainHeight);
+        		confidence.setConfidenceType(ConfidenceType.BUILDING);
+        		confidence.setDepthInBlocks(getLastBlockSeenHeight() - chainHeight + 1);
+        	}
+        	try {
+        		addWalletTransaction(Pool.UNSPENT, tx);
+        	} finally {
+				//do nothing as the transaction is already in the pool
+			}
+        }
+        lock.unlock();
+    	return found;
+    }
+    
+    @Override
+    public long getValue(TransactionOutput out) {
+    	byte[] marked = new byte[32];
+    	return revealValue(out, marked);
+    }
+    
+    public long revealValue(TransactionOutput out, byte[] masked) {
+    	if (valueMap.containsKey(out.getParentTransaction().getHashAsString() + out.getIndex())) {
+    		System.arraycopy(valueMap.get(out.getHash().toString() + out.getIndex()).mask, 0, masked, 0, masked.length);
+    		return valueMap.get(out.getHash().toString() + out.getIndex()).value.value;
+    	}
+    	
+    	if (findKeyFromPubKey(out.getScriptPubKey().getPubKey()) == null) {
+    		return 0;
+    	}
+    	
+    	LazyECPoint le = new LazyECPoint(ECKey.CURVE.getCurve(), out.txPub);
+        
+        ECPoint arEP = le.multiply(currentViewKey().getPrivKey().mod(ECKey.CURVE.getN()));
+        byte[] aR = arEP.getEncoded(true);
+        byte[] HS = Sha256Hash.hashTwice(aR);
+        
+        byte[] sharedSec1 = HS;
+        byte[] sharedSec2 = Sha256Hash.hashTwice(sharedSec1);
+        System.arraycopy(Utils.reverseBytes(out.maskValue.mask.getBytes()), 0, masked, 0, 32);
+        byte[] amount = new byte[32];
+      
+        for (int i = 0;i < 32; i++) {
+            masked[i] = (byte)(masked[i]^sharedSec1[i]);
+        }
+        
+        byte[] tempAmount = Utils.reverseBytes(out.maskValue.amount.getBytes());
+        for (int i = 0;i < 32; i++) {
+            amount[i] = (byte)(tempAmount[i%8]^sharedSec2[i]);
+        }
+        byte[] amountB = new byte[8];
+        System.arraycopy(amount, 0, amountB, 0, 8);
+        long val = new BigInteger(Utils.reverseBytes(amountB)).longValue();
+        valueMap.put(out.getHash().toString() + out.getIndex(), new ValueMask(Coin.valueOf(val), masked));
+        return val;
     }
     
     public static String add1s(String s, int wantedSize) {
@@ -1834,6 +1944,19 @@ public class Wallet extends BaseTaggableObject
             lock.unlock();
         }
     }
+    
+    private boolean makeRingCT(Transaction tx) {
+    	return true;
+    }
+    
+    public static byte[] createCommitment(BigInteger blind, long val) {
+    	Peder
+    	return null;
+    }
+    
+    public static byte[] createCommitment(long val) {
+    	return null;
+    }
 
     /**
      * <p>Called when we have found a transaction (via network broadcast or otherwise) that is relevant to this wallet
@@ -1848,7 +1971,7 @@ public class Wallet extends BaseTaggableObject
      * arbitrary transactions. Note that transactions added in this way will still be relayed to peers and appear in
      * transaction lists like any other pending transaction (even when not relevant).</p>
      */
-    public void receivePending(Transaction tx, @Nullable List<Transaction> dependencies, boolean overrideIsRelevant) throws VerificationException {
+     public void receivePending(Transaction tx, @Nullable List<Transaction> dependencies, boolean overrideIsRelevant) throws VerificationException {
         // Can run in a peer thread. This method will only be called if a prior call to isPendingTransactionRelevant
         // returned true, so we already know by this point that it sends coins to or from our wallet, or is a double
         // spend against one of our other pending transactions.
@@ -3114,7 +3237,10 @@ public class Wallet extends BaseTaggableObject
         switch (pool) {
         case UNSPENT:
             //case INSTANTX_LOCKED:
-            if (unspent.containsKey(tx.getHash())) System.out.println("Unspent pool contains: "+tx.getHashAsString());
+            if (unspent.containsKey(tx.getHash())) {
+            	System.out.println("Unspent pool contains: "+tx.getHashAsString());
+            	unspent.remove(tx.getHash());
+            }
             checkState(unspent.put(tx.getHash(), tx) == null);
             break;
         case SPENT:
@@ -3750,12 +3876,13 @@ public class Wallet extends BaseTaggableObject
         try {
             if (balanceType == BalanceType.AVAILABLE || balanceType == BalanceType.AVAILABLE_SPENDABLE) {
                 List<TransactionOutput> candidates = calculateAllSpendCandidates(true, balanceType == BalanceType.AVAILABLE_SPENDABLE);
-                CoinSelection selection = coinSelector.select(NetworkParameters.MAX_MONEY, candidates);
+                CoinSelection selection = coinSelector.select(this, NetworkParameters.MAX_MONEY, candidates);
                 return selection.valueGathered;
             } else if (balanceType == BalanceType.ESTIMATED || balanceType == BalanceType.ESTIMATED_SPENDABLE) {
                 List<TransactionOutput> all = calculateAllSpendCandidates(false, balanceType == BalanceType.ESTIMATED_SPENDABLE);
                 Coin value = Coin.ZERO;
-                for (TransactionOutput out : all) value = value.add(out.getValue());
+                byte[] masked = new byte[32];
+                for (TransactionOutput out : all) value = value.add(Coin.valueOf(revealValue(out, masked)));
                 return value;
             } else {
                 throw new AssertionError("Unknown balance type");  // Unreachable.
@@ -3775,7 +3902,7 @@ public class Wallet extends BaseTaggableObject
         try {
             checkNotNull(selector);
             List<TransactionOutput> candidates = calculateAllSpendCandidates(true, false);
-            CoinSelection selection = selector.select(params.getMaxMoney(), candidates);
+            CoinSelection selection = selector.select(this, params.getMaxMoney(), candidates);
             return selection.valueGathered;
         } finally {
             lock.unlock();
@@ -4224,7 +4351,7 @@ public class Wallet extends BaseTaggableObject
                 // of the total value we can currently spend as determined by the selector, and then subtracting the fee.
                 checkState(req.tx.getOutputs().size() == 1, "Empty wallet TX must have a single output only.");
                 CoinSelector selector = req.coinSelector == null ? coinSelector : req.coinSelector;
-                bestCoinSelection = selector.select(params.getMaxMoney(), candidates);
+                bestCoinSelection = selector.select(this, params.getMaxMoney(), candidates);
                 candidates = null;  // Selector took ownership and might have changed candidates. Don't access again.
                 req.tx.getOutput(0).setValue(bestCoinSelection.valueGathered);
                 log.info("  emptying {}", bestCoinSelection.valueGathered.toFriendlyString());
@@ -5113,7 +5240,7 @@ public class Wallet extends BaseTaggableObject
             // Of the coins we could spend, pick some that we actually will spend.
             CoinSelector selector = req.coinSelector == null ? coinSelector : req.coinSelector;
             // selector is allowed to modify candidates list.
-            CoinSelection selection = selector.select(valueNeeded, new LinkedList<TransactionOutput>(candidates));
+            CoinSelection selection = selector.select(this, valueNeeded, new LinkedList<TransactionOutput>(candidates));
             // Can we afford this?
             if (selection.valueGathered.compareTo(valueNeeded) < 0) {
                 valueMissing = valueNeeded.subtract(selection.valueGathered);
@@ -5518,7 +5645,7 @@ public class Wallet extends BaseTaggableObject
             for (Transaction other : others)
                 selector.excludeOutputsSpentBy(other);
             // TODO: Make this use the standard SendRequest.
-            CoinSelection toMove = selector.select(Coin.ZERO, calculateAllSpendCandidates());
+            CoinSelection toMove = selector.select(this, Coin.ZERO, calculateAllSpendCandidates());
             if (toMove.valueGathered.equals(Coin.ZERO)) return null;  // Nothing to do.
             maybeUpgradeToHD(aesKey);
             Transaction rekeyTx = new Transaction(params);

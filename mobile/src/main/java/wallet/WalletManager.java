@@ -570,8 +570,7 @@ public class WalletManager {
      */
     @Deprecated
     public Wallet getWallet() {
-//        return wallet;
-        return null;
+        return wallet;
     }
 
     public List<TransactionOutput> listUnspent() {
@@ -632,7 +631,7 @@ public class WalletManager {
     public Coin getUnspentValue(Sha256Hash parentTransactionHash, int index) {
         Transaction tx = wallet.getTransaction(parentTransactionHash);
         if (tx==null)return null;
-        return tx.getOutput(index).getValue();
+        return Coin.valueOf(wallet.getValue(tx.getOutput(index)));
     }
 
     public void checkMnemonic(List<String> mnemonic) throws MnemonicException {

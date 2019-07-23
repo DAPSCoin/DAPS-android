@@ -306,7 +306,7 @@ public class Transaction extends ChildMessage {
         Coin v = Coin.ZERO;
         for (TransactionOutput o : outputs) {
             if (!o.isMineOrWatched(transactionBag)) continue;
-            v = v.add(o.getValue());
+            v = v.add(Coin.valueOf(transactionBag.getValue(o)));
         }
         return v;
     }
@@ -390,7 +390,7 @@ public class Transaction extends ChildMessage {
             // case we ignore it.
             if (!connected.isMineOrWatched(wallet))
                 continue;
-            v = v.add(connected.getValue());
+            v = v.add(Coin.valueOf(wallet.getValue(connected)));
         }
         return v;
     }
@@ -435,16 +435,7 @@ public class Transaction extends ChildMessage {
      * @return fee, or null if it cannot be determined
      */
     public Coin getFee() {
-        Coin fee = Coin.ZERO;
-        for (TransactionInput input : inputs) {
-            if (input.getValue() == null)
-                return null;
-            fee = fee.add(input.getValue());
-        }
-        for (TransactionOutput output : outputs) {
-            fee = fee.subtract(output.getValue());
-        }
-        return fee;
+        return Coin.valueOf(this.nTxFee);
     }
 
     /**

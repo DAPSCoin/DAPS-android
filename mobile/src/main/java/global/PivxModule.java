@@ -182,4 +182,6 @@ public interface PivxModule {
     boolean encrypt(String password) throws UnsupportedEncodingException;
     boolean decrypt(String password) throws UnsupportedEncodingException;
     boolean isWalletLocked();
+    Wallet getWallet();
+    public void saveWallet();
 }

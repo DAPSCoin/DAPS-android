@@ -41,6 +41,7 @@ import java.util.TimerTask;
 import java.util.Timer;
 
 import chain.BlockchainState;
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import global.exceptions.NoPeerConnectedException;
 import global.PivxRate;
@@ -78,6 +79,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private View container_txs;
     private View syncing_txs;
     private final MonetaryFormat DAPS_FORMAT = MonetaryFormat.BTC.minDecimals(8).optionalDecimals(0).noCode();
+    private int lastBlockHeight = 0;
 
     private TextView txt_value, txt_height, txt_syncing_value, txt_syncing_height, txt_pending_value;
 //    private TextView txt_unnavailable;
@@ -121,6 +123,12 @@ public class WalletActivity extends BaseDrawerActivity {
 
         updateBalance();
 
+        String blockHeight = (String) daps.callRPC("getBlockCount");
+        if (blockHeight == null)
+            blockHeight = "0";
+        txt_height.setText(blockHeight);
+        txt_syncing_height.setText(blockHeight + " / " + blockHeight);
+
         handler.postDelayed(runnable, interval);
     }
 
@@ -157,6 +165,17 @@ public class WalletActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 updateWallet();
+                String blockHeight = (String) daps.callRPC("getBlockCount");
+                if (blockHeight == null)
+                    blockHeight = "0";
+                txt_height.setText(blockHeight);
+                txt_syncing_height.setText(blockHeight + " / " + blockHeight);
+                int lastBlock = PivxApplication.getInstance().getModule().getWallet().getLastBlockSeenHeight();
+                if (lastBlock == -1) {
+                    lastBlock = Integer.parseInt(blockHeight) - 310;
+                }
+
+                syncTransactions(lastBlock + 1, Integer.parseInt(blockHeight));
             }
         });
 
@@ -182,7 +201,7 @@ public class WalletActivity extends BaseDrawerActivity {
 //        txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
         updateWallet();
         Timer t = new Timer();
-        t.scheduleAtFixedRate(timer , 0 , 10000);
+        t.scheduleAtFixedRate(timer , 0 , 40000);
 
     }
 
@@ -485,6 +504,21 @@ public class WalletActivity extends BaseDrawerActivity {
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
+    private void syncTransactions(int lastBlock, int currentBlock) {
+        final int _lastBlock = lastBlock;
+        final int _currentBlock = currentBlock;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                /*for (int i = _lastBlock; i <= _currentBlock; i++) {
+                    daps.callRPC("getrawtransactionbyblockheight", "" + i);
+                }*/
+                daps.callRPC("getrawtransactionbyblockheight", "" + _lastBlock, "" + _currentBlock);
+            }
+        });
+    }
+
+
 
     private void updateBalance() {
 //        Coin availableBalance = pivxModule.getAvailableBalanceCoin();
@@ -504,17 +538,22 @@ public class WalletActivity extends BaseDrawerActivity {
 //            txt_local_currency.setText("0");
 //        }
 
-        String availableBalance = (String) daps.callRPC("getBalance");
+        Coin availableBalance = PivxApplication.getInstance().getModule().getWallet().getBalance();
         if (availableBalance == null)
-            availableBalance = "0";
-        Coin availableBalanceCoin = Coin.parseCoin(availableBalance);
-        if (availableBalanceCoin.isZero())
+            availableBalance = Coin.ZERO;
+        if (availableBalance.isZero())
             txt_value.setText("0.00000000 DAPS");
         else
-            txt_value.setText(DAPS_FORMAT.format(availableBalanceCoin).toString() + " DAPS");
+            txt_value.setText(DAPS_FORMAT.format(availableBalance).toString() + " DAPS");
         txt_syncing_value.setText(txt_value.getText());
 
-        Map result = (Map) daps.callRPC("getPendingBalance");
+        String blockHeight = (String) daps.callRPC("getBlockCount");
+        if (blockHeight == null)
+            blockHeight = "0";
+        txt_height.setText(blockHeight);
+        txt_syncing_height.setText(blockHeight + " / " + blockHeight);
+
+        /*Map result = (Map) daps.callRPC("getPendingBalance");
         String pendingBalance = "0";
         if (result != null) {
             String.valueOf(result.get("pending"));
@@ -525,13 +564,7 @@ public class WalletActivity extends BaseDrawerActivity {
         if (pendingBalanceCoin.isZero())
             txt_pending_value.setText("0.00000000 DAPS");
         else
-            txt_pending_value.setText(DAPS_FORMAT.format(pendingBalanceCoin).toString() + " DAPS");
-
-        String blockHeight = (String) daps.callRPC("getBlockCount");
-        if (blockHeight == null)
-            blockHeight = "0";
-        txt_height.setText(blockHeight);
-        txt_syncing_height.setText(blockHeight + " / " + blockHeight);
+            txt_pending_value.setText(DAPS_FORMAT.format(pendingBalanceCoin).toString() + " DAPS");*/
 
 //        txt_unnavailable.setText("0 Daps");
         if (pivxRate == null)

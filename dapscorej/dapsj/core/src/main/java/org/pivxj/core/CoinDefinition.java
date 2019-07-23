@@ -117,10 +117,10 @@ public class CoinDefinition {
 
     //net.cpp strDNSSeed
     static public String[] dnsSeeds = new String[] {
-            "pivx.seed.fuzzbawls.pw",
+            /*"pivx.seed.fuzzbawls.pw",
             "pivx.seed2.fuzzbawls.pw",
             "coin-server.com",
-            "s3v3nh4cks.ddns.net"
+            "s3v3nh4cks.ddns.net"*/
     };
 
     public static int minBroadcastConnections = 3;   //0 for default; we need more peers.

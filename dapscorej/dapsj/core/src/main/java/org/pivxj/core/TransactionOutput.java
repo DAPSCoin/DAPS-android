@@ -39,14 +39,14 @@ import static com.google.common.base.Preconditions.*;
 public class TransactionOutput extends ChildMessage {
     private static final Logger log = LoggerFactory.getLogger(TransactionOutput.class);
 
-    class MaskValue {
-        LazyECPoint sharedSec;  //secret is computed based on the transaction pubkey, using diffie hellman
+    public class MaskValue {
+        public LazyECPoint sharedSec;  //secret is computed based on the transaction pubkey, using diffie hellman
                             //sharedSec = txPub * viewPrivateKey of receiver = txPriv * viewPublicKey of receiver
-        Sha256Hash amount;
-        Sha256Hash mask;   //blinding factor, this is encoded throug ECDH before sending to the receiver
-        ECKey inMemoryRawBind;
-        Sha256Hash hashOfKey; //hash of encrypting key
-        MaskValue() {
+        public Sha256Hash amount;
+        public Sha256Hash mask;   //blinding factor, this is encoded throug ECDH before sending to the receiver
+        public ECKey inMemoryRawBind;
+        public Sha256Hash hashOfKey; //hash of encrypting key
+        public MaskValue() {
             amount = Sha256Hash.ZERO_HASH;
             mask = Sha256Hash.ZERO_HASH;
             hashOfKey = Sha256Hash.ZERO_HASH;
@@ -67,7 +67,7 @@ public class TransactionOutput extends ChildMessage {
     public byte[] txPub;
     //ECDH encoded value for the amount: the idea is the use the shared secret and a key derivation function to
     //encode the value and the mask so that only the sender and the receiver of the tx output can decode the encoded amount
-    MaskValue maskValue;
+    public MaskValue maskValue;
     public byte[] masternodeStealthAddress;  //will be clone from the tx having 1000000 daps output
     public byte[] commitment;  //Commitment C = mask * G + amount * H, H = Hp(G), Hp = toHashPoint
 
@@ -436,6 +436,11 @@ public class TransactionOutput extends ChildMessage {
     @Nullable
     public Transaction getParentTransaction() {
         return (Transaction)parent;
+    }
+    
+    @Override
+    public Sha256Hash getHash() {
+    	return getParentTransactionHash();
     }
 
     /**

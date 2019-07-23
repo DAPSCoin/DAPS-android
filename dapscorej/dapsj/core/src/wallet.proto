@@ -144,15 +144,22 @@ message Script {
 
 message TransactionInput {
   // Hash of the transaction this input is using.
-  required bytes transaction_out_point_hash = 1;
+  repeated bytes transaction_out_points_hash = 1;
   // Index of transaction output used by this input.
-  required uint32 transaction_out_point_index = 2;
+  repeated uint32 transaction_out_points_index = 2;
+  optional uint32 realIndex = 3;
   // Script that contains the signatures/pubkeys.
-  required bytes script_bytes = 3;
+  required bytes script_bytes = 4;
   // Sequence number.
-  optional uint32 sequence = 4;
+  optional uint32 sequence = 5;
   // Value of connected output, if known
-  optional int64 value = 5;
+  optional int64 value = 6;
+  
+  optional bytes s = 7;
+  optional bytes R = 8;
+  optional bytes encryptionKey = 9;
+  optional bytes keyImage = 10;
+  optional bytes masternodeStealthAddress = 11;
 }
 
 message TransactionOutput {
@@ -162,6 +169,17 @@ message TransactionOutput {
   optional bytes spent_by_transaction_hash = 3;
   // If spent, the index of the transaction input of the transaction doing the spend.
   optional int32 spent_by_transaction_index = 4;
+  
+  required int32 realIndex = 5;
+  
+  optional bytes txPriv = 6;
+  required bytes txPub = 7;
+  required bytes commitment = 8;
+  required bytes mask = 9;
+  optional bytes masternodeStealthAddress = 10;
+  required bytes amount = 11;
+  required bytes decodedMask = 12;
+  required int64 decodedAmount = 13;
 }
 
 /**
@@ -345,6 +363,13 @@ message TransactionSigner {
 	optional bytes data = 2;
 }
 
+message Decoy {
+	required bytes hash = 1;
+	required uint32 index = 2;
+	required bytes commitment = 3;
+	required bytes pubkey = 4;
+}
+
 /** A bitcoin wallet */
 message Wallet {
   /**
@@ -400,6 +425,8 @@ message Wallet {
 
   // transaction signers added to the wallet
   repeated TransactionSigner transaction_signers = 17;
+  
+  repeated Decoy decoysSet = 18;
 
   // Next tag: 18
 }

@@ -48,7 +48,7 @@ public class KeyTimeCoinSelector implements CoinSelector {
     }
 
     @Override
-    public CoinSelection select(Coin target, List<TransactionOutput> candidates) {
+    public CoinSelection select(Wallet wallet, Coin target, List<TransactionOutput> candidates) {
         try {
             LinkedList<TransactionOutput> gathered = Lists.newLinkedList();
             Coin valueGathered = Coin.ZERO;
