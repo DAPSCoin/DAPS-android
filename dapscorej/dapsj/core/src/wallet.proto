@@ -368,6 +368,7 @@ message Decoy {
 	required uint32 index = 2;
 	required bytes commitment = 3;
 	required bytes pubkey = 4;
+	required uint32 height = 5;
 }
 
 /** A bitcoin wallet */

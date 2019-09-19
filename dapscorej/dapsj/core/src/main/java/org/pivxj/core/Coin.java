@@ -45,6 +45,8 @@ public final class Coin implements Monetary, Comparable<Coin>, Serializable {
      * Zero Bitcoins.
      */
     public static final Coin ZERO = Coin.valueOf(0);
+    
+    public static final Coin MINIMUM_TX_FEE = Coin.valueOf(COIN_VALUE);
 
     /**
      * One Bitcoin.

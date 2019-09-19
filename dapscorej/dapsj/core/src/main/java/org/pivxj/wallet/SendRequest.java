@@ -31,6 +31,7 @@ import org.pivxj.core.ECKey;
 import org.pivxj.core.NetworkParameters;
 import org.pivxj.core.Transaction;
 import org.pivxj.core.TransactionOutput;
+import org.pivxj.core.Utils;
 import org.pivxj.script.Script;
 import org.pivxj.script.ScriptBuilder;
 import org.pivxj.utils.ExchangeRate;
@@ -174,10 +175,12 @@ public class SendRequest {
      * rejected by the network. Note that using {@link SendRequest#to(Address, Coin)} will result
      * in a smaller output, and thus the ability to use a smaller output value without rejection.</p>
      */
-    public static SendRequest to(NetworkParameters params, ECKey destination, Coin value) {
+    public static SendRequest to(NetworkParameters params, ECKey destination, Coin value, BigInteger txPriv) {
         SendRequest req = new SendRequest();
         req.tx = new Transaction(params);
-        req.tx.addOutput(value, destination);
+        TransactionOutput output = new TransactionOutput(params, req.tx, value, destination);
+        output.txPriv = Utils.bigIntegerToBytes(txPriv, 32);
+        req.tx.addOutput(output);
         return req;
     }
 

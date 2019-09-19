@@ -37,9 +37,6 @@ android {
                 srcDirs = []
             }
 
-            jniLibs {
-                srcDir 'libs'
-            }
         }
     }
 

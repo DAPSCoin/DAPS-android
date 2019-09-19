@@ -161,6 +161,7 @@ public class WalletProtobufSerializer {
         	pD.setHash(hashToByteString(d.hash));
         	pD.setIndex(d.index);
         	pD.setPubkey(ByteString.copyFrom(d.pubKey));
+        	pD.setHeight(d.height);
         	walletBuilder.addDecoysSet(pD);
         }
 
@@ -569,7 +570,7 @@ public class WalletProtobufSerializer {
         } else {
         	//read decoys
         	for (Protos.Decoy pd : walletProto.getDecoysSetList()) {
-        		org.pivxj.wallet.Wallet.Decoy d = new org.pivxj.wallet.Wallet.Decoy(byteStringToHash(pd.getHash()), pd.getIndex(), pd.getCommitment().toByteArray(), pd.getPubkey().toByteArray());
+        		org.pivxj.wallet.Wallet.Decoy d = new org.pivxj.wallet.Wallet.Decoy(byteStringToHash(pd.getHash()), pd.getIndex(), pd.getCommitment().toByteArray(), pd.getPubkey().toByteArray(), pd.getHeight());
         		wallet.addToDecoySet(d);
         	}
         	

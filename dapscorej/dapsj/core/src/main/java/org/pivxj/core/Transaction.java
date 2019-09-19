@@ -115,28 +115,28 @@ public class Transaction extends ChildMessage {
     public static final Coin MIN_NONDUST_OUTPUT = Coin.valueOf(CoinDefinition.DUST_LIMIT); // satoshis
 
     // These are bitcoin serialized.
-    private long version;
-    private ArrayList<TransactionInput> inputs;
-    private ArrayList<TransactionOutput> outputs;
+    public long version;
+    public ArrayList<TransactionInput> inputs;
+    public ArrayList<TransactionOutput> outputs;
 
-    private long lockTime;
+    public long lockTime;
     
     //For stealth transactions
-    private BigInteger txPrivM;    //only  in-memory
-    private byte hasPaymentID;
-    private BigInteger paymentID;
+    public BigInteger txPrivM;    //only  in-memory
+    public byte hasPaymentID;
+    public BigInteger paymentID;
     //const unsigned int nTime;
-    private long txType;
+    public long txType;
 
-    private byte[] bulletproofs;
+    public byte[] bulletproofs;
 
-    private long nTxFee;
+    public long nTxFee;
 
-    private Sha256Hash c;
-    private ArrayList<ArrayList<Sha256Hash>> S;
+    public Sha256Hash c;
+    public ArrayList<ArrayList<Sha256Hash>> S;
 
     //additional key image for transaction fee
-    LazyECPoint ntxFeeKeyImage;
+    public LazyECPoint ntxFeeKeyImage;
 
     // This is either the time the transaction was broadcast as measured from the local clock, or the time from the
     // block in which it was included. Note that this can be changed by re-orgs so the wallet may update this field.
@@ -297,8 +297,58 @@ public class Transaction extends ChildMessage {
 
         return inputTotal;
     }
+    
+    
 
-    /**
+    public byte getHasPaymentID() {
+		return hasPaymentID;
+	}
+
+	public void setHasPaymentID(byte hasPaymentID) {
+		this.hasPaymentID = hasPaymentID;
+	}
+
+	public BigInteger getPaymentID() {
+		return paymentID;
+	}
+
+	public void setPaymentID(BigInteger paymentID) {
+		this.paymentID = paymentID;
+	}
+
+	public long getTxType() {
+		return txType;
+	}
+
+	public void setTxType(long txType) {
+		this.txType = txType;
+	}
+
+	public long getnTxFee() {
+		return nTxFee;
+	}
+
+	public void setnTxFee(long nTxFee) {
+		this.nTxFee = nTxFee;
+	}
+
+	public Sha256Hash getC() {
+		return c;
+	}
+
+	public void setC(Sha256Hash c) {
+		this.c = c;
+	}
+
+	public LazyECPoint getNtxFeeKeyImage() {
+		return ntxFeeKeyImage;
+	}
+
+	public void setNtxFeeKeyImage(LazyECPoint ntxFeeKeyImage) {
+		this.ntxFeeKeyImage = ntxFeeKeyImage;
+	}
+
+	/**
      * Calculates the sum of the outputs that are sending coins to a key in the wallet.
      */
     public Coin getValueSentToMe(TransactionBag transactionBag) {

@@ -285,6 +285,10 @@ public class TransactionInput extends ChildMessage {
     public TransactionOutPoint getOutpoint() {
         return outpoint;
     }
+    
+    public void setOutpoint(TransactionOutPoint op) {
+        outpoint = op;
+    }
 
     /**
      * The "script bytes" might not actually be a script. In coinbase transactions where new coins are minted there

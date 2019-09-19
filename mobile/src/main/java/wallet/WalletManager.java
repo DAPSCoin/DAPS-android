@@ -2,6 +2,7 @@ package wallet;
 
 import com.google.common.base.Charsets;
 
+import org.bitcoin.NativeSecp256k1Util;
 import org.pivxj.core.Address;
 import org.pivxj.core.BlockChain;
 import org.pivxj.core.Coin;

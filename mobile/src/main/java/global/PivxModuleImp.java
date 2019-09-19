@@ -2,6 +2,7 @@ package global;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
+import org.bitcoin.NativeSecp256k1Util;
 import org.pivxj.core.Address;
 import org.pivxj.core.Coin;
 import org.pivxj.core.InsufficientMoneyException;

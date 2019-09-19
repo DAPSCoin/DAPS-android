@@ -26,7 +26,9 @@ import com.google.protobuf.*;
 import net.jcip.annotations.*;
 
 import org.bitcoin.NativeSecp256k1;
+import org.bitcoin.NativeSecp256k1Util;
 import org.bitcoin.NativeSecp256k1Util.AssertFailException;
+import org.pivxj.bp.impl.Generators;
 import org.pivxj.core.*;
 import org.pivxj.core.listeners.*;
 import org.pivxj.core.TransactionConfidence.*;
@@ -141,11 +143,13 @@ public class Wallet extends BaseTaggableObject
     	public int index;
     	public byte[] commitment;
     	public byte[] pubKey;
-    	public Decoy(Sha256Hash _hash, int _index, byte[] _commitment, byte[] _pubkey) {
+    	public int height;
+    	public Decoy(Sha256Hash _hash, int _index, byte[] _commitment, byte[] _pubkey, int height) {
     		hash = _hash;
     		index = _index;
     		commitment = _commitment;
     		pubKey = _pubkey;
+    		this.height = height;
     	}
     }
     
@@ -467,6 +471,12 @@ public class Wallet extends BaseTaggableObject
     
     public String computeStealthAddress() {
     	byte[] pubSpend = currentReceiveKey().getPubKey();
+//    	try {
+//    		byte[] pS = NativeSecp256k1.sign(currentReceiveKey().getPrivKeyBytes(), currentReceiveKey().getPrivKeyBytes());
+//    		System.out.println(Utils.HEX.encode(pS));
+//    	} catch (Exception e) {} finally {
+//    		
+//    	}
     	byte[] pubView = currentViewKey().getPubKey();
     	byte[] pubAddress = new byte[71];
     	pubAddress[0] = 18;
@@ -475,24 +485,27 @@ public class Wallet extends BaseTaggableObject
     	byte[] h = Sha256Hash.hashTwice(pubAddress, 0, 67);
     	System.arraycopy(h, 0, pubAddress, 67, 4);
     	String addr = encodeStealthAddress(pubAddress);
-    	byte[] pubSpend1 = new byte[33];
-    	byte[] pubView1 = new byte[33];
-    	if (decodeStealthAddress(addr, pubSpend1, pubView1)) {
-    		System.out.println("Successfully decode");
-    	} else {
-    		System.out.println("cannot Successfully decode");
-    	}
+    	//byte[] pubSpend1 = new byte[33];
+    	//byte[] pubView1 = new byte[33];
     	
-    	//test istransactionforme
+    	/*//test istransactionforme
     	Transaction tx = new Transaction(this.params, Utils.HEX.decode("01000000016d1ee448c3184630046b734eb38ebf6c6f0bc23732c6244a5680fa8c0691f74d0100000000ffffffff0021027626b86bd8d7725dc66a44c26244f3622c20ed2b40b5aab6820f2b80d65e6f6e0be922ea24684c03f7046e77a0a9b1dae1c79bc7c671ed5eabe34fac1de137fe9b010000006d1ee448c3184630046b734eb38ebf6c6f0bc23732c6244a5680fa8c0691f74d020000006d1ee448c3184630046b734eb38ebf6c6f0bc23732c6244a5680fa8c0691f74d030000003874cc282cfca137292203b231964b011368e9dfee9cc46e6ef8183f03a0198e010000003874cc282cfca137292203b231964b011368e9dfee9cc46e6ef8183f03a0198e02000000b744788ac91f9bed772341e6899c7d584a4b0dbc193a8cfd96827e3f18003b5101000000b744788ac91f9bed772341e6899c7d584a4b0dbc193a8cfd96827e3f18003b5102000000b744788ac91f9bed772341e6899c7d584a4b0dbc193a8cfd96827e3f18003b510300000030d79bcbabb28eee026db5de930f097ed44876811ee2710fe2db48ef457f904b0100000030d79bcbabb28eee026db5de930f097ed44876811ee2710fe2db48ef457f904b0200000030d79bcbabb28eee026db5de930f097ed44876811ee2710fe2db48ef457f904b030000000000000200000000000000002321030ce2edce0e3b65f34e45ac0c70c2418397940934ac835592656ef16d4cf79a66ac0021023478b7f0e9a21dbd47ae4611c6d7864fc1da3c38f0f0bd5f10b920d8a82b7552edb191a42a5c72f65d8b2d691891603aa5a0a45a2742b58e7eaebb435a9546255c7947390616c830bc4325d1ae3bed1bd641144b4f924a58dbcfcd1da6c3739930a4ceb9657dc107345ffffe7ce67fcafb7fc5ee004e2d79bef1a15b75f234580021086f1b7c7188ffd1fa3fc8351047596e497ded76a686b274c894cf20703bcc905c00000000000000002321032425097a85828bedf0127adabde60e39a80be25955ec2b5a62677c664d8812caac002103d273265c5dea4f2d34d3a1c40113c27f93ea7f84456858017ceaad3d766dec3132a5968ab5a5816dbd81e9061e9c1b31c603c29f5c7eff28ea14d7eae189cd28ef84271a308d50419edb5f698c4fff9b5216f4eff4e6f6525297f98e6e27397580ed70208223879daeb53c41a0f5b1aff763cd5973e8e49c692ce65e2dfab6ca002109a63752180e165a46d3a8ac33ea095be0630e697394c6062959b90617e30c6ab0000000000000000000fde302f3b63c4fee2861319c8a6ca2aabe08c53d4cdfeb4e039ea5b72a458aa8f116afb334d78a0a317f9f2e16994a0e27703dce30ac04ea0811f518cd66c3f77401a605654a815526dae310b6c822f29c69dbe55260224f5c0ec10d4429c56950212d829d95d28e543d823cdb14e1b289363ffcf9438c2028f177c59c1488508cbdf24e7a8798eb04232c7b8a7672aecb9d5c44f5073cff7ce32425d8bad59fe7dfa81ef116a08aecdd41dc6e67c2df558d8371d1998a7810a8e4cd92a08e0673369834ef8451de0696fce7e8a6241a6d29118309ee19659e07b008642873c66e90c1933e9db8a9aca9802422555630b0e025d39a337f8ebb747de476a161d6aedf1f800cd288c8c0c0e5275785e6935cee37bbadc6a5234cd3d3f2b5ef8c7e2e7b13de4ae3eb867e472ce738fea8fed7f378f3648aea2e56797858770578400015d901e4e9a564ad7c6c68d3510374368d5088e4ae7b896d2e30512b68f3e7238c250f260bf6d9d3ab21376994b76c8d93bc97bfcd8bde008bbd0b2503d79d88209786039b87844ef40ca3e4d964d4316eecc635d4402a0d2fb194b881d24fc70ef2b5ee95fd7d519d04374b507dae80011e059847fb5aa1336d5611f045b8d29e6bc26b5c2da650097ccefc1ebce6b777c12603133c23032ddea50e241b2823c72513d6449872658027c8cd9582a64ffdef007e7206a332d9feef9a6f484994a5809270f6cf2d84927081b7eec298ef788ba2f162ef313a6831029b4323edb206c58f7c88d441e7dceb3422b29b2f73257a46c051d095014bb7a1077a50899f6df5c4b3a739a8d1c96c994c21de4d53573c4ec6b9c527895e915ac5029af85e73b3346257d427229e4c34554042f2f232e698210e54c28f3070ac505b9771592dbdbdf2bc471d7256803a5f570f2ee108b50f97f603c28e049c2aaa8fc3deb593356b64a51dd22b3c70141dd2d9bada4de72293dd1357c05a53312a40974784cd48fb33d1ed69aabb46a53fb0ccfc0656632c060d7670f0c50d07e9162dcb66a9fc7b075a1058d70100000000189dbd0f00e27153460167305e68238c1679162eee6c5daede445492a51aa9a40c02efe6794ddadab3d17a47cdca4313d12830120941ea1820d8eb6e219812e3eaca5d97632a7449f85885d262a51d16bb74db39c6fa6e9a07bdc519bb08e2bdad130229d97989ef8d590dcef06e531d2f33989131f3a6e5c8ffa775516470df74d2ddf5fe0c18a3489ca4c86c9da1f48cf6e4175cf35a497cf912c9b5ddc746b28e1202864f1d7889deb4d5bb1c094bd854a55079955dc64ccbef3e2ffb9aedc3e54f385df59abbba9070f741d05ae0b7a4ec6961627093fcbd330b86c0c4a08a82f0e2028682a6db7e79bb76f06c3ceb6886567ef144e8329aa3b1b070641b1bcd01021050919cd109404569f9eb499d08c6c614dc73b0609363f37a19ecc5ea3e5a728602b374475ead854f56e1aa40b9cf207321b65df2dd6a9d3803e3823ed009f98951d1fadef750044a67432b238ebe0748e7cbce11fd308371a33641705c9f66c88502719498d62a26fca7dd9da7e7b211795b3448add5c27ffa517f7e86bddf335ffa72776bf99a50b2035410137719f3730560000767e18f378814bd69d2b321037c02c2dedf55bc0ab1da2783ac41711d82c6ba5814f9a8049fbb617f34a6bdbfb06bd3bed6b95a43f8983b4c941146a34d6104a8bf5ae8b118be23196cd6a13ce2a202090708215e4ba9764835bff8482a72ac3ce1a644ca3a6dfaebed7bef95cab4ca7e24f929ae93cc87340e2a81d5b8e60e504760a93284e849bd6d7ad1be2dae4e0215f5495ba88fc39fd973cf9b6fa63294aa05b8ef6b3e6dd913ab83e165aa77a5b48474d8844cf2bf1bf7a99bb8529ded5a6981450b33472705c9b212af17124102dc5d2bf48bd037b4a2a6706dca5d2263f7dcf6da5f05c76f7f2e8e7aff208ea24357552de5d176a561ac76866745ce0646888da7d8c3f1508a35adc7442a3c3a0286d806634d68eba0343de37c065c8503e612456c1ecd97049113566e0077ed7a0399fc0c4a9e8245ca162a7f82b25ceef9bbb079e7277916bddf69dcdb119657023b2d07d057a40c651134be949b2c117bbb06b9623b624b77c1beba3d0c254a824156c5c4f5203aab4e41039edce8dc3e5b790b66e2c59884cbe3d688b2195e3921023bf649239b07b283120dc2561980c4e28eb9c3eb302dec6ff226c765649b1c0b"));
     	if (isTransactionForMe(tx, Sha256Hash.wrap("5bf4bedf85ddb080e17dc32d7b74f1fe5fe3e63321b16fc16d6f46bfeeb1aca1"), 47095) ) {
     		System.out.println("Successfully test");
-    	}
+    	}*/
     	return addr;
+    }
+    
+    public static LazyECPoint getH() {
+    	return new LazyECPoint(ECKey.CURVE.getCurve(), Utils.HEX.decode("0250929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0"));
     }
     
     public boolean isTransactionForMe(Transaction tx, Sha256Hash blockHash, int chainHeight) {
     	lock.lock();
+    	
+    	List<LazyECPoint> points = Generators.generateGeneratorsVector(0);
+    	System.out.println("Point 0 :" + Utils.HEX.encode(points.get(0).getEncoded(true)));
+    	
     	ECKey spend = currentReceiveKey();
     	ECKey view = currentViewKey();
     	boolean found = false;
@@ -508,6 +521,7 @@ public class Wallet extends BaseTaggableObject
             //compute the tx destination
             //P' = Hs(aR)G+B, a = view private, B = spend pub, R = tx public key
             LazyECPoint le = new LazyECPoint(ECKey.CURVE.getCurve(), txPub);
+            
            
             ECPoint arEP = le.multiply(view.getPrivKey().mod(ECKey.CURVE.getN()));
             
@@ -515,6 +529,10 @@ public class Wallet extends BaseTaggableObject
             byte[] HS = Sha256Hash.hashTwice(aR);
                                     
             BigInteger spendB = spend.getPrivKey();
+            ECPoint G = ECKey.CURVE.getG();
+            ECPoint recomputedSpend = new LazyECPoint(G).multiply(spendB);
+            byte[] recomputedSpendB = recomputedSpend.getEncoded();
+            System.out.println("recomputedSpendB = " + Utils.HEX.encode(recomputedSpendB));
 
             BigInteger key = ECKey.fromPrivate(Utils.bigIntegerToBytes(spendB, 32), true).getPrivKey().add(ECKey.fromPrivate(HS, true).getPrivKey());
             System.out.println("KeyB = " + Utils.HEX.encode(Utils.bigIntegerToBytes(key, 32)));
@@ -552,6 +570,18 @@ public class Wallet extends BaseTaggableObject
     	return revealValue(out, marked);
     }
     
+    private byte[] computeSharedSec(byte[] txPub) {
+    	LazyECPoint le = new LazyECPoint(ECKey.CURVE.getCurve(), txPub);
+    	ECPoint arEP = le.multiply(currentViewKey().getPrivKey().mod(ECKey.CURVE.getN()));
+    	return arEP.getEncoded(true);
+    }
+    
+    private byte[] computeSharedSec(TransactionOutput out) {
+    	LazyECPoint le = new LazyECPoint(ECKey.CURVE.getCurve(), out.txPub);
+    	ECPoint arEP = le.multiply(currentViewKey().getPrivKey().mod(ECKey.CURVE.getN()));
+    	return arEP.getEncoded(true);
+    }
+    
     public long revealValue(TransactionOutput out, byte[] masked) {
     	if (valueMap.containsKey(out.getParentTransaction().getHashAsString() + out.getIndex())) {
     		System.arraycopy(valueMap.get(out.getHash().toString() + out.getIndex()).mask, 0, masked, 0, masked.length);
@@ -585,7 +615,53 @@ public class Wallet extends BaseTaggableObject
         System.arraycopy(amount, 0, amountB, 0, 8);
         long val = new BigInteger(Utils.reverseBytes(amountB)).longValue();
         valueMap.put(out.getHash().toString() + out.getIndex(), new ValueMask(Coin.valueOf(val), masked));
+        
+        /*byte[] encodedM = new byte[32];
+        byte[] encodedA = new byte[32];
+        encodeAmount(encodedA, encodedM, aR, val, masked);
+        Sha256Hash encodedmask = Sha256Hash.wrap(encodedM);
+        Sha256Hash encodedamount = Sha256Hash.wrap(encodedA);
+        
+        //redecode
+        tempAmount = Utils.reverseBytes(encodedamount.getBytes());
+        amount = new byte[32];
+        for (int i = 0;i < 32; i++) {
+            amount[i] = (byte)(tempAmount[i%8]^sharedSec2[i]);
+        }
+        amountB = new byte[8];
+        System.arraycopy(amount, 0, amountB, 0, 8);
+        val = new BigInteger(Utils.reverseBytes(amountB)).longValue();
+        
+        byte[] commitment = createCommitment(new BigInteger(masked), val);
+        System.out.println("coimmitment = " + Utils.HEX.encode(commitment));*/
         return val;
+    }
+    
+    public static void encodeAmount(byte[] encodedAmount, byte[] encodedMask, byte[] sharedSec, long amount, byte[] mask) {
+    	byte[] sharedSec1 = Sha256Hash.hashTwice(sharedSec);
+    	byte[] sharedSec2 = Sha256Hash.hashTwice(sharedSec1);
+    	
+    	for (int i = 0;i < 32; i++) {
+            mask[i] = (byte)(mask[i]^sharedSec1[i]);
+        }
+    	System.arraycopy(Utils.reverseBytes(mask), 0, encodedMask, 0, 32);
+    	
+    	byte[] a = new byte[32];
+    	ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    	try {
+    		Utils.int64ToByteStreamLE(amount, stream);
+    	} catch (Exception e) {} finally {
+			
+		}
+    	byte[] arr = stream.toByteArray();
+    	
+        System.arraycopy(arr, 0, a, 0, 8);
+        
+        for (int i = 0;i < 32; i++) {
+            a[i] = (byte)(a[i%8]^sharedSec2[i]);
+        }
+        
+    	System.arraycopy(Utils.reverseBytes(a), 0, encodedAmount, 0, 32);
     }
     
     public static String add1s(String s, int wantedSize) {
@@ -1945,17 +2021,822 @@ public class Wallet extends BaseTaggableObject
         }
     }
     
-    private boolean makeRingCT(Transaction tx) {
+    public static byte[] generateKeyImage(BigInteger secret) {
+    	ECKey ecKey = ECKey.fromPrivate(secret);
+    	byte[] pub = ecKey.getPubKey();
+		byte[] point = new byte[33];
+		System.arraycopy(pub, 0, point, 0, 33);
+    	do {
+    		byte[] h = Sha256Hash.hashTwice(point);
+    		point[0] = pub[0];
+    		System.arraycopy(h, 0, point, 1, 32);
+    	} while (!(new LazyECPoint(ECKey.CURVE.getCurve(), point).isValid()));
+    	
+    	return point;
+    }
+    
+    private byte[] generateKeyImage(TransactionOutPoint outpoint) {
+    	Transaction tx = transactions.get(outpoint.getHash());
+    	TransactionOutput output = tx.getOutput(outpoint.getIndex());
+    	byte[] pubkey = output.getScriptPubKey().getPubKey();
+    	for (ECKey k : keyChainGroup.getImportedKeys()) {
+			if (k.hasPrivKey() && Arrays.equals(k.getPubKey(), pubkey)) {
+				return generateKeyImage(k.getPrivKey());
+			}
+		}
+    	return null;
+    }
+    
+    private BigInteger findPrivateKey(byte[] pub) {
+    	for (ECKey k : keyChainGroup.getImportedKeys()) {
+			if (k.hasPrivKey() && Arrays.equals(k.getPubKey(), pub)) {
+				return k.getPrivKey();
+			}
+		}
+    	return null;
+    }
+    
+    private int selectDecoys(Transaction tx, int ringSize) {
+    	//fillter lists of decoys that are 100 confirmations
+    	int lastSeen = getLastBlockSeenHeight();
+    	List<Decoy> matureCoins = new ArrayList<Decoy>();
+    	for (Decoy d : decoySet.values()) {
+			if (lastSeen > d.height && lastSeen - d.height > CoinDefinition.spendableCoinbaseDepth) {
+				matureCoins.add(d);
+			}
+		}
+    	
+    	if (matureCoins.size() <= ringSize) return -2;
+
+        //Choose decoys
+        int myIndex = -1;
+        for(int i = 0; i < tx.getInputs().size(); i++) {
+            //generate key images and choose decoys
+            tx.getInput(i).keyImage = new LazyECPoint(ECKey.CURVE.getCurve(), generateKeyImage(tx.getInput(i).getOutpoint()));
+
+            int numDecoys = 0;
+
+            if ((int)matureCoins.size() >= ringSize * 5) {
+            	while(numDecoys < ringSize) {
+            		boolean duplicated = false;
+            		Decoy outpoint = matureCoins.get(new Random().nextInt() % matureCoins.size());
+            		for (int d = 0; d < tx.getInput(i).decoys.size(); d++) {
+            			if (tx.getInput(i).decoys.get(d).getHash() == outpoint.hash && tx.getInput(i).decoys.get(d).getIndex() == outpoint.index) {
+            				duplicated = true;
+            				break;
+            			}
+            		}
+            		if (duplicated) {
+            			continue;
+            		}
+            		tx.getInput(i).decoys.add(new TransactionOutPoint(params, outpoint.index, outpoint.hash));
+            		numDecoys++;
+            	}
+            } else if (matureCoins.size() >= ringSize) {
+            	for (int j = 0; j < matureCoins.size(); j++) {
+            		tx.getInput(i).decoys.add(new TransactionOutPoint(params, matureCoins.get(j).index, matureCoins.get(j).hash));
+            		numDecoys++;
+            		if (numDecoys == ringSize) break;
+            	}
+            } else {
+            	return -2;
+            }
+
+        }
+        myIndex = new Random().nextInt() % (tx.getInput(0).decoys.size() + 1) - 1;
+
+        if (myIndex != -1) {
+        	for(int i = 0; i < tx.getInputs().size(); i++) {
+            	TransactionOutPoint prevout = tx.getInput(i).getOutpoint();
+        		tx.getInput(i).setOutpoint(tx.getInput(i).decoys.get(myIndex));
+        		tx.getInput(i).decoys.set(myIndex, prevout);
+        	}
+        }
+
+        return myIndex;
+    }
+    
+    private static byte[] fromPubkeyToCommitment(byte[] pk) {
+    	byte[] commitment = new byte[33];
+    	System.arraycopy(pk, 0, commitment, 0, 33);
+    	commitment[0] = (byte)(pk[0] == 2? 9:8);
+    	return commitment;
+    }
+    
+    private static byte[] fromCommitmentToPubkey(byte[] commitment) {
+    	byte[] pk = new byte[33];
+    	System.arraycopy(commitment, 0, pk, 0, 33);
+    	pk[0] = (byte)(commitment[0] == 8? 3:2);
+    	return pk;
+    }
+    
+    private byte[] createBulletproofs(Transaction tx) {
+    	return null;
+    }
+    
+    private boolean makeRingCT(SendRequest req) {
+    	Transaction tx = req.tx;
+    	
+    	//generate commitments and blinds for commitment
+    	ArrayList<ECKey> blinds = new ArrayList<ECKey>();
+    	for(int i = 0; i < tx.getOutputs().size(); i++) {
+    		blinds.add(new ECKey());
+    		//create corresponding commitments for each output
+    		tx.getOutputs().get(i).commitment = createCommitment(blinds.get(i).getPrivKey(), tx.getOutputs().get(i).getValue().value);
+    		if (tx.getOutput(i).maskValue == null) {
+    			tx.getOutput(i).maskValue = new TransactionOutput.MaskValue();
+    		}
+    		tx.getOutput(i).maskValue.inMemoryRawBind = blinds.get(i);
+    	}
+    	
+    	//encode transaction output values
+    	for(int i = 0; i < tx.getOutputs().size(); i++) {
+    		byte[] encodedMask = new byte[32];
+    		byte[] encodedAmount = new byte[32];
+    		encodeAmount(encodedAmount, encodedMask, computeSharedSec(tx.getOutput(i)), tx.getOutput(i).getValue().value, Utils.bigIntegerToBytes(tx.getOutput(i).maskValue.inMemoryRawBind.getPrivKey(), 32));
+    		tx.getOutput(i).maskValue.mask = Sha256Hash.wrap(encodedMask);
+    		tx.getOutput(i).maskValue.amount = Sha256Hash.wrap(encodedAmount);
+    	}
+    	
+    	//select decoys
+    	int ringSize = 6 + new Random().nextInt(7);
+    	int myIndex = selectDecoys(tx, ringSize);
+    	if (myIndex < -1) return false;
+    	
+    	/*for(CTxOut& out: wtxNew.vout) {
+    		if (!out.IsEmpty()) {
+    			secp256k1_pedersen_commitment commitment;
+    			CKey blind;
+    			blind.Set(out.maskValue.inMemoryRawBind.begin(), out.maskValue.inMemoryRawBind.end(), true);
+    			if (!secp256k1_pedersen_commit(both, &commitment, blind.begin(), out.nValue, &secp256k1_generator_const_h, &secp256k1_generator_const_g))
+    				throw runtime_error("Cannot commit commitment");
+    			unsigned char output[33];
+    			if (!secp256k1_pedersen_commitment_serialize(both, output, &commitment))
+    				throw runtime_error("Cannot serialize commitment");
+    			out.commitment.clear();
+    			std::copy(output, output + 33, std::back_inserter(out.commitment));
+    		}
+    	}*/
+
+    	if (tx.getOutputs().size() >= 30) {
+    		return false;
+    	}
+
+    	int MAX_VIN = 32;
+    	int MAX_DECOYS = 13;	//padding 1 for safety reasons
+    	int MAX_VOUT = 5;
+
+    	List<byte[]> myInputCommiments = new ArrayList<byte[]>();
+    	int totalCommits = tx.getInputs().size() + tx.getOutputs().size();
+    	int npositive = tx.getInputs().size();
+    	BigInteger[] myBlinds = new BigInteger[MAX_VIN + MAX_VIN + MAX_VOUT + 1];
+    	
+    	byte[][][] allInPubKeys = new byte[MAX_VIN + 1][MAX_DECOYS + 1][33];
+    	byte[][] allKeyImages = new byte[MAX_VIN + 1][33];
+    	byte[][][] allInCommitments = new byte[MAX_VIN][MAX_DECOYS + 1][33];
+    	byte[][] allOutCommitments = new byte[MAX_VOUT][33];
+    	
+//    	int totalCommits = wtxNew.vin.size() + wtxNew.vout.size();
+//    	int npositive = wtxNew.vin.size();
+//    	unsigned char myBlinds[MAX_VIN + MAX_VIN + MAX_VOUT + 1][32];	//myBlinds is used for compuitng additional private key in the ring =
+//    	memset(myBlinds, 0, (MAX_VIN + MAX_VIN + MAX_VOUT + 1) * 32);
+//    	const unsigned char *bptr[MAX_VIN + MAX_VIN + MAX_VOUT + 1];
+//    	//all in pubkeys + an additional public generated from commitments
+//    	unsigned char allInPubKeys[MAX_VIN + 1][MAX_DECOYS + 1][33];
+//    	unsigned char allKeyImages[MAX_VIN + 1][33];
+//    	unsigned char allInCommitments[MAX_VIN][MAX_DECOYS + 1][33];
+//    	unsigned char allOutCommitments[MAX_VOUT][33];
+
+    	int myBlindsIdx = 0;
+    	//additional member in the ring = Sum of All input public keys + sum of all input commitments - sum of all output commitments
+    	for (int j = 0; j < tx.getInputs().size(); j++) {
+    		TransactionOutPoint myOutpoint = null;
+    		if (myIndex == -1) {
+    			myOutpoint = tx.getInput(j).getOutpoint();
+    		} else {
+    			myOutpoint = tx.getInput(j).decoys.get(myIndex);
+    		}
+    		myBlinds[myBlindsIdx] = findPrivateKey(transactions.get(myOutpoint.getHash()).getOutput(myOutpoint.getIndex()).getScriptPubKey().getPubKey());
+    		myBlindsIdx++;
+    	}
+
+    	//Collecting input commitments blinding factors
+    	for(TransactionInput in: tx.getInputs()) {
+    		TransactionOutPoint myOutpoint = null;
+    		if (myIndex == -1) {
+    			myOutpoint = in.getOutpoint();;
+    		} else {
+    			myOutpoint = in.decoys.get(myIndex);
+    		}
+    		Transaction inTx = transactions.get(myOutpoint.getHash());
+    		//pedersen_commitment structure
+    		byte[] inCommitment = inTx.getOutput(myOutpoint.getIndex()).commitment;
+
+    		myInputCommiments.add(inCommitment);
+    		byte[] blind = new byte[32];
+    		revealValue(inTx.getOutput(myOutpoint.getIndex()), blind);
+    		
+    		myBlinds[myBlindsIdx] = new BigInteger(blind);
+    		myBlindsIdx++;
+    	}
+//    	for(CTxIn& in: wtxNew.vin) {
+//    		COutPoint myOutpoint;
+//    		if (myIndex == -1) {
+//    			myOutpoint = in.prevout;
+//    		} else {
+//    			myOutpoint = in.decoys[myIndex];
+//    		}
+//    		CTransaction& inTx = mapWallet[myOutpoint.hash];
+//    		secp256k1_pedersen_commitment inCommitment;
+//    		if (!secp256k1_pedersen_commitment_parse(both, &inCommitment, &(inTx.vout[myOutpoint.n].commitment[0]))) {
+//    			strFailReason = _("Cannot parse the commitment for inputs");
+//    			return false;
+//    		}
+//
+//    		myInputCommiments.push_back(inCommitment);
+//    		CAmount tempAmount;
+//    		CKey tmp;
+//    		RevealTxOutAmount(inTx, inTx.vout[myOutpoint.n], tempAmount, tmp);
+//    		if (tmp.IsValid()) memcpy(&myBlinds[myBlindsIdx][0], tmp.begin(), 32);
+//    		//verify input commitments
+//    		std::vector<unsigned char> recomputedCommitment;
+//    		if (!CreateCommitment(&myBlinds[myBlindsIdx][0], tempAmount, recomputedCommitment))
+//    			throw runtime_error("Cannot create pedersen commitment");
+//    		if (recomputedCommitment != inTx.vout[myOutpoint.n].commitment) {
+//    			strFailReason = _("Input commitments are not correct");
+//    			return false;
+//    		}
+//
+//    		bptr[myBlindsIdx] = myBlinds[myBlindsIdx];
+//    		myBlindsIdx++;
+//    	}
+
+    	//collecting output commitment blinding factors
+    	for(TransactionOutput out: tx.getOutputs()) {
+    		myBlinds[myBlindsIdx] = out.maskValue.inMemoryRawBind.getPrivKey();
+    		myBlindsIdx++;
+    	}
+//    	for(CTxOut& out: wtxNew.vout) {
+//    		if (!out.IsEmpty()) {
+//    			if (out.maskValue.inMemoryRawBind.IsValid()) {
+//    				memcpy(&myBlinds[myBlindsIdx][0], out.maskValue.inMemoryRawBind.begin(), 32);
+//    			}
+//    			bptr[myBlindsIdx] = &myBlinds[myBlindsIdx][0];
+//    			myBlindsIdx++;
+//    		}
+//    	}
+
+    	BigInteger newBlind = new ECKey().getPrivKey();
+    	myBlinds[myBlindsIdx] = newBlind;
+
+    	int myRealIndex = 0;
+    	if (myIndex != -1) {
+    		myRealIndex = myIndex + 1;
+    	}
+    	
+//    	CKey newBlind;
+//    	newBlind.MakeNewKey(true);
+//    	memcpy(&myBlinds[myBlindsIdx][0], newBlind.begin(), 32);
+//    	bptr[myBlindsIdx] = &myBlinds[myBlindsIdx][0];
+//
+//    	int myRealIndex = 0;
+//    	if (myIndex != -1) {
+//    		myRealIndex = myIndex + 1;
+//    	}
+
+    	int PI = myRealIndex;
+    	BigInteger[][] SIJ = new BigInteger[MAX_VIN + 1][MAX_DECOYS + 1];
+    	byte[][][] LIJ = new byte[MAX_VIN + 1][MAX_DECOYS + 1][33];
+    	byte[][][] RIJ = new byte[MAX_VIN + 1][MAX_DECOYS + 1][33];
+    	BigInteger[] ALPHA = new BigInteger[MAX_VIN + 1];
+    	BigInteger[] AllPrivKeys = new BigInteger[MAX_VIN + 1];
+    	
+//    	int PI = myRealIndex;
+//    	unsigned char SIJ[MAX_VIN + 1][MAX_DECOYS + 1][32];
+//    	unsigned char LIJ[MAX_VIN + 1][MAX_DECOYS + 1][33];
+//    	unsigned char RIJ[MAX_VIN + 1][MAX_DECOYS + 1][33];
+//    	unsigned char ALPHA[MAX_VIN + 1][32];
+//    	unsigned char AllPrivKeys[MAX_VIN + 1][32];
+
+    	//generating LIJ and RIJ at PI: LIJ[j][PI], RIJ[j][PI], j=0..wtxNew.vin.size()
+    	for (int j = 0; j < tx.getInputs().size(); j++) {
+    		TransactionOutPoint myOutpoint;
+    		if (myIndex == -1) {
+    			myOutpoint = tx.getInput(j).getOutpoint();
+    		} else {
+    			myOutpoint = tx.getInput(j).decoys.get(myIndex);
+    		}
+    		Transaction inTx = transactions.get(myOutpoint.getHash());
+    		//looking for private keys corresponding to my real inputs
+    		BigInteger tempPk = findPrivateKey(inTx.getOutput(myOutpoint.getIndex()).getScriptPubKey().getPubKey());
+    		AllPrivKeys[j] = tempPk;
+    		
+    		//copying corresponding key images
+    		System.arraycopy(tx.getInput(j).keyImage.getEncoded(true), 0, allKeyImages[j], 0, 33);
+    		//copying corresponding in public keys
+    		System.arraycopy(ECKey.fromPrivate(tempPk).getPubKey(), 0, allInPubKeys[j][PI], 0, 33);
+
+    		System.arraycopy(inTx.getOutput(myOutpoint.getIndex()).commitment, 0, allInCommitments[j][PI], 0, 33);
+    		
+    		ECKey alpha = new ECKey();
+    		ALPHA[j] = alpha.getPrivKey();
+    		byte[] LIJ_PI = alpha.getPubKey();
+    		System.arraycopy(LIJ_PI, 0, LIJ[j][PI], 0, 33);
+    		System.arraycopy(generateKeyImage(alpha.getPrivKey()), 0, RIJ[j][PI], 0, 33);
+    	}
+//    	for (size_t j = 0; j < wtxNew.vin.size(); j++) {
+//    		COutPoint myOutpoint;
+//    		if (myIndex == -1) {
+//    			myOutpoint = wtxNew.vin[j].prevout;
+//    		} else {
+//    			myOutpoint = wtxNew.vin[j].decoys[myIndex];
+//    		}
+//    		CTransaction& inTx = mapWallet[myOutpoint.hash];
+//    		CKey tempPk;
+//    		//looking for private keys corresponding to my real inputs
+//    		if (!findCorrespondingPrivateKey(inTx.vout[myOutpoint.n], tempPk)) {
+//    			strFailReason = _("Cannot find corresponding private key");
+//    			return false;
+//    		}
+//    		memcpy(AllPrivKeys[j], tempPk.begin(), 32);
+//    		//copying corresponding key images
+//    		memcpy(allKeyImages[j], wtxNew.vin[j].keyImage.begin(), 33);
+//    		//copying corresponding in public keys
+//    		CPubKey tempPubKey = tempPk.GetPubKey();
+//    		memcpy(allInPubKeys[j][PI], tempPubKey.begin(), 33);
+//
+//    		memcpy(allInCommitments[j][PI], &(inTx.vout[myOutpoint.n].commitment[0]), 33);
+//    		CKey alpha;
+//    		alpha.MakeNewKey(true);
+//    		memcpy(ALPHA[j], alpha.begin(), 32);
+//    		CPubKey LIJ_PI = alpha.GetPubKey();
+//    		memcpy(LIJ[j][PI], LIJ_PI.begin(), 33);
+//    		PointHashingSuccessively(tempPubKey, alpha.begin(), RIJ[j][PI]);
+//    	}
+
+    	//computing additional input pubkey and key images
+    	//additional private key = sum of all existing private keys + sum of all blinds in - sum of all blind outs
+    	BigInteger outSum = myBlinds[0];
+    	for(int i = 1; i < 2*npositive; i++) {
+    		outSum = outSum.add(myBlinds[i]).mod(ECKey.CURVE.getN());
+    	}
+    	
+    	for(int i = 0; i < npositive + totalCommits - 2*npositive; i++) {
+    		outSum = outSum.add(myBlinds[i]).mod(ECKey.CURVE.getN());
+    	}
+    	
+    	myBlinds[myBlindsIdx] = outSum;
+    	
+    	AllPrivKeys[tx.getInputs().size()] = outSum;
+
+    	byte[] additionalPubKey = ECKey.publicKeyFromPrivate(myBlinds[myBlindsIdx], true);
+    	System.arraycopy(additionalPubKey, 0, allInPubKeys[tx.getInputs().size()][PI], 0, 33);
+    	System.arraycopy(generateKeyImage(myBlinds[myBlindsIdx]), 0, allKeyImages[tx.getInputs().size()], 0, 33);
+    	
+//    	unsigned char outSum[32];
+//    	if (!secp256k1_pedersen_blind_sum(both, outSum, (const unsigned char * const *)bptr, npositive + totalCommits, 2 * npositive))
+//    		throw runtime_error("Cannot compute pedersen blind sum");
+//    	memcpy(myBlinds[myBlindsIdx], outSum, 32);
+//    	memcpy(AllPrivKeys[wtxNew.vin.size()], outSum, 32);
+//    	CKey additionalPkKey;
+//    	additionalPkKey.Set(myBlinds[myBlindsIdx], myBlinds[myBlindsIdx] + 32, true);
+//    	CPubKey additionalPubKey = additionalPkKey.GetPubKey();
+//    	memcpy(allInPubKeys[wtxNew.vin.size()][PI], additionalPubKey.begin(), 33);
+//    	PointHashingSuccessively(additionalPubKey, myBlinds[myBlindsIdx], allKeyImages[wtxNew.vin.size()]);
+
+    	//verify that additional public key = sum of wtx.vin.size() real public keys + sum of wtx.vin.size() commitments - sum of wtx.vout.size() commitments - commitment to zero of transction fee
+
+    	//filling LIJ & RIJ at [j][PI]
+    	BigInteger alpha_additional = new ECKey().getPrivKey();
+    	ALPHA[tx.getInputs().size()] = alpha_additional;
+    	byte[] LIJ_PI_additional = ECKey.publicKeyFromPrivate(alpha_additional, true);
+    	System.arraycopy(LIJ_PI_additional, 0, LIJ[tx.getInputs().size()][PI], 0, 33);
+    	System.arraycopy(generateKeyImage(alpha_additional), 0, RIJ[tx.getInputs().size()][PI], 0, 33);
+//    	CKey alpha_additional;
+//    	alpha_additional.MakeNewKey(true);
+//    	memcpy(ALPHA[wtxNew.vin.size()], alpha_additional.begin(), 32);
+//    	CPubKey LIJ_PI_additional = alpha_additional.GetPubKey();
+//    	memcpy(LIJ[wtxNew.vin.size()][PI], LIJ_PI_additional.begin(), 33);
+//    	PointHashingSuccessively(additionalPubKey, alpha_additional.begin(), RIJ[wtxNew.vin.size()][PI]);
+
+    	//Initialize SIJ except S[..][PI]
+    	for (int i = 0; i < tx.getInputs().size() + 1; i++) {
+    		for (int j = 0; j < tx.getInput(0).decoys.size() + 1; j++) {
+    			if (j != PI) {
+    				SIJ[i][j] = new ECKey().getPrivKey();
+    			}
+    		}
+    	}
+//    	for (int i = 0; i < (int)wtxNew.vin.size() + 1; i++) {
+//    		for (int j = 0; j < (int)wtxNew.vin[0].decoys.size() + 1; j++) {
+//    			if (j != PI) {
+//    				CKey randGen;
+//    				randGen.MakeNewKey(true);
+//    				memcpy(SIJ[i][j], randGen.begin(), 32);
+//    			}
+//    		}
+//    	}
+
+    	//extract all public keys
+    	for (int i = 0; i < tx.getInputs().size(); i++) {
+    		List<TransactionOutPoint> decoysForIn = new ArrayList<TransactionOutPoint>();
+    		decoysForIn.add(tx.getInput(i).getOutpoint());
+    		decoysForIn.addAll(tx.getInput(i).decoys);
+
+    		for (int j = 0; j < tx.getInput(0).decoys.size() + 1; j++) {
+    			if (j != PI) {
+    				Decoy d = decoySet.get(decoysForIn.get(j).getHash().toString() + decoysForIn.get(j).getIndex());
+    				byte[] extractedPub = d.pubKey;
+    				System.arraycopy(extractedPub, 0, allInPubKeys[i][j], 0, 33);
+    				System.arraycopy(d.commitment, 0, allInCommitments[i][j], 0, 33);
+    			}
+    		}
+    	}
+//    	for (int i = 0; i < (int)wtxNew.vin.size(); i++) {
+//    		std::vector<COutPoint> decoysForIn;
+//    		decoysForIn.push_back(wtxNew.vin[i].prevout);
+//    		for(int j = 0; j < (int)wtxNew.vin[i].decoys.size(); j++) {
+//    			decoysForIn.push_back(wtxNew.vin[i].decoys[j]);
+//    		}
+//    		for (int j = 0; j < (int)wtxNew.vin[0].decoys.size() + 1; j++) {
+//    			if (j != PI) {
+//    				CTransaction txPrev;
+//    				uint256 hashBlock;
+//    				if (!GetTransaction(decoysForIn[j].hash, txPrev, hashBlock)) {
+//    					return false;
+//    				}
+//    				CPubKey extractedPub;
+//    				if (!ExtractPubKey(txPrev.vout[decoysForIn[j].n].scriptPubKey, extractedPub)) {
+//    					strFailReason = _("Cannot extract public key from script pubkey");
+//    					return false;
+//    				}
+//    				memcpy(allInPubKeys[i][j], extractedPub.begin(), 33);
+//    				memcpy(allInCommitments[i][j], &(txPrev.vout[decoysForIn[j].n].commitment[0]), 33);
+//    			}
+//    		}
+//    	}
+
+    	LazyECPoint[][] allInCommitmentsPacked = new LazyECPoint[MAX_VIN][MAX_DECOYS + 1];
+    	LazyECPoint[] allOutCommitmentsPacked = new LazyECPoint[MAX_VOUT + 1]; //+1 for tx fee
+//    	secp256k1_pedersen_commitment allInCommitmentsPacked[MAX_VIN][MAX_DECOYS + 1];
+//    	secp256k1_pedersen_commitment allOutCommitmentsPacked[MAX_VOUT + 1]; //+1 for tx fee
+
+    	for (int i = 0; i < tx.getOutputs().size(); i++) {
+    		System.arraycopy(tx.getOutput(i).commitment, 0, allOutCommitments[i], 0, 33);
+    		allOutCommitmentsPacked[i] = new LazyECPoint(ECKey.CURVE.getCurve(), fromCommitmentToPubkey(allOutCommitments[i]));
+    	}
+//    	for (size_t i = 0; i < wtxNew.vout.size(); i++) {
+//    		memcpy(&(allOutCommitments[i][0]), &(wtxNew.vout[i].commitment[0]), 33);
+//    		if (!secp256k1_pedersen_commitment_parse(both, &allOutCommitmentsPacked[i], allOutCommitments[i])) {
+//    			strFailReason = _("Cannot parse the commitment for inputs");
+//    			return false;
+//    		}
+//    	}
+
+    	//commitment to tx fee, blind = 0
+    	BigInteger txFeeBlind = BigInteger.valueOf(0);
+    	allOutCommitmentsPacked[tx.getOutputs().size()] = new LazyECPoint(ECKey.CURVE.getCurve(), fromCommitmentToPubkey(createZeroBlindCommitment(tx.getFee().value)));
+
+//    	unsigned char txFeeBlind[32];
+//    	memset(txFeeBlind, 0, 32);
+//    	if (!secp256k1_pedersen_commit(both, &allOutCommitmentsPacked[wtxNew.vout.size()], txFeeBlind, wtxNew.nTxFee, &secp256k1_generator_const_h, &secp256k1_generator_const_g)) {
+//    		strFailReason = _("Cannot parse the commitment for transaction fee");
+//    		return false;
+//    	}
+
+    	//filling the additional pubkey elements for decoys: allInPubKeys[wtxNew.vin.size()][..]
+    	//allInPubKeys[wtxNew.vin.size()][j] = sum of allInPubKeys[..][j] + sum of allInCommitments[..][j] - sum of allOutCommitments
+    	LazyECPoint[] outCptr = new LazyECPoint[MAX_VOUT + 1];
+    	for(int i = 0; i < tx.getOutputs().size() + 1; i++) {
+    		outCptr[i] = allOutCommitmentsPacked[i];
+    	}
+    	LazyECPoint[][] inPubKeysToCommitments = new LazyECPoint[MAX_VIN][MAX_DECOYS + 1];
+    	for(int i = 0; i < tx.getInputs().size(); i++) {
+    		for (int j = 0; j < tx.getInput(0).decoys.size() + 1; j++) {
+    			inPubKeysToCommitments[i][j] = new LazyECPoint(ECKey.CURVE.getCurve(), allInPubKeys[i][j]);
+    		}
+    	}
+//    	const secp256k1_pedersen_commitment *outCptr[MAX_VOUT + 1];
+//    	for(size_t i = 0; i < wtxNew.vout.size() + 1; i++) {
+//    		outCptr[i] = &allOutCommitmentsPacked[i];
+//    	}
+//    	secp256k1_pedersen_commitment inPubKeysToCommitments[MAX_VIN][MAX_DECOYS + 1];
+//    	for(int i = 0; i < (int)wtxNew.vin.size(); i++) {
+//    		for (int j = 0; j < (int)wtxNew.vin[0].decoys.size() + 1; j++) {
+//    			secp256k1_pedersen_serialized_pubkey_to_commitment(allInPubKeys[i][j], 33, &inPubKeysToCommitments[i][j]);
+//    		}
+//    	}
+    	
+    	LazyECPoint sumOfOutCptr = outCptr[0];
+    	for (int i = 1; i < outCptr.length; i++) {
+    		sumOfOutCptr = new LazyECPoint(sumOfOutCptr.add(outCptr[i].get()));
+    	}
+    	for (int j = 0; j < tx.getInput(0).decoys.size() + 1; j++) {
+    		if (j != PI) {
+    			LazyECPoint[] inCptr = new LazyECPoint[MAX_VIN * 2];
+    			for (int k = 0; k < tx.getInputs().size(); k++) {
+    				allInCommitmentsPacked[k][j] = new LazyECPoint(ECKey.CURVE.getCurve(), fromCommitmentToPubkey(allInCommitments[k][j]));
+    				inCptr[k] = allInCommitmentsPacked[k][j];
+    			}
+    			for (int k = tx.getInputs().size(); k < 2*tx.getInputs().size(); k++) {
+    				inCptr[k] = inPubKeysToCommitments[k - tx.getInputs().size()][j];
+    			}
+    			LazyECPoint out = inCptr[0];
+    			//convert allInPubKeys to pederson commitment to compute sum of all in public keys
+    			//sum of all in commitments
+    			for(int m = 1; m < tx.getInputs().size() * 2; m ++) {
+    				out = new LazyECPoint(out.add(inCptr[m].get()));
+    			}
+    			out = new LazyECPoint(out.add(sumOfOutCptr.get()));
+    			System.arraycopy(out.getEncoded(true), 0, allInPubKeys[tx.getInputs().size()][j], 0, 33);
+    		}
+    	}
+//    	for (int j = 0; j < (int)wtxNew.vin[0].decoys.size() + 1; j++) {
+//    		if (j != PI) {
+//    			const secp256k1_pedersen_commitment *inCptr[MAX_VIN * 2];
+//    			for (int k = 0; k < (int)wtxNew.vin.size(); k++) {
+//    				if (!secp256k1_pedersen_commitment_parse(both, &allInCommitmentsPacked[k][j], allInCommitments[k][j])) {
+//    					strFailReason = _("Cannot parse the commitment for inputs");
+//    					return false;
+//    				}
+//    				inCptr[k] = &allInCommitmentsPacked[k][j];
+//    			}
+//    			for (size_t k = wtxNew.vin.size(); k < 2*wtxNew.vin.size(); k++) {
+//    				inCptr[k] = &inPubKeysToCommitments[k - wtxNew.vin.size()][j];
+//    			}
+//    			secp256k1_pedersen_commitment out;
+//    			size_t length;
+//    			//convert allInPubKeys to pederson commitment to compute sum of all in public keys
+//    			if (!secp256k1_pedersen_commitment_sum(both, inCptr, wtxNew.vin.size()*2, outCptr, wtxNew.vout.size() + 1, &out))
+//    				throw runtime_error("Cannot compute sum of commitment");
+//    			if (!secp256k1_pedersen_commitment_to_serialized_pubkey(&out, allInPubKeys[wtxNew.vin.size()][j], &length))
+//    				throw runtime_error("Cannot covert from commitment to public key");
+//    		}
+//    	}
+
+    	//Computing C
+    	int PI_interator = PI + 1; //PI_interator: PI + 1 .. wtxNew.vin[0].decoys.size() + 1 .. PI
+    	//unsigned char SIJ[wtxNew.vin.size() + 1][wtxNew.vin[0].decoys.size() + 1][32];
+    	//unsigned char LIJ[wtxNew.vin.size() + 1][wtxNew.vin[0].decoys.size() + 1][33];
+    	//unsigned char RIJ[wtxNew.vin.size() + 1][wtxNew.vin[0].decoys.size() + 1][33];
+    	BigInteger[] CI = new BigInteger[MAX_DECOYS + 1];
+    	byte[] tempForHash = new byte[2 * (MAX_VIN + 1) * 33 + 32];
+    	int tempForHashCursor = 0;
+    	for (int i = 0; i < tx.getInputs().size() + 1; i++) {
+    		System.arraycopy(LIJ[i][PI], 0, tempForHash, tempForHashCursor, 33);
+    		tempForHashCursor += 33;
+    		System.arraycopy(RIJ[i][PI], 0, tempForHash, tempForHashCursor, 33);
+    		tempForHashCursor += 33;
+    	}
+    	byte[] ctsHash = new TransactionSignature(tx).getSigHash();
+		System.arraycopy(ctsHash, 0, tempForHash, tempForHashCursor, 32);
+
+    	if (PI_interator == tx.getInput(0).decoys.size() + 1) PI_interator = 0;
+    	byte[] temppi1 = Sha256Hash.hashTwice(tempForHash, 0, 2 * (tx.getInputs().size() + 1) * 33 + 32);
+    	if (PI_interator == 0) {
+    		CI[0] = new BigInteger(temppi1);
+    	} else {
+    		CI[PI_interator] = new BigInteger(temppi1);
+    	}
+//    	int PI_interator = PI + 1; //PI_interator: PI + 1 .. wtxNew.vin[0].decoys.size() + 1 .. PI
+//    	//unsigned char SIJ[wtxNew.vin.size() + 1][wtxNew.vin[0].decoys.size() + 1][32];
+//    	//unsigned char LIJ[wtxNew.vin.size() + 1][wtxNew.vin[0].decoys.size() + 1][33];
+//    	//unsigned char RIJ[wtxNew.vin.size() + 1][wtxNew.vin[0].decoys.size() + 1][33];
+//    	unsigned char CI[MAX_DECOYS + 1][32];
+//    	unsigned char tempForHash[2 * (MAX_VIN + 1) * 33 + 32];
+//    	unsigned char* tempForHashPtr = tempForHash;
+//    	for (size_t i = 0; i < wtxNew.vin.size() + 1; i++) {
+//    		memcpy(tempForHashPtr, &LIJ[i][PI][0], 33);
+//    		tempForHashPtr += 33;
+//    		memcpy(tempForHashPtr, &RIJ[i][PI][0], 33);
+//    		tempForHashPtr += 33;
+//    	}
+//    	uint256 ctsHash = GetTxSignatureHash(wtxNew);
+//    	memcpy(tempForHashPtr, ctsHash.begin(), 32);
+//
+//    	if (PI_interator == (int)wtxNew.vin[0].decoys.size() + 1) PI_interator = 0;
+//    	uint256 temppi1 = Hash(tempForHash, tempForHash + 2 * (wtxNew.vin.size() + 1) * 33 + 32);
+//    	if (PI_interator == 0) {
+//    		memcpy(CI[0], temppi1.begin(), 32);
+//    	} else {
+//    		memcpy(CI[PI_interator], temppi1.begin(), 32);
+//    	}
+    	while (PI_interator != PI) {
+    		for (int j = 0; j < tx.getInputs().size() + 1; j++) {
+    			//compute LIJ
+    			LazyECPoint CP = new LazyECPoint(ECKey.CURVE.getCurve(), allInPubKeys[j][PI_interator]);
+    			CP = new LazyECPoint(CP.multiply(CI[PI_interator]));
+    			CP = new LazyECPoint(CP.add(ECKey.fromPrivate(SIJ[j][PI_interator]).getPubKeyPoint()));
+    			System.arraycopy(CP.getEncoded(true), 0, LIJ[j][PI_interator], 0, 33);
+
+    			//compute RIJ
+    			//first compute CI * I
+    			LazyECPoint RIJ_Point = new LazyECPoint(ECKey.CURVE.getCurve(), allKeyImages[j]);
+    			RIJ_Point = new LazyECPoint(RIJ_Point.multiply(CI[PI_interator]));
+    			System.arraycopy(RIJ_Point.getEncoded(true), 0, RIJ[j][PI_interator], 0, 33);
+
+    			//compute S*H(P)
+    			LazyECPoint tempP = new LazyECPoint(ECKey.CURVE.getCurve(), allInPubKeys[j][PI_interator]);
+    			byte[] SHP = pointHashingSuccessively(tempP.getEncoded(true), SIJ[j][PI_interator]);
+    			//convert shp into commitment
+    			LazyECPoint SHP_commitment = new LazyECPoint(ECKey.CURVE.getCurve(), SHP);
+
+    			//convert CI*I into commitment
+    			LazyECPoint cii_commitment = new LazyECPoint(ECKey.CURVE.getCurve(), RIJ[j][PI_interator]);
+
+    			LazyECPoint sum = SHP_commitment;
+    			sum = new LazyECPoint(sum.add(cii_commitment.get()));
+    			System.arraycopy(sum.getEncoded(true), 0, RIJ[j][PI_interator], 0, 33);
+    		}
+
+    		PI_interator++;
+    		if (PI_interator == tx.getInput(0).decoys.size() + 1) PI_interator = 0;
+
+    		int prev, ciIdx;
+    		if (PI_interator == 0) {
+    			prev = tx.getInput(0).decoys.size();
+    			ciIdx = 0;
+    		} else {
+    			prev = PI_interator - 1;
+    			ciIdx = PI_interator;
+    		}
+
+    		tempForHashCursor = 0;
+    		for (int i = 0; i < tx.getInputs().size() + 1; i++) {
+    			System.arraycopy(LIJ[i][prev], 0, tempForHash, tempForHashCursor, 33);
+    			tempForHashCursor += 33;
+    			System.arraycopy(RIJ[i][prev], 0, tempForHash, tempForHashCursor, 33);
+    			tempForHashCursor += 33;
+    		}
+			System.arraycopy(ctsHash, 0, tempForHash, tempForHashCursor, 33);
+			byte[] ciHashTmp = Sha256Hash.hashTwice(tempForHash, 0, 2 * (tx.getInputs().size() + 1) * 33 + 32);
+    		CI[ciIdx] = new BigInteger(ciHashTmp);
+    	}
+//    	while (PI_interator != PI) {
+//    		for (int j = 0; j < (int)wtxNew.vin.size() + 1; j++) {
+//    			//compute LIJ
+//    			unsigned char CP[33];
+//    			memcpy(CP, allInPubKeys[j][PI_interator], 33);
+//    			if (!secp256k1_ec_pubkey_tweak_mul(CP, 33, CI[PI_interator])) {
+//    				strFailReason = _("Cannot compute LIJ for ring signature in secp256k1_ec_pubkey_tweak_mul");
+//    				return false;
+//    			}
+//    			if (!secp256k1_ec_pubkey_tweak_add(CP, 33, SIJ[j][PI_interator])) {
+//    				strFailReason = _("Cannot compute LIJ for ring signature in secp256k1_ec_pubkey_tweak_add");
+//    				return false;
+//    			}
+//    			memcpy(LIJ[j][PI_interator], CP, 33);
+//
+//    			//compute RIJ
+//    			//first compute CI * I
+//    			memcpy(RIJ[j][PI_interator], allKeyImages[j], 33);
+//    			if (!secp256k1_ec_pubkey_tweak_mul(RIJ[j][PI_interator], 33, CI[PI_interator])) {
+//    				strFailReason = _("Cannot compute RIJ for ring signature in secp256k1_ec_pubkey_tweak_mul");
+//    				return false;
+//    			}
+//
+//    			//compute S*H(P)
+//    			unsigned char SHP[33];
+//    			CPubKey tempP;
+//    			tempP.Set(allInPubKeys[j][PI_interator], allInPubKeys[j][PI_interator] + 33);
+//    			PointHashingSuccessively(tempP, SIJ[j][PI_interator], SHP);
+//    			//convert shp into commitment
+//    			secp256k1_pedersen_commitment SHP_commitment;
+//    			secp256k1_pedersen_serialized_pubkey_to_commitment(SHP, 33, &SHP_commitment);
+//
+//    			//convert CI*I into commitment
+//    			secp256k1_pedersen_commitment cii_commitment;
+//    			secp256k1_pedersen_serialized_pubkey_to_commitment(RIJ[j][PI_interator], 33, &cii_commitment);
+//
+//    			const secp256k1_pedersen_commitment *twoElements[2];
+//    			twoElements[0] = &SHP_commitment;
+//    			twoElements[1] = &cii_commitment;
+//
+//    			secp256k1_pedersen_commitment sum;
+//    			if (!secp256k1_pedersen_commitment_sum_pos(both, twoElements, 2, &sum))
+//    				throw  runtime_error("Cannot compute sum of commitments");
+//    			size_t tempLength;
+//    			if (!secp256k1_pedersen_commitment_to_serialized_pubkey(&sum, RIJ[j][PI_interator], &tempLength)) {
+//    				strFailReason = _("Cannot compute two elements and serialize it to pubkey");
+//    			}
+//    		}
+//
+//    		PI_interator++;
+//    		if (PI_interator == (int)wtxNew.vin[0].decoys.size() + 1) PI_interator = 0;
+//
+//    		int prev, ciIdx;
+//    		if (PI_interator == 0) {
+//    			prev = wtxNew.vin[0].decoys.size();
+//    			ciIdx = 0;
+//    		} else {
+//    			prev = PI_interator - 1;
+//    			ciIdx = PI_interator;
+//    		}
+//
+//    		tempForHashPtr = tempForHash;
+//    		for (int i = 0; i < (int)wtxNew.vin.size() + 1; i++) {
+//    			memcpy(tempForHashPtr, LIJ[i][prev], 33);
+//    			tempForHashPtr += 33;
+//    			memcpy(tempForHashPtr, RIJ[i][prev], 33);
+//    			tempForHashPtr += 33;
+//    		}
+//    		memcpy(tempForHashPtr, ctsHash.begin(), 32);
+//    		uint256 ciHashTmp = Hash(tempForHash, tempForHash + 2 * (wtxNew.vin.size() + 1) * 33 + 32);
+//    		memcpy(CI[ciIdx], ciHashTmp.begin(), 32);
+//    	}
+
+    	//compute S[j][PI] = alpha_j - c_pi * x_j, x_j = private key corresponding to key image I
+    	for (int j = 0; j < tx.getInputs().size() + 1; j++) {
+    		BigInteger cx = CI[PI];
+    		cx = cx.multiply(AllPrivKeys[j]).mod(ECKey.CURVE.getN());
+    		SIJ[j][PI] = cx.subtract(ALPHA[j]).mod(ECKey.CURVE.getN());;
+    	}
+    	tx.c = Sha256Hash.wrap(Utils.bigIntegerToBytes(CI[0], 32));
+//    	for (size_t j = 0; j < wtxNew.vin.size() + 1; j++) {
+//    		unsigned char cx[32];
+//    		memcpy(cx, CI[PI], 32);
+//    		if (!secp256k1_ec_privkey_tweak_mul(cx, AllPrivKeys[j]))
+//    			throw runtime_error("Cannot compute EC mul");
+//    		const unsigned char *sumArray[2];
+//    		sumArray[0] = ALPHA[j];
+//    		sumArray[1] = cx;
+//    		if (!secp256k1_pedersen_blind_sum(both, SIJ[j][PI], sumArray, 2, 1))
+//    			throw runtime_error("Cannot compute pedersen blind sum");
+//    	}
+//    	memcpy(wtxNew.c.begin(), CI[0], 32);
+    	//i for decoy index => PI
+    	if (tx.S == null) {
+    		tx.S = new ArrayList<ArrayList<Sha256Hash>>();
+    	}
+    	for (int i = 0; i < tx.getInput(0).decoys.size() + 1; i++) {
+    		ArrayList<Sha256Hash> S_column = new ArrayList<Sha256Hash>();
+    		for (int j = 0; j < tx.getInputs().size() + 1; j++) {
+    			Sha256Hash t = Sha256Hash.wrap(Utils.bigIntegerToBytes(SIJ[j][i], 32));
+    			S_column.add(t);
+    		}
+    		tx.S.add(S_column);
+    	}
+    	tx.ntxFeeKeyImage = new LazyECPoint(ECKey.CURVE.getCurve(), allKeyImages[tx.getInputs().size()]);
+//    	for (int i = 0; i < (int)wtxNew.vin[0].decoys.size() + 1; i++) {
+//    		std::vector<uint256> S_column;
+//    		for (int j = 0; j < (int)wtxNew.vin.size() + 1; j++) {
+//    			uint256 t;
+//    			memcpy(t.begin(), SIJ[j][i], 32);
+//    			S_column.push_back(t);
+//    		}
+//    		wtxNew.S.push_back(S_column);
+//    	}
+//    	wtxNew.ntxFeeKeyImage.Set(allKeyImages[wtxNew.vin.size()], allKeyImages[wtxNew.vin.size()] + 33);
     	return true;
     }
     
-    public static byte[] createCommitment(BigInteger blind, long val) {
-    	Peder
-    	return null;
+    public static byte[] pointHashingSuccessively(byte[] p, BigInteger secret) {
+    	ECKey ecKey = ECKey.fromPrivate(secret);
+    	byte[] pub = p;
+		byte[] point = new byte[33];
+		System.arraycopy(pub, 0, point, 0, 33);
+    	do {
+    		byte[] h = Sha256Hash.hashTwice(point);
+    		point[0] = pub[0];
+    		System.arraycopy(h, 0, point, 1, 32);
+    	} while (!(new LazyECPoint(ECKey.CURVE.getCurve(), point).isValid()));
+    	
+    	return point;
     }
     
-    public static byte[] createCommitment(long val) {
-    	return null;
+    public static byte[] createCommitment(BigInteger blind, long val) {
+    	LazyECPoint H = getH();
+    	LazyECPoint HVal = new LazyECPoint(H.multiply(BigInteger.valueOf(val)));
+    	byte[] ret = ECKey.fromPrivate(blind).getPubKeyPoint().add(HVal.get()).getEncoded();
+    	ret[0] = (byte)(ret[0] == 2? 9 : 8);
+    	return ret;
+    }
+    
+    public static byte[] createZeroBlindCommitment(long val) {
+    	byte[] zeros = new byte[32];
+    	return createCommitment(new BigInteger(zeros), val);
+    }
+    
+    public static byte[] generateRecipientAddress(String stealth, BigInteger txPriv) {
+    	return generateRecipientAddress(stealth, ECKey.fromPrivate(txPriv));
+    }
+    
+    public byte[] generateChangeAddress(ECKey txPriv) {
+    	return generateRecipientAddress(computeStealthAddress(), txPriv);
+    }
+    
+    public static byte[] generateRecipientAddress(String stealth, ECKey txPriv) {
+    	byte[] pubSpend = new byte[33];
+    	byte[] pubView = new byte[33];
+    	if (!decodeStealthAddress(stealth, pubSpend, pubView)) return null;
+    	
+    	//generate transaction destination: P = Hs(rA)G+B, A = view pub, B = spend pub, r = secret
+        //1. Compute rA
+        ECPoint rA = new LazyECPoint(ECKey.CURVE.getCurve(), pubView).multiply(txPriv.getPrivKey());
+
+        byte[] HS = Sha256Hash.hashTwice(rA.getEncoded(true));
+        
+        return new LazyECPoint(ECKey.CURVE.getCurve(), pubSpend).add(ECKey.fromPrivate(HS, true).getPubKeyPoint()).getEncoded(true);
     }
 
     /**
@@ -4313,7 +5194,7 @@ public class Wallet extends BaseTaggableObject
             Coin totalInput = Coin.ZERO;
             for (TransactionInput input : req.tx.getInputs())
                 if (input.getConnectedOutput() != null)
-                    totalInput = totalInput.add(input.getConnectedOutput().getValue());
+                    totalInput = totalInput.add(Coin.valueOf(getValue(input.getConnectedOutput())));
                 else
                     log.warn("SendRequest transaction already has inputs but we don't know how much they are worth - they will be added to fee.");
             value = value.subtract(totalInput);
@@ -4341,30 +5222,13 @@ public class Wallet extends BaseTaggableObject
 
             CoinSelection bestCoinSelection;
             TransactionOutput bestChangeOutput = null;
-            if (!req.emptyWallet) {
-                // This can throw InsufficientMoneyException.
-                FeeCalculation feeCalculation = calculateFee(req, value, originalInputs, req.ensureMinRequiredFee, candidates);
-                bestCoinSelection = feeCalculation.bestCoinSelection;
-                bestChangeOutput = feeCalculation.bestChangeOutput;
-            } else {
-                // We're being asked to empty the wallet. What this means is ensuring "tx" has only a single output
-                // of the total value we can currently spend as determined by the selector, and then subtracting the fee.
-                checkState(req.tx.getOutputs().size() == 1, "Empty wallet TX must have a single output only.");
-                CoinSelector selector = req.coinSelector == null ? coinSelector : req.coinSelector;
-                bestCoinSelection = selector.select(this, params.getMaxMoney(), candidates);
-                candidates = null;  // Selector took ownership and might have changed candidates. Don't access again.
-                req.tx.getOutput(0).setValue(bestCoinSelection.valueGathered);
-                log.info("  emptying {}", bestCoinSelection.valueGathered.toFriendlyString());
-            }
+            // This can throw InsufficientMoneyException.
+            FeeCalculation feeCalculation = calculateFee(req, value, originalInputs, req.ensureMinRequiredFee, candidates);
+            bestCoinSelection = feeCalculation.bestCoinSelection;
+            bestChangeOutput = feeCalculation.bestChangeOutput;
 
             for (TransactionOutput output : bestCoinSelection.gathered)
                 req.tx.addInput(output);
-
-            if (req.emptyWallet) {
-                final Coin feePerKb = req.feePerKb == null ? Coin.ZERO : req.feePerKb;
-                if (!adjustOutputDownwardsForFee(req.tx, bestCoinSelection, feePerKb, req.ensureMinRequiredFee, req.useInstantSend))
-                    throw new CouldNotAdjustDownwards();
-            }
 
             if (bestChangeOutput != null) {
                 req.tx.addOutput(bestChangeOutput);
@@ -4376,8 +5240,13 @@ public class Wallet extends BaseTaggableObject
                 req.tx.shuffleOutputs();
 
             // Now sign the inputs, thus proving that we are entitled to redeem the connected outputs.
-            if (req.signInputs)
-                signTransaction(req);
+            //Cam: removed transaction signing
+//            if (req.signInputs)
+//                signTransaction(req);
+            
+            if (!makeRingCT(req)) return;
+            
+            
 
             // Check size.
             final int size = req.tx.unsafeBitcoinSerialize().length;
@@ -4406,6 +5275,18 @@ public class Wallet extends BaseTaggableObject
         } finally {
             lock.unlock();
         }
+    }
+    
+    public void sendToStealthAddress(String stealth, Coin coin) throws InsufficientMoneyException {
+    	BigInteger txPriv = new ECKey().getPrivKey();
+    	byte[] recipient = generateRecipientAddress(stealth, txPriv);
+    	
+    	if (recipient == null) return;
+    	
+    	ECKey pub = ECKey.fromPublicOnly(recipient);
+    	SendRequest req = SendRequest.to(getParams(), pub, coin, txPriv);
+    	
+    	completeTx(req);
     }
 
     /**
@@ -5222,17 +6103,7 @@ public class Wallet extends BaseTaggableObject
         Coin valueNeeded, valueMissing = null;
         while (true) {
             resetTxInputs(req, originalInputs);
-
-            Coin fees = req.feePerKb.multiply(lastCalculatedSize).divide(1000);
-            if (needAtLeastReferenceFee && fees.compareTo(Transaction.REFERENCE_DEFAULT_MIN_TX_FEE) < 0)
-                fees = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
-
-            //PIVX instantSend
-            if(req.useInstantSend) {
-                fees = Coin.valueOf(max(TransactionLockRequest.MIN_FEE.getValue(), TransactionLockRequest.MIN_FEE.multiply(lastCalculatedInputs).getValue()));
-            }
-
-            valueNeeded = value.add(fees);
+            valueNeeded = Coin.MINIMUM_TX_FEE;
             if (additionalValueForNextCategory != null)
                 valueNeeded = valueNeeded.add(additionalValueForNextCategory);
             Coin additionalValueSelected = additionalValueForNextCategory;
@@ -5260,7 +6131,8 @@ public class Wallet extends BaseTaggableObject
             Coin change = selection.valueGathered.subtract(valueNeeded);
             if (additionalValueSelected != null)
                 change = change.add(additionalValueSelected);
-
+            Coin fees = Coin.MINIMUM_TX_FEE;
+            
             // If change is < 0.01 BTC, we will need to have at least minfee to be accepted by the network
             if (req.ensureMinRequiredFee && !change.equals(Coin.ZERO) &&
                     change.compareTo(Coin.CENT) < 0 && fees.compareTo(Transaction.REFERENCE_DEFAULT_MIN_TX_FEE) < 0) {
@@ -5278,10 +6150,11 @@ public class Wallet extends BaseTaggableObject
                 // The value of the inputs is greater than what we want to send. Just like in real life then,
                 // we need to take back some coins ... this is called "change". Add another output that sends the change
                 // back to us. The address comes either from the request or currentChangeAddress() as a default.
-                Address changeAddress = req.changeAddress;
-                if (changeAddress == null)
-                    changeAddress = currentChangeAddress();
-                changeOutput = new TransactionOutput(params, req.tx, change, changeAddress);
+                ECKey txPriv = new ECKey();
+                byte[] changePub = generateChangeAddress(txPriv);
+
+                changeOutput = new TransactionOutput(params, req.tx, change, ECKey.fromPublicOnly(changePub));
+                changeOutput.txPriv = txPriv.getPrivKeyBytes();
                 // If the change output would result in this transaction being rejected as dust, just drop the change and make it a fee
                 if (req.ensureMinRequiredFee && changeOutput.isDust()) {
                     // This solution definitely fits in category 3
@@ -5295,11 +6168,7 @@ public class Wallet extends BaseTaggableObject
                         additionalValueForNextCategory = null;
                 }
             } else {
-                if (eitherCategory2Or3) {
-                    // This solution definitely fits in category 3 (we threw away change because it was smaller than MIN_TX_FEE)
-                    isCategory3 = true;
-                    additionalValueForNextCategory = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE.add(Coin.SATOSHI);
-                }
+                continue;
             }
 
             // Now add unsigned inputs for the selected coins.

@@ -15746,6 +15746,15 @@ public final class Protos {
      * <code>required bytes pubkey = 4;</code>
      */
     com.google.protobuf.ByteString getPubkey();
+
+    /**
+     * <code>required uint32 height = 5;</code>
+     */
+    boolean hasHeight();
+    /**
+     * <code>required uint32 height = 5;</code>
+     */
+    int getHeight();
   }
   /**
    * Protobuf type {@code wallet.Decoy}
@@ -15817,6 +15826,11 @@ public final class Protos {
             case 34: {
               bitField0_ |= 0x00000008;
               pubkey_ = input.readBytes();
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              height_ = input.readUInt32();
               break;
             }
           }
@@ -15919,11 +15933,27 @@ public final class Protos {
       return pubkey_;
     }
 
+    public static final int HEIGHT_FIELD_NUMBER = 5;
+    private int height_;
+    /**
+     * <code>required uint32 height = 5;</code>
+     */
+    public boolean hasHeight() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>required uint32 height = 5;</code>
+     */
+    public int getHeight() {
+      return height_;
+    }
+
     private void initFields() {
       hash_ = com.google.protobuf.ByteString.EMPTY;
       index_ = 0;
       commitment_ = com.google.protobuf.ByteString.EMPTY;
       pubkey_ = com.google.protobuf.ByteString.EMPTY;
+      height_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -15947,6 +15977,10 @@ public final class Protos {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasHeight()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -15965,6 +15999,9 @@ public final class Protos {
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeBytes(4, pubkey_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeUInt32(5, height_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -15990,6 +16027,10 @@ public final class Protos {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(4, pubkey_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(5, height_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -16116,6 +16157,8 @@ public final class Protos {
         bitField0_ = (bitField0_ & ~0x00000004);
         pubkey_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000008);
+        height_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -16160,6 +16203,10 @@ public final class Protos {
           to_bitField0_ |= 0x00000008;
         }
         result.pubkey_ = pubkey_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.height_ = height_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -16188,6 +16235,9 @@ public final class Protos {
         if (other.hasPubkey()) {
           setPubkey(other.getPubkey());
         }
+        if (other.hasHeight()) {
+          setHeight(other.getHeight());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -16206,6 +16256,10 @@ public final class Protos {
           return false;
         }
         if (!hasPubkey()) {
+          
+          return false;
+        }
+        if (!hasHeight()) {
           
           return false;
         }
@@ -16364,6 +16418,38 @@ public final class Protos {
       public Builder clearPubkey() {
         bitField0_ = (bitField0_ & ~0x00000008);
         pubkey_ = getDefaultInstance().getPubkey();
+        onChanged();
+        return this;
+      }
+
+      private int height_ ;
+      /**
+       * <code>required uint32 height = 5;</code>
+       */
+      public boolean hasHeight() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>required uint32 height = 5;</code>
+       */
+      public int getHeight() {
+        return height_;
+      }
+      /**
+       * <code>required uint32 height = 5;</code>
+       */
+      public Builder setHeight(int value) {
+        bitField0_ |= 0x00000010;
+        height_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required uint32 height = 5;</code>
+       */
+      public Builder clearHeight() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        height_ = 0;
         onChanged();
         return this;
       }
@@ -21723,28 +21809,28 @@ public final class Protos {
       "Extension\022\n\n\002id\030\001 \002(\t\022\014\n\004data\030\002 \002(\014\022\021\n\tm" +
       "andatory\030\003 \002(\010\" \n\003Tag\022\013\n\003tag\030\001 \002(\t\022\014\n\004da",
       "ta\030\002 \002(\014\"5\n\021TransactionSigner\022\022\n\nclass_n" +
-      "ame\030\001 \002(\t\022\014\n\004data\030\002 \001(\014\"H\n\005Decoy\022\014\n\004hash" +
+      "ame\030\001 \002(\t\022\014\n\004data\030\002 \001(\014\"X\n\005Decoy\022\014\n\004hash" +
       "\030\001 \002(\014\022\r\n\005index\030\002 \002(\r\022\022\n\ncommitment\030\003 \002(" +
-      "\014\022\016\n\006pubkey\030\004 \002(\014\"\213\005\n\006Wallet\022\032\n\022network_" +
-      "identifier\030\001 \002(\t\022\034\n\024last_seen_block_hash" +
-      "\030\002 \001(\014\022\036\n\026last_seen_block_height\030\014 \001(\r\022!" +
-      "\n\031last_seen_block_time_secs\030\016 \001(\003\022\030\n\003key" +
-      "\030\003 \003(\0132\013.wallet.Key\022(\n\013transaction\030\004 \003(\013" +
-      "2\023.wallet.Transaction\022&\n\016watched_script\030" +
-      "\017 \003(\0132\016.wallet.Script\022C\n\017encryption_type",
-      "\030\005 \001(\0162\035.wallet.Wallet.EncryptionType:\013U" +
-      "NENCRYPTED\0227\n\025encryption_parameters\030\006 \001(" +
-      "\0132\030.wallet.ScryptParameters\022\022\n\007version\030\007" +
-      " \001(\005:\0011\022$\n\textension\030\n \003(\0132\021.wallet.Exte" +
-      "nsion\022\023\n\013description\030\013 \001(\t\022\031\n\021key_rotati" +
-      "on_time\030\r \001(\004\022\031\n\004tags\030\020 \003(\0132\013.wallet.Tag" +
-      "\0226\n\023transaction_signers\030\021 \003(\0132\031.wallet.T" +
-      "ransactionSigner\022 \n\tdecoysSet\030\022 \003(\0132\r.wa" +
-      "llet.Decoy\";\n\016EncryptionType\022\017\n\013UNENCRYP" +
-      "TED\020\001\022\030\n\024ENCRYPTED_SCRYPT_AES\020\002\"R\n\014Excha",
-      "ngeRate\022\022\n\ncoin_value\030\001 \002(\003\022\022\n\nfiat_valu" +
-      "e\030\002 \002(\003\022\032\n\022fiat_currency_code\030\003 \002(\tB\032\n\020o" +
-      "rg.pivxj.walletB\006Protos"
+      "\014\022\016\n\006pubkey\030\004 \002(\014\022\016\n\006height\030\005 \002(\r\"\213\005\n\006Wa" +
+      "llet\022\032\n\022network_identifier\030\001 \002(\t\022\034\n\024last" +
+      "_seen_block_hash\030\002 \001(\014\022\036\n\026last_seen_bloc" +
+      "k_height\030\014 \001(\r\022!\n\031last_seen_block_time_s" +
+      "ecs\030\016 \001(\003\022\030\n\003key\030\003 \003(\0132\013.wallet.Key\022(\n\013t" +
+      "ransaction\030\004 \003(\0132\023.wallet.Transaction\022&\n" +
+      "\016watched_script\030\017 \003(\0132\016.wallet.Script\022C\n",
+      "\017encryption_type\030\005 \001(\0162\035.wallet.Wallet.E" +
+      "ncryptionType:\013UNENCRYPTED\0227\n\025encryption" +
+      "_parameters\030\006 \001(\0132\030.wallet.ScryptParamet" +
+      "ers\022\022\n\007version\030\007 \001(\005:\0011\022$\n\textension\030\n \003" +
+      "(\0132\021.wallet.Extension\022\023\n\013description\030\013 \001" +
+      "(\t\022\031\n\021key_rotation_time\030\r \001(\004\022\031\n\004tags\030\020 " +
+      "\003(\0132\013.wallet.Tag\0226\n\023transaction_signers\030" +
+      "\021 \003(\0132\031.wallet.TransactionSigner\022 \n\tdeco" +
+      "ysSet\030\022 \003(\0132\r.wallet.Decoy\";\n\016Encryption" +
+      "Type\022\017\n\013UNENCRYPTED\020\001\022\030\n\024ENCRYPTED_SCRYP",
+      "T_AES\020\002\"R\n\014ExchangeRate\022\022\n\ncoin_value\030\001 " +
+      "\002(\003\022\022\n\nfiat_value\030\002 \002(\003\022\032\n\022fiat_currency" +
+      "_code\030\003 \002(\tB\032\n\020org.pivxj.walletB\006Protos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -21841,7 +21927,7 @@ public final class Protos {
     internal_static_wallet_Decoy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_wallet_Decoy_descriptor,
-        new java.lang.String[] { "Hash", "Index", "Commitment", "Pubkey", });
+        new java.lang.String[] { "Hash", "Index", "Commitment", "Pubkey", "Height", });
     internal_static_wallet_Wallet_descriptor =
       getDescriptor().getMessageTypes().get(14);
     internal_static_wallet_Wallet_fieldAccessorTable = new

@@ -39,7 +39,7 @@ import static com.google.common.base.Preconditions.*;
 public class TransactionOutput extends ChildMessage {
     private static final Logger log = LoggerFactory.getLogger(TransactionOutput.class);
 
-    public class MaskValue {
+    public static class MaskValue {
         public LazyECPoint sharedSec;  //secret is computed based on the transaction pubkey, using diffie hellman
                             //sharedSec = txPub * viewPrivateKey of receiver = txPriv * viewPublicKey of receiver
         public Sha256Hash amount;
