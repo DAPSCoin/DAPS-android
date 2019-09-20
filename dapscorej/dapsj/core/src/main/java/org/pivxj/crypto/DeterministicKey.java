@@ -195,7 +195,7 @@ public class DeterministicKey extends ECKey {
     }
     
     public ECKey getViewKey() {
-    	return ECKey.fromPrivate(Sha256Hash.wrapReversed(getPrivKeyBytes()).getBytes());
+    	return ECKey.fromPrivate(Sha256Hash.hashTwice(getPrivKeyBytes()));
     }
 
     /**
