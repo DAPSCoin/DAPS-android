@@ -13,7 +13,7 @@
     <string name="app_name">DAPS wallet</string>
     <string name="btn_create_wallet">Create Wallet</string>
     <string name="btn_restore_wallet">Restore Wallet</string>
-    <string name="restore_wallet_message">Select a backup of the wallet\nfrom a storage unit</string>
+    <string name="restore_wallet_message">Select a backup of the wallet from a storage unit</string>
     <string name="pincode_message">For your security \na pincode is needed</string>
     <string name="select_file">Select File</string>
     <string name="action_qr">QR Cocde</string>
@@ -40,7 +40,7 @@
     <string name="btn_request">Submit</string>
     <string name="payment_request">Payment Request</string>
     <string name="settings_subtitle_security">Security</string>
-    <string name="backup_wallet_message">Your backup will be encrypted with\nthe password you choose and saved\nto an external storage drive.</string>
+    <string name="backup_wallet_message">Your backup will be encrypted with the password you choose and saved to an external storage drive.</string>
     <string name="settings_subtitle_preference">Preference</string>
     <string name="settings_subtitle_about">About</string>
     <string name="restore_wallet">Restore wallet</string>

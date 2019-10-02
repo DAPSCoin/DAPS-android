@@ -1,6 +1,8 @@
 package pivx.org.pivxwallet.ui.base;
 
 import android.app.DownloadManager;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +28,12 @@ import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.donate.DonateActivity;
+import pivx.org.pivxwallet.ui.history_activity.HistoryActivity;
 import pivx.org.pivxwallet.ui.node_activity.NodeActivity;
+import pivx.org.pivxwallet.ui.settings_activity.NewSettingsActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.IOnFocusListenable;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.ui.twofa_config.TwoFAConfigActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
@@ -40,6 +46,8 @@ import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 
 public class BaseDrawerActivity extends PivxActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private FragmentManager fragmentManager;
+    Fragment currentFragment;
 
     private NavigationView navigationView;
     private FrameLayout frameLayout;
@@ -75,8 +83,16 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         beforeCreate();
         setContentView(R.layout.activity_main);
+
+        fragmentManager = getFragmentManager();
+        currentFragment = new WalletActivity();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, currentFragment)
+                .commit();
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("DAPS COIN");
+
         frameLayout = (FrameLayout) findViewById(R.id.content_frame);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         header_container = (FrameLayout) findViewById(R.id.header_container);
@@ -87,8 +103,6 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View headerLayout = navigationView.getHeaderView(0);
-
         onCreateView(savedInstanceState,frameLayout);
 
         localBroadcastManager.registerReceiver(walletServiceReceiver,new IntentFilter(ACTION_NOTIFICATION));
@@ -132,7 +146,6 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         super.onResume();
 
         checkState();
-
         updateBlockchainState();
 
     }
@@ -170,8 +183,12 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -196,26 +213,30 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         }
 
         if (id == R.id.nav_overview) {
-            Intent intent = new Intent(this,WalletActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            currentFragment = new WalletActivity();
+            setTitle("DAPS COIN");
         } else if (id == R.id.nav_send) {
-            startActivity(new Intent(this, SendActivity.class));
-//        } else if (id == R.id.nav_settings) {
-//            startActivity(new Intent(this, SettingsActivity.class));
-//        } else if (id == R.id.nav_donations){
-//            startActivity(new Intent(this, DonateActivity.class));
+            currentFragment = new SendActivity();
+            setTitle("Send Transaction");
+        } else if (id == R.id.nav_settings) {
+            currentFragment = new NewSettingsActivity();
+            setTitle("Settings");
         } else if (id == R.id.nav_receive) {
-            startActivity(new Intent(this, RequestActivity.class));
-//        } else if (id == R.id.nav_history) {
-//            startActivity(new Intent(this, History.class));
+            currentFragment = new RequestActivity();
+            setTitle("Receive Transaction");
+        } else if (id == R.id.nav_history) {
+            currentFragment = new HistoryActivity();
+            setTitle("Transaction History");
         } else if (id == R.id.nav_node) {
-            startActivity(new Intent(this, NodeActivity.class));
+            currentFragment = new NodeActivity();
+            setTitle("Node Select");
         } else if (id == R.id.nav_2fa) {
-            startActivity(new Intent(this, TwoFAConfigActivity.class));
+            currentFragment = new TwoFAConfigActivity();
+            setTitle("Two-factor Authentication");
         }
 
+        fragmentManager.beginTransaction().replace(R.id.content_frame, currentFragment)
+                .commit();
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -234,7 +255,9 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
 
     private void updateBlockchainState() {
         // Check if the activity is on foreground
-        if (!isOnForeground)return;
+        if (!isOnForeground) {
+            return;
+        }
 
 //        if (txt_sync_status!=null) {
 //            String text = null;
@@ -286,5 +309,11 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
 
     }
 
-
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(currentFragment instanceof IOnFocusListenable) {
+            ((IOnFocusListenable) currentFragment).onWindowFocusChanged(hasFocus);
+        }
+    }
 }

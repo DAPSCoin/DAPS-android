@@ -24,7 +24,7 @@
                 android:src="@drawable/ring"
                 android:background="@color/transparent" />
             <ExpandableListView
-                android:id = "@+id/edit_node"
+                android:id = "@+id/address_node"
                 android:layout_marginLeft="15dp"
                 android:layout_width = "match_parent"
                 android:layout_height = "30dp"

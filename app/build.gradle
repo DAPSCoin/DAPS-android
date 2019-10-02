@@ -88,4 +88,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.apache.httpcomponents:httpclient:4.5.3'
     testCompile 'org.mockito:mockito-core:2.8.9'
+    compile 'info.hoang8f:android-segmented:1.0.6'
 }

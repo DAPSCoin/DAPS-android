@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,37 +22,51 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
+import global.PivxModule;
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.utils.DapsController;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**
  * Created by Neoperol on 5/18/17.
  */
 
-public class SettingsBackupActivity extends BaseActivity {
+public class SettingsBackupActivity extends AppCompatActivity {
+    public static PivxModule pivxModule;
+    public static DapsController daps;
+    public static PivxApplication pivxApplication;
 
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL = 500;
-
-    private View root;
     private EditText edit_password;
     private EditText edit_repeat_password;
     private Button btn_backup;
     private ProgressBar progress;
 
+
     @Override
-    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        root = getLayoutInflater().inflate(R.layout.fragment_settings_backup, container);
-        setTitle("Backup Wallet");
-        getSupportActionBar().setHomeButtonEnabled(true);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_settings_backup);
+
+        setupView();
+    }
+
+    void setupView() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        edit_password = (EditText) root.findViewById(R.id.edit_password);
-        edit_repeat_password = (EditText) root.findViewById(R.id.edit_repeat_password);
-        progress = (ProgressBar) root.findViewById(R.id.progress);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("");
+
+        edit_password = (EditText) findViewById(R.id.edit_password);
+        edit_repeat_password = (EditText) findViewById(R.id.edit_repeat_password);
+        progress = (ProgressBar) findViewById(R.id.progress);
 
         btn_backup = (Button) findViewById(R.id.btn_backup);
         btn_backup.setOnClickListener(new View.OnClickListener() {
@@ -79,24 +96,11 @@ public class SettingsBackupActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        menu.add(0,0,0, R.string.backup_words);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
-            case 0:
-                if (pivxModule.isWalletWatchOnly()){
-                    Toast.makeText(this,R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                Intent myIntent = new Intent(getApplicationContext(), MnemonicActivity.class);
-                startActivity(myIntent);
-                return true;
+            case android.R.id.home:
+                finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

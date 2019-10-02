@@ -41,7 +41,6 @@
             android:paddingBottom="20dp"
             android:background="@color/transparent">
 
-
         </com.google.android.flexbox.FlexboxLayout>
 
 

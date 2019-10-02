@@ -1,7 +1,10 @@
 package pivx.org.pivxwallet.ui.node_activity;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,38 +20,46 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import global.PivxModule;
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
+import pivx.org.pivxwallet.ui.base.PivxActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.IOnFocusListenable;
 import pivx.org.pivxwallet.utils.AppConf;
-import pivx.org.pivxwallet.utils.FeeAdapter;
+import pivx.org.pivxwallet.utils.DapsController;
 import pivx.org.pivxwallet.utils.NavigationUtils;
 import pivx.org.pivxwallet.utils.NodeAdapter;
 import pivx.org.pivxwallet.utils.NodeInfo;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by Neoperol on 5/4/17.
  */
 
-public class NodeActivity extends BaseDrawerActivity implements View.OnClickListener {
+public class NodeActivity extends Fragment implements View.OnClickListener, IOnFocusListenable {
+    PivxApplication pivxApplication;
+    PivxModule pivxModule;
+    DapsController daps;
 
-    private Logger logger = LoggerFactory.getLogger(NodeActivity.class);
-
-    private View root;
     private ExpandableListView edit_node;
     private EditText edit_name, edit_host, edit_port, edit_user, edit_password;
     private NodeAdapter nodeAdapter;
 
-    @Override
-    protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
-        root = getLayoutInflater().inflate(R.layout.fragment_node_settings, container);
-        setTitle("Node Select");
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        pivxApplication = PivxActivity.pivxApplication;
+        pivxModule = PivxActivity.pivxModule;
+        daps = PivxActivity.daps;
 
-        edit_node = (ExpandableListView) findViewById(R.id.edit_node);
-        edit_name = (EditText) findViewById(R.id.edit_name);
-        edit_host = (EditText) findViewById(R.id.edit_host);
-        edit_port = (EditText) findViewById(R.id.edit_port);
-        edit_user = (EditText) findViewById(R.id.edit_user);
-        edit_password = (EditText) findViewById(R.id.edit_password);
+        View root = inflater.inflate(R.layout.fragment_node_settings, container, false);
+
+        edit_node = (ExpandableListView) root.findViewById(R.id.address_node);
+        edit_name = (EditText) root.findViewById(R.id.edit_name);
+        edit_host = (EditText) root.findViewById(R.id.edit_host);
+        edit_port = (EditText) root.findViewById(R.id.edit_port);
+        edit_user = (EditText) root.findViewById(R.id.edit_user);
+        edit_password = (EditText) root.findViewById(R.id.edit_password);
 
         root.findViewById(R.id.btnNodeUpdate).setOnClickListener(this);
 
@@ -58,44 +69,17 @@ public class NodeActivity extends BaseDrawerActivity implements View.OnClickList
         NodeActivity.this.edit_port.setText(String.valueOf(appConf.getCurNodeInfo().port));
         NodeActivity.this.edit_user.setText(appConf.getCurNodeInfo().user);
         NodeActivity.this.edit_password.setText(appConf.getCurNodeInfo().password);
+
+        return root;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.send_menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        NavigationUtils.goBackToHome(this);
-    }
-
-    @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        setNavigationMenuItemChecked(3);
 
-        if(getCurrentFocus()!=null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        if(getActivity().getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
 
         if (nodeAdapter==null) {
@@ -106,7 +90,7 @@ public class NodeActivity extends BaseDrawerActivity implements View.OnClickList
                 list.add(nodeList.get(i).name);
             }
 
-            nodeAdapter= new NodeAdapter(this, list, appConf.getCurNodeInfo().name);
+            nodeAdapter= new NodeAdapter(getActivity(), list, appConf.getCurNodeInfo().name);
             edit_node.setAdapter(nodeAdapter);
 
             edit_node.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
@@ -182,16 +166,10 @@ public class NodeActivity extends BaseDrawerActivity implements View.OnClickList
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-
         edit_node.setIndicatorBounds(edit_node.getWidth()- convertDpToPx(40), edit_node.getWidth());
     }
 
-    private void showErrorDialog(int resStr){
-        showErrorDialog(getString(resStr));
-    }
-
     private void showErrorDialog(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 }

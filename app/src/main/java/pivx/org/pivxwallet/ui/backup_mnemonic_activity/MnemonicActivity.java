@@ -62,7 +62,6 @@ public class MnemonicActivity extends BaseActivity {
         }
 
         List<String> textArray = pivxModule.getMnemonic();
-
         txt_words = (FlexboxLayout) findViewById(R.id.securityWords);
 
         if (textArray != null) {

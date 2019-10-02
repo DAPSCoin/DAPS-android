@@ -11,12 +11,10 @@ import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
  */
 
 public class NavigationUtils {
-
     public static void goBackToHome(Activity activity){
         Intent upIntent = new Intent(activity,WalletActivity.class);
         upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(upIntent);
         activity.finish();
     }
-
 }

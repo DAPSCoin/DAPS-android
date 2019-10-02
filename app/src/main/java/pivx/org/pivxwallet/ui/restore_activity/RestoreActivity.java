@@ -2,13 +2,17 @@ package pivx.org.pivxwallet.ui.restore_activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,13 +39,18 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import global.PivxModule;
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.DialogListener;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
+import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.ui.words_restore_activity.RestoreWordsActivity;
+import pivx.org.pivxwallet.utils.DapsController;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import wallet.Crypto;
 import wallet.WalletUtils;
@@ -51,16 +60,23 @@ import wallet.exceptions.CantRestoreEncryptedWallet;
  * Created by Neoperol on 4/20/17.
  */
 
-public class RestoreActivity extends BaseActivity {
+public class RestoreActivity extends AppCompatActivity {
     public static final String ACTION_RESTORE_AND_JUMP_TO_WIZARD = "jump_to_wizard";
     private static final int OPTIONS_RESTORE = 1;
     private static final int OPTIONS_ADVANCE = 2;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL = 502;
-    private View root;
+
+    public static PivxModule pivxModule;
+    public static DapsController daps;
+    public static PivxApplication pivxApplication;
+    public static boolean fromIntroScreen;
+
     private TextInputEditText edit_password;
     private Spinner spinnerFiles;
     private TextView restoreMessage;
     private Button btn_restore;
+    private Button btn_skip;
+
     private ProgressBar progress;
     private AtomicBoolean flag = new AtomicBoolean(false);
     private FileAdapter fileAdapter;
@@ -69,29 +85,23 @@ public class RestoreActivity extends BaseActivity {
     private boolean jumpToWizard = false;
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem menuItem = menu.add(0,OPTIONS_RESTORE,0,R.string.restore_from_words);
-        return super.onCreateOptionsMenu(menu);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_settings_restore);
+
+        setupView();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == OPTIONS_RESTORE){
-            Intent myIntent = new Intent(getApplicationContext(), RestoreWordsActivity.class);
-            startActivity(myIntent);
-            return true;
+    void setupView() {
+        if(!fromIntroScreen) {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("");
         }
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
-    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        root = getLayoutInflater().inflate(R.layout.fragment_settings_restore, container);
-        setTitle("Restore wallet");
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (getIntent()!=null){
+        if (getIntent() != null){
             if (getIntent().getAction()!=null) {
                 if (getIntent().getAction().equals(ACTION_RESTORE_AND_JUMP_TO_WIZARD)){
                     jumpToWizard = true;
@@ -106,10 +116,28 @@ public class RestoreActivity extends BaseActivity {
                 restore();
             }
         });
-        progress = (ProgressBar) root.findViewById(R.id.progress);
-        restoreMessage = (TextView) root.findViewById(R.id.restoreMessage);
-        edit_password = (TextInputEditText) root.findViewById(R.id.edit_password);
-        spinnerFiles = (Spinner) root.findViewById(R.id.spinner_files);
+
+        btn_skip = (Button) findViewById(R.id.btn_skip);
+        if(!fromIntroScreen) {
+            btn_skip.setVisibility(View.GONE);
+        }
+
+        btn_skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                pref.edit().putBoolean("RestoreWalletDone", true).apply();
+
+                Intent intent = new Intent(RestoreActivity.this, BaseDrawerActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        progress = (ProgressBar) findViewById(R.id.progress);
+        restoreMessage = (TextView) findViewById(R.id.restoreMessage);
+        edit_password = (TextInputEditText) findViewById(R.id.edit_password);
+        spinnerFiles = (Spinner) findViewById(R.id.spinner_files);
         fileAdapter = new FileAdapter(this) {
             @Override
             public View getDropDownView(int position, View row, ViewGroup parent) {
@@ -152,6 +180,27 @@ public class RestoreActivity extends BaseActivity {
         spinnerFiles.setAdapter(fileAdapter);
 
         checkPermissions();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(!fromIntroScreen) {
+            menu.add(0,OPTIONS_RESTORE,0, R.string.restore_from_words);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == OPTIONS_RESTORE){
+            Intent myIntent = new Intent(getApplicationContext(), RestoreWordsActivity.class);
+            startActivity(myIntent);
+            return true;
+        } else if(id == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -248,8 +297,11 @@ public class RestoreActivity extends BaseActivity {
                     public void onClick(View v) {
                         if (jumpToWizard){
                             startActivity(new Intent(RestoreActivity.this, TutorialActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(RestoreActivity.this, BaseDrawerActivity.class));
+                            finish();
                         }
-                        finish();
                     }
                 });
                 simpleTextDialog.setListener(new DialogListener() {
@@ -257,8 +309,11 @@ public class RestoreActivity extends BaseActivity {
                     public void cancel(boolean isActionCompleted) {
                         if (jumpToWizard){
                             startActivity(new Intent(RestoreActivity.this, TutorialActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(RestoreActivity.this, BaseDrawerActivity.class));
+                            finish();
                         }
-                        finish();
                     }
                 });
                 simpleTextDialog.show(getFragmentManager(),getResources().getString(R.string.restore_dialog_tag));
@@ -271,6 +326,9 @@ public class RestoreActivity extends BaseActivity {
                         }
                     }, TimeUnit.SECONDS.toMillis(5));
                 }
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                pref.edit().putBoolean("RestoreWalletDone", true).apply();
             }
         });
     }
