@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import org.pivxj.wallet.Wallet;
 
 import pivx.org.pivxwallet.PivxApplication;
+import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.splash_activity.SplashActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
@@ -51,7 +52,7 @@ public class InitialActivity extends AppCompatActivity {
                 return;
             }
 
-            intent = new Intent(this, WalletActivity.class);
+            intent = new Intent(this, BaseDrawerActivity.class);
             startActivity(intent);
             finish();
         }
