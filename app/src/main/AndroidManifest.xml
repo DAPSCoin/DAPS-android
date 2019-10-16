@@ -87,6 +87,7 @@
 
         <activity android:name=".ui.history_activity.TransactionActivity"  android:screenOrientation="portrait" />
         <activity android:name=".ui.settings_activity.PhraseActivity"  android:screenOrientation="portrait" />
+        <activity android:name=".ui.node_activity.DnsDiscoveryActivity"  android:screenOrientation="portrait" />
 
         <service android:name=".service.PivxWalletService" />
 

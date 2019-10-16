@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="We strongly recommend you only view yourmnemonic phrase in a secure environment safe from video cameras or any wandering eyes"
+                        android:text="We strongly recommend you only view your mnemonic phrase in a secure environment safe from video cameras or any wandering eyes"
                         android:textColor="#ffffff"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
