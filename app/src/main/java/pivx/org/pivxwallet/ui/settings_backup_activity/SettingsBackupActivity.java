@@ -176,10 +176,6 @@ public class SettingsBackupActivity extends AppCompatActivity {
     private void checkPermissions() {
         // Assume thisActivity is the current activity
         if (Build.VERSION.SDK_INT > 22) {
-
-            int permissionCheck = ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
             // Here, thisActivity is the current activity
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
