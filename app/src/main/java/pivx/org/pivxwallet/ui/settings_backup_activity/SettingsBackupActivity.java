@@ -148,13 +148,14 @@ public class SettingsBackupActivity extends AppCompatActivity {
     }
 
     private void showSuccedBackupDialog(final String backupAbsolutePath){
+        final String realPath = backupAbsolutePath.replace("/storage/emulated/0/", "");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 SimpleTextDialog succedDialog = DialogsUtil.buildSimpleTextDialog(
                         SettingsBackupActivity.this,
                         getString(R.string.backup_completed),
-                        getString(R.string.backup_completed_text,backupAbsolutePath)
+                        getString(R.string.backup_completed_text,realPath)
                 );
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     succedDialog.setOkBtnBackgroundColor(getColor(R.color.lightGreen));
