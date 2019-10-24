@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -81,7 +82,7 @@ public class RequestActivity extends Fragment implements View.OnClickListener, I
     private AddressAdapter addressAdapter;
     private String addressStr;
     private String pivxURI;
-    private ImageView img_qr, img_copy;
+    private ImageView img_qr, img_copy, address_copy;
     private LinearLayout copy_data;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -97,12 +98,25 @@ public class RequestActivity extends Fragment implements View.OnClickListener, I
         img_qr = (ImageView) root.findViewById(R.id.img_qr);
         img_copy = (ImageView) root.findViewById(R.id.img_copy);
         copy_data = (LinearLayout) root.findViewById(R.id.copy_data);
-
+        address_copy = (ImageView) root.findViewById(R.id.address_copy_iv);
         root.findViewById(R.id.btnRequest).setOnClickListener(this);
         root.findViewById(R.id.btnGenerate).setOnClickListener(this);
         img_copy.setOnClickListener(this);
+        address_copy.setOnClickListener(this);
 
         return root;
+    }
+
+    private void generateQR() {
+        try {
+            showRequestQr();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            showErrorDialog(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorDialog(e.getMessage());
+        }
     }
 
     @Override
@@ -127,6 +141,14 @@ public class RequestActivity extends Fragment implements View.OnClickListener, I
             InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                generateQR();
+            }
+        }, 500);
     }
 
     @Override
@@ -147,6 +169,13 @@ public class RequestActivity extends Fragment implements View.OnClickListener, I
             Toast.makeText(getActivity(), R.string.copy_uri, Toast.LENGTH_LONG).show();
         } else if (id == R.id.btnGenerate) {
             payment_id.setText("Payment_Test");
+        } else if (id == R.id.address_copy_iv) {
+            try {
+                copyToClipboard(getActivity(), getAddressStr());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(getActivity(), R.string.copy_address_message, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -181,20 +210,27 @@ public class RequestActivity extends Fragment implements View.OnClickListener, I
     private void showRequestQr() throws Exception {
         // first check amount
         String amountStr = getAmountStr();
-        if (amountStr.length() < 1) throw new IllegalArgumentException("Amount not valid");
-        if (amountStr.length() == 1 && amountStr.equals("."))
+        //if (amountStr.length() < 1) throw new IllegalArgumentException("Amount not valid");
+
+        if (amountStr.length() == 1 && amountStr.equals(".")) {
             throw new IllegalArgumentException("Amount not valid");
-        if (amountStr.charAt(0) == '.') {
-            amountStr = "0" + amountStr;
         }
 
-        Coin amount = Coin.parseCoin(amountStr);
+        Coin amount;
+        if(amountStr.length() == 0) {
+            amount = Coin.ZERO;
+        } else {
+            if (amountStr.charAt(0) == '.') {
+                amountStr = "0" + amountStr;
+            }
 
-        if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
-        if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT))
-            throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, " + Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
+            amount = Coin.parseCoin(amountStr);
 
-//        addressStr = pivxModule.getFreshNewAddress().toBase58();
+            if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
+            if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT))
+                throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, " + Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
+
+        }
         addressStr = getAddressStr();
 
         String label = payment_id.getText().toString();
@@ -202,7 +238,10 @@ public class RequestActivity extends Fragment implements View.OnClickListener, I
 
         pivxURI = PivxURI.convertToBitcoinURI(params, addressStr, amount, label, "");
         pivxURI = pivxURI.replace("pivx:", "dapscoin:");
-
+        if(amount == Coin.ZERO) {
+            int endIndex = pivxURI.indexOf("?amount=");
+            pivxURI = pivxURI.substring(0, endIndex);
+        }
         if (img_qr != null) {
             int px = convertDpToPx(225);
             Bitmap qrBitmap = encodeAsBitmap(pivxURI, px, px, Color.parseColor("#1A1A1A"), WHITE);
