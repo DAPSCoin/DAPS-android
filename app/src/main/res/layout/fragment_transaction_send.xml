@@ -86,7 +86,7 @@
 
                 <EditText
                     android:id="@+id/edit_amount"
-                    android:maxLength="10"
+                    android:maxLength="9"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginLeft="15dp"
