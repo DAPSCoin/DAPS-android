@@ -10,7 +10,9 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.text.InputFilter;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +40,8 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -51,6 +55,7 @@ import pivx.org.pivxwallet.ui.base.PivxActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.transaction_send_activity.AmountInputFragment;
 import pivx.org.pivxwallet.ui.transaction_send_activity.IOnFocusListenable;
+import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.utils.AddressAdapter;
 import pivx.org.pivxwallet.utils.AmountAdapter;
 import pivx.org.pivxwallet.utils.Base32String;
@@ -85,6 +90,25 @@ public class RequestActivity extends Fragment implements View.OnClickListener, I
     private ImageView img_qr, img_copy, address_copy;
     private LinearLayout copy_data;
 
+    public class DecimalDigitsInputFilter implements InputFilter {
+
+        Pattern mPattern;
+
+        public DecimalDigitsInputFilter(int digitsBeforeZero,int digitsAfterZero) {
+            mPattern=Pattern.compile("[0-9]{0," + (digitsBeforeZero-1) + "}+((\\.[0-9]{0," + (digitsAfterZero-1) + "})?)||(\\.)?");
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            Matcher matcher=mPattern.matcher(dest);
+            if(!matcher.matches())
+                return "";
+            return null;
+        }
+
+    }
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         pivxApplication = PivxActivity.pivxApplication;
         pivxModule = PivxActivity.pivxModule;
@@ -92,6 +116,8 @@ public class RequestActivity extends Fragment implements View.OnClickListener, I
 
         View root = inflater.inflate(R.layout.fragment_transaction_request, container, false);
         edit_amount = (EditText) root.findViewById(R.id.edit_amount);
+        edit_amount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(100,8)});
+
         edit_address = (ExpandableListView) root.findViewById(R.id.edit_address);
         payment_id = (TextView) root.findViewById(R.id.edit_payment_id);
         underline_text = (TextView) root.findViewById(R.id.underline_text);

@@ -18,6 +18,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,6 +70,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -187,6 +191,24 @@ public class SendActivity extends Fragment implements View.OnClickListener, IOnF
     private boolean changeToOrigin;
     private Address changeAddress;
 
+    public class DecimalDigitsInputFilter implements InputFilter {
+
+        Pattern mPattern;
+
+        public DecimalDigitsInputFilter(int digitsBeforeZero,int digitsAfterZero) {
+            mPattern=Pattern.compile("[0-9]{0," + (digitsBeforeZero-1) + "}+((\\.[0-9]{0," + (digitsAfterZero-1) + "})?)||(\\.)?");
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            Matcher matcher=mPattern.matcher(dest);
+            if(!matcher.matches())
+                return "";
+            return null;
+        }
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {        pivxApplication = PivxActivity.pivxApplication;
@@ -198,6 +220,8 @@ public class SendActivity extends Fragment implements View.OnClickListener, IOnF
 
         edit_address = (EditText) root.findViewById(R.id.edit_address);
         edit_amount = (EditText) root.findViewById(R.id.edit_amount);
+        edit_amount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(100,8)});
+
         edit_fee = (ExpandableListView) root.findViewById(R.id.edit_fee);
         edit_memo = (EditText) root.findViewById(R.id.edit_memo);
 //
@@ -495,8 +519,8 @@ public class SendActivity extends Fragment implements View.OnClickListener, IOnF
                             }
                         }
 
+                        edit_address.setText(usedAddress);
                         if (amount != null){
-                            edit_address.setText(usedAddress);
                             edit_amount.setText(amount.toPlainString());
                         }
                     }
