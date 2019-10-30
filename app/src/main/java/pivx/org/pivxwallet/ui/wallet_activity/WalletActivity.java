@@ -121,7 +121,7 @@ public class WalletActivity extends Fragment {
             public void onClick(View v) {
                 updateWallet();
 
-                String blockHeight = (String) daps.callRPC("getBlockCount");
+                /*String blockHeight = (String) daps.callRPC("getBlockCount");
                 if (blockHeight == null)
                     blockHeight = "0";
                 txt_height.setText(blockHeight);
@@ -131,7 +131,7 @@ public class WalletActivity extends Fragment {
                     lastBlock = Integer.parseInt(blockHeight) - 310;
                 }
 
-                syncTransactions(lastBlock + 1, Integer.parseInt(blockHeight));
+                syncTransactions(lastBlock + 1, Integer.parseInt(blockHeight));*/
             }
         });
     }

@@ -11,8 +11,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.SpannableString;
@@ -169,7 +170,7 @@ public class TwoFAConfigActivity extends Fragment implements View.OnClickListene
                     qrDialog = null;
                 }
                 qrDialog = TwoFAQRDialog.newInstance(daps, TwoFAConfigActivity.this);
-                qrDialog.show(myContext.getSupportFragmentManager(), "twofa_qr_dialog");
+                qrDialog.show(getFragmentManager(), "twofa_qr_dialog");
             }
             else {
                 appConf.saveTwoFA("disabled");
@@ -242,7 +243,7 @@ public class TwoFAConfigActivity extends Fragment implements View.OnClickListene
             dialog = null;
         }
         dialog = TwoFADialog.newInstance(daps, TwoFAConfigActivity.this);
-        dialog.show(myContext.getSupportFragmentManager(), "twofa_dialog");
+        dialog.show(getFragmentManager(), "twofa_dialog");
     }
 
     public void qrdialog_rejected() {
@@ -259,14 +260,14 @@ public class TwoFAConfigActivity extends Fragment implements View.OnClickListene
         }
 
         success_dialog = SuccessDialog.newInstance();
-        success_dialog.show(myContext.getSupportFragmentManager(), "twofa_success_dialog");
+        success_dialog.show(getFragmentManager(), "twofa_success_dialog");
     }
 
     public void dialog_rejected() {
         twofa_status.setChecked(false);
     }
 
-    public static class TwoFAQRDialog extends DialogFragment {
+    public static class TwoFAQRDialog extends android.app.DialogFragment {
         private Fragment parentFragment;
         private View root;
         private DapsController rpc;
@@ -281,13 +282,16 @@ public class TwoFAConfigActivity extends Fragment implements View.OnClickListene
             try {
                 getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 root = inflater.inflate(R.layout.twofa_qr_dialog, container);
+                //root = getActivity().getLayoutInflater().inflate(R.layout.twofa_qr_dialog, new LinearLayout(getActivity()), false);
+
                 underline_text = (TextView) root.findViewById(R.id.underline_text);
                 img_qr = (ImageView) root.findViewById(R.id.img_qr);
                 copy_data = (LinearLayout) root.findViewById(R.id.copy_data);
 
                 if (img_qr != null) {
                     int px = convertDpToPx(225);
-                    String address = (String)rpc.callRPC("getAccountAddress");
+                    //-----Test Purpose
+                    String address = PivxApplication.getInstance().getModule().getStealthAddress();//(String)rpc.callRPC("getAccountAddress");
                     address = address.replaceAll("[^A-Za-z]","");
                     URI = "otpauth://totp/dapscoin:test@test.com?secret=" + address + "&issuer=dapscoin&algorithm=SHA1&digits=6&period=30";
                     Bitmap qrBitmap = null;
@@ -394,7 +398,7 @@ public class TwoFAConfigActivity extends Fragment implements View.OnClickListene
                         code += code5.getText().toString();
                         code += code6.getText().toString();
 
-                        String address = (String)rpc.callRPC("getAccountAddress");
+                        String address = PivxApplication.getInstance().getModule().getStealthAddress();//(String)rpc.callRPC("getAccountAddress");
                         address = address.replaceAll("[^A-Za-z]","");
                         String checkCode = null;
                         try {
