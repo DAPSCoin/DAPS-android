@@ -111,9 +111,9 @@ public class AppConf extends Configurations {
 //        nodeList.add(new NodeInfo("Node#1", "10.0.2.2", 53573, "bilbo", "baggins"));
         nodeList.add(new NodeInfo("Node#1", "35.194.2.105", 53573, "admin", "admin123"));
         nodeList.add(new NodeInfo("Node#2", "34.69.121.145", 53573, "admin", "admin123"));
-        nodeList.add(new NodeInfo("Node#2", "35.225.119.166", 53573, "admin", "admin123"));
-        nodeList.add(new NodeInfo("Node#2", "34.82.214.16", 53573, "admin", "admin123"));
-        nodeList.add(new NodeInfo("Node#2", "34.83.218.180", 53573, "admin", "admin123"));
+        nodeList.add(new NodeInfo("Node#3", "35.225.119.166", 53573, "admin", "admin123"));
+        nodeList.add(new NodeInfo("Node#4", "34.82.214.16", 53573, "admin", "admin123"));
+        nodeList.add(new NodeInfo("Node#5", "34.83.218.180", 53573, "admin", "admin123"));
     }
     public List<NodeInfo> getNodeList() {
         if (nodeList.size() == 0) {
