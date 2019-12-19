@@ -83,22 +83,24 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp" >
+
                 <EditText
-                    android:id = "@+id/edit_amount"
+                    android:id="@+id/edit_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_width = "match_parent"
-                    android:layout_height = "30dp"
                     android:background="@drawable/rounded_border"
-                    android:textColor = "@color/white"
                     android:ellipsize="start"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:singleLine="true"
-                    android:hint=""
-                    android:text = ""
-                    android:textColorHint="@color/hinttext"
-                    android:paddingLeft="15dp"
                     android:gravity="center_vertical"
-                    android:textSize = "14sp" />
+                    android:hint=""
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="15dp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hinttext"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textSize="14sp" />
                 <Button
                     android:id="@+id/button_qr"
                     android:layout_alignParentRight="true"

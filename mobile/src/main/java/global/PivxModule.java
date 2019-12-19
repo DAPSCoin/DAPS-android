@@ -71,6 +71,11 @@ public interface PivxModule {
      * Return a new address.
      */
     Address getReceiveAddress();
+    String getStealthAddress();
+
+    DeterministicKey getSpendKey();
+
+    String getHDPath();
 
     Address getFreshNewAddress();
 
@@ -177,4 +182,6 @@ public interface PivxModule {
     boolean encrypt(String password) throws UnsupportedEncodingException;
     boolean decrypt(String password) throws UnsupportedEncodingException;
     boolean isWalletLocked();
+    Wallet getWallet();
+    public void saveWallet();
 }

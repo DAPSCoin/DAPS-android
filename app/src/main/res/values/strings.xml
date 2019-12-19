@@ -13,7 +13,7 @@
     <string name="app_name">DAPS wallet</string>
     <string name="btn_create_wallet">Create Wallet</string>
     <string name="btn_restore_wallet">Restore Wallet</string>
-    <string name="restore_wallet_message">Select a backup of the wallet\nfrom a storage unit</string>
+    <string name="restore_wallet_message">Select a backup of the wallet from a storage unit</string>
     <string name="pincode_message">For your security \na pincode is needed</string>
     <string name="select_file">Select File</string>
     <string name="action_qr">QR Cocde</string>
@@ -40,7 +40,7 @@
     <string name="btn_request">Submit</string>
     <string name="payment_request">Payment Request</string>
     <string name="settings_subtitle_security">Security</string>
-    <string name="backup_wallet_message">Your backup will be encrypted with\nthe password you choose and saved\nto an external storage drive.</string>
+    <string name="backup_wallet_message">Your backup will be encrypted with the password you choose and saved to an external storage drive.</string>
     <string name="settings_subtitle_preference">Preference</string>
     <string name="settings_subtitle_about">About</string>
     <string name="restore_wallet">Restore wallet</string>
@@ -87,7 +87,7 @@
     <string name="explorer">Explorer</string>
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
-    <string name="backup_completed_text">Congratulations! Your wallet is backup is complete.\nIt has been saved in the folder at\n%s </string>
+    <string name="backup_completed_text">Congratulations! Your wallet backup is complete.\nIt has been saved in the folder at\n%s </string>
     <string name="import_keys_dialog_message">Select one of your backups\nfiles loaded from\nfolder %s</string>
     <string name="backup_restore">Restore</string>
     <string name="import_export_keys_dialog_failure_title">Restore wallet fail</string>
@@ -261,6 +261,8 @@
     <string name="unknown_error_message">Error loading the xpub, please send a report</string>
     <string name="settings_export_pub_key">Export account</string>
     <string name="copy_key_message">Key copied</string>
+    <string name="copy_address_message">Address copied</string>
+    <string name="copy_transaction_id_message">Transaction ID copied</string>
     <string name="hint_paste_xpub">Paste your xpub here</string>
     <string name="explanation_import_xpub">Make your wallet a Watch Only Wallet importing your xpub from another wallet.\n\nPeople using this device are going to see the full balance but not be able to spend coins.</string>
     <string name="import_xpub">Import</string>

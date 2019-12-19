@@ -25,15 +25,15 @@ import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_TRUSTED_PEER_C
 
 public class PivxActivity extends AppCompatActivity {
 
-    protected PivxApplication pivxApplication;
-    protected PivxModule pivxModule;
-    protected DapsController daps;
+    public static PivxApplication pivxApplication;
+    public static PivxModule pivxModule;
+    public static DapsController daps;
 
     protected LocalBroadcastManager localBroadcastManager;
     private static final IntentFilter intentFilter = new IntentFilter(ACTION_TRUSTED_PEER_CONNECTION_FAIL);
     private static final IntentFilter errorIntentFilter = new IntentFilter(ACTION_STORED_BLOCKCHAIN_ERROR);
 
-    protected boolean isOnForeground = false;
+    public static boolean isOnForeground = false;
 
     private BroadcastReceiver trustedPeerConnectionDownReceiver = new BroadcastReceiver() {
         @Override
@@ -53,6 +53,9 @@ public class PivxActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pivxApplication = PivxApplication.getInstance();
+
+        //-----Asai Started it at first
+        //pivxApplication.startPivxService();
         pivxModule = pivxApplication.getModule();
         daps = new DapsController();
         localBroadcastManager = LocalBroadcastManager.getInstance(this);

@@ -56,11 +56,11 @@ public class PivxContext {
         /** Path to external storage */
         public static final File EXTERNAL_STORAGE_DIR = Environment.getExternalStorageDirectory();
         /** Filename of the manual wallet backup. */
-        public static final String EXTERNAL_WALLET_BACKUP = "pivx-wallet-backup" +"_"+ FILENAME_NETWORK_SUFFIX;
+        public static final String EXTERNAL_WALLET_BACKUP = "Backup";
         /** Manual backups go here. */
-        public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/DAPS/");
         public static final String getExternalWalletBackupFileName(String appName){
-            return appName+"_"+EXTERNAL_WALLET_BACKUP;
+            return EXTERNAL_WALLET_BACKUP;
         }
         /** Checkpoint filename */
         public static final String CHECKPOINTS_FILENAME = "checkpoints";

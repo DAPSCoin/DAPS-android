@@ -17,22 +17,41 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/qrcode"
-                android:background="@color/transparent" />
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_toLeftOf="@+id/address_copy_iv"
+                  android:layout_marginRight="12dp"
+                  android:orientation="horizontal">
+                  <ImageView
+                      android:layout_width="30dp"
+                      android:layout_height="30dp"
+                      android:src="@drawable/qrcode"
+                      android:background="@color/transparent" />
 
-            <ExpandableListView
-                android:id = "@+id/edit_address"
-                android:layout_marginLeft="15dp"
-                android:layout_width = "match_parent"
-                android:layout_height = "30dp"
-                android:background="@drawable/rounded_border"
-                android:groupIndicator="@drawable/custom_indicator"
-                android:textColor = "@color/white"
-                android:childDivider="@drawable/list_divider"
-                android:dividerHeight="0.5dp" />
+                  <ExpandableListView
+                      android:id="@+id/edit_address"
+                      android:layout_width="match_parent"
+                      android:layout_height="30dp"
+                      android:layout_marginLeft="15dp"
+                      android:background="@drawable/rounded_border"
+                      android:childDivider="@drawable/list_divider"
+                      android:dividerHeight="0.5dp"
+                      android:groupIndicator="@drawable/custom_indicator"
+                      android:textColor="@color/white" />
+              </LinearLayout>
+
+              <ImageView
+                  android:id="@+id/address_copy_iv"
+                  android:layout_width="30dp"
+                  android:layout_height="30dp"
+                  android:layout_alignParentRight="true"
+                  android:src="@drawable/copy"
+                  android:background="@color/transparent" />
+          </RelativeLayout>
 
         </LinearLayout>
 
@@ -47,22 +66,24 @@
                 android:layout_height="30dp"
                 android:src="@drawable/wallet"
                 android:background="@color/transparent" />
+
             <EditText
-                android:id = "@+id/edit_amount"
+                android:id="@+id/edit_amount"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 android:layout_marginLeft="15dp"
-                android:layout_width = "match_parent"
-                android:layout_height = "30dp"
                 android:background="@drawable/rounded_border"
-                android:textColor = "@color/white"
                 android:ellipsize="start"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:singleLine="true"
-                android:hint=""
-                android:text = ""
-                android:textColorHint="@color/hinttext"
-                android:paddingLeft="15dp"
                 android:gravity="center_vertical"
-                android:textSize = "14sp" />
+                android:hint=""
+                android:inputType="numberDecimal"
+                android:paddingLeft="15dp"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/white"
+                android:textColorHint="@color/hinttext"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="14sp" />
             <!--<ExpandableListView-->
                 <!--android:id = "@+id/edit_amount"-->
                 <!--android:layout_marginLeft="15dp"-->

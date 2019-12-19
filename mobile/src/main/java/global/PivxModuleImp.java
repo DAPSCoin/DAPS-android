@@ -2,6 +2,7 @@ package global;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
+import org.bitcoin.NativeSecp256k1Util;
 import org.pivxj.core.Address;
 import org.pivxj.core.Coin;
 import org.pivxj.core.InsufficientMoneyException;
@@ -88,6 +89,11 @@ public class PivxModuleImp implements PivxModule {
         blockchainManager = new BlockchainManager(context,walletManager,walletConfiguration);
     }
 
+    @Override
+    public void saveWallet() {
+        walletManager.saveWallet();
+    }
+
     public void start() throws IOException{
         walletManager.init();
     }
@@ -140,6 +146,16 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public DeterministicKey getSpendKey() {
+        return walletManager.getKeyPairForAddress(getReceiveAddress());
+    }
+
+    @Override
+    public String getHDPath() {
+        return getSpendKey().getPathAsString();
+    }
+
+    @Override
     public Address getFreshNewAddress(){
         return walletManager.newFreshReceiveAddress();
     }
@@ -162,6 +178,11 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public Coin getUnnavailableBalanceCoin() {
         return walletManager.getUnspensableBalance();
+    }
+
+    @Override
+    public String getStealthAddress() {
+        return walletManager.getStealthAddress();
     }
 
     @Override
@@ -404,12 +425,7 @@ public class PivxModuleImp implements PivxModule {
             if (!isStaking){
                 // Check if a zc_spend
                 boolean isZcSpend = false;
-                for (TransactionInput transactionInput : transaction.getInputs()) {
-                    if (transactionInput.isZcspend()){
-                        isZcSpend = true;
-                        break;
-                    }
-                }
+
                 TransactionWrapper.TransactionUse transactionUse;
                 if (!isZcSpend)
                     transactionUse = isMine ? TransactionWrapper.TransactionUse.SENT_SINGLE: TransactionWrapper.TransactionUse.RECEIVE;

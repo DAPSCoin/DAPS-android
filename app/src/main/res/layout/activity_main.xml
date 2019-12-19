@@ -27,7 +27,6 @@
         app:itemTextColor="@drawable/nav_item_text_selector"
         app:itemIconTint="@drawable/nav_item_text_selector">
 
-
     </android.support.design.widget.NavigationView>
 
 

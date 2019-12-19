@@ -1,6 +1,7 @@
 package pivx.org.pivxwallet.ui.splash_activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,8 +12,12 @@ import android.widget.VideoView;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
+import pivx.org.pivxwallet.ui.base.PivxActivity;
+import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+import pivx.org.pivxwallet.utils.DapsController;
 
 /**
  * Created by Neoperol on 6/13/17.
@@ -36,15 +41,21 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void jump() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        boolean restoreWalletDone = pref.getBoolean("RestoreWalletDone", false);
 
-//        if (PivxApplication.getInstance().getAppConf().isAppInit()){
-            Intent intent = new Intent(this, WalletActivity.class);
+        if(!restoreWalletDone) {
+            Intent intent = new Intent(SplashActivity.this, RestoreActivity.class);
+            RestoreActivity.fromIntroScreen = true;
+            RestoreActivity.pivxModule = PivxApplication.getInstance().getModule();
+            RestoreActivity.daps = new DapsController();
+            RestoreActivity.pivxApplication = PivxApplication.getInstance();;
             startActivity(intent);
-//        }else {
-////             Jump to your Next Activity or MainActivity
-//            Intent intent = new Intent(this, StartActivity.class);
-//            startActivity(intent);
-//        }
+            return;
+        }
+
+        Intent intent = new Intent(this, BaseDrawerActivity.class);
+        startActivity(intent);
         finish();
     }
 }

@@ -19,10 +19,11 @@
         tools:ignore="MissingConstraints">
 
         <LinearLayout
+            android:id="@+id/syncing_txs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:id="@+id/syncing_txs" >
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,22 +34,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:text="Balance"
                     android:textAlignment="center"
-                    android:textSize = "14sp"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:text="Balance"/>
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id = "@+id/pivValue_syncing"
-                    android:layout_width = "match_parent"
-                    android:layout_height = "wrap_content"
+                    android:id="@+id/pivValue_syncing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:textAlignment="center"
                     android:padding="5dp"
-                    android:text = "000 000.00000000 DAPS"
-                    android:textColor = "#96ff83"
-                    android:textSize = "18sp" />
+                    android:text="000 000.00000000 DAPS"
+                    android:textAlignment="center"
+                    android:textColor="#96ff83"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <FrameLayout
@@ -73,34 +74,34 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
+                        android:text="Pending Balance"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize = "14sp"
-                        android:textStyle="bold"
-                        android:text="Pending Balance"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txt_pending_balance_syncing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:id = "@+id/txt_pending_balance_syncing"
-                        android:layout_width = "match_parent"
-                        android:layout_height = "wrap_content"
+                        android:padding="15dp"
+                        android:text="000 000.00000000 \nDAPS"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:text = "000 000.00000000 \nDAPS"
-                        android:padding="15dp"
-                        android:textSize = "14sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </FrameLayout>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
+                android:padding="10dp"
+                android:text="Syncing..."
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:text = "Syncing..."
-                android:padding="10dp"
-                android:textSize = "14sp" />
+                android:textSize="14sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -123,35 +124,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
+                        android:text="Blocks Remaining"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize = "14sp"
-                        android:textStyle="bold"
-                        android:text="Blocks Remaining"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txt_blocks_syncing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:id = "@+id/txt_blocks_syncing"
-                        android:layout_width = "match_parent"
-                        android:layout_height = "wrap_content"
+                        android:padding="15dp"
+                        android:text="1440 / 5760"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:text = "1440 / 5760"
-                        android:padding="15dp"
-                        android:textSize = "14sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
             </FrameLayout>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
+                android:padding="10dp"
+                android:text="Syncing..."
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:text = "Syncing..."
-                android:padding="10dp"
-                android:textSize = "14sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

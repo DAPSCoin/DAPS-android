@@ -1,5 +1,7 @@
 package pivx.org.pivxwallet.ui.twofa_config;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -9,7 +11,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.SpannableString;
@@ -43,8 +47,12 @@ import java.util.List;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import global.PivxModule;
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
+import pivx.org.pivxwallet.ui.base.PivxActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.IOnFocusListenable;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.utils.AppConf;
 import pivx.org.pivxwallet.utils.Base32String;
@@ -57,6 +65,7 @@ import pivx.org.pivxwallet.utils.PasscodeGenerator;
 import pivx.org.pivxwallet.utils.TotpCounter;
 import pivx.org.pivxwallet.utils.Utilities;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.utils.AndroidUtils.copyToClipboard;
 import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
@@ -65,7 +74,11 @@ import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
  * Created by Neoperol on 5/4/17.
  */
 
-public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnClickListener {
+public class TwoFAConfigActivity extends Fragment implements View.OnClickListener {
+    PivxApplication pivxApplication;
+    PivxModule pivxModule;
+    DapsController daps;
+    private FragmentActivity myContext;
 
     private Logger logger = LoggerFactory.getLogger(TwoFAConfigActivity.class);
 
@@ -77,22 +90,23 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
     private TwoFADialog dialog;
     private SuccessDialog success_dialog;
 
-    @Override
-    protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
-        root = getLayoutInflater().inflate(R.layout.fragment_2fa_settings, container);
-        setTitle("Two-factor Authentication");
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        pivxApplication = PivxActivity.pivxApplication;
+        pivxModule = PivxActivity.pivxModule;
+        daps = PivxActivity.daps;
 
-        twofa_status = (ToggleButton) findViewById(R.id.twofa_state);
-        btnDay = (Button) findViewById(R.id.btnDay);
-        btnWeek = (Button) findViewById(R.id.btnWeek);
-        btnMonth = (Button) findViewById(R.id.btnMonth);
+        View root = inflater.inflate(R.layout.fragment_2fa_settings, container, false);
+        twofa_status = (ToggleButton) root.findViewById(R.id.twofa_state);
+        btnDay = (Button) root.findViewById(R.id.btnDay);
+        btnWeek = (Button) root.findViewById(R.id.btnWeek);
+        btnMonth = (Button) root.findViewById(R.id.btnMonth);
 
-        code1 = (TextView) findViewById(R.id.code_1);
-        code2 = (TextView) findViewById(R.id.code_2);
-        code3 = (TextView) findViewById(R.id.code_3);
-        code4 = (TextView) findViewById(R.id.code_4);
-        code5 = (TextView) findViewById(R.id.code_5);
-        code6 = (TextView) findViewById(R.id.code_6);
+        code1 = (TextView) root.findViewById(R.id.code_1);
+        code2 = (TextView) root.findViewById(R.id.code_2);
+        code3 = (TextView) root.findViewById(R.id.code_3);
+        code4 = (TextView) root.findViewById(R.id.code_4);
+        code5 = (TextView) root.findViewById(R.id.code_5);
+        code6 = (TextView) root.findViewById(R.id.code_6);
 
         btnDay.setOnClickListener(this);
         btnWeek.setOnClickListener(this);
@@ -100,7 +114,6 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
         twofa_status.setOnClickListener(this);
 
         AppConf appConf = pivxApplication.getAppConf();
-//        TwoFAConfigActivity.this.edit_name.setText(appConf.getCurNodeInfo().name);
         String status = appConf.getTwoFA();
         if (status.compareTo("enabled") == 0) {
             twofa_status.setChecked(true);
@@ -110,44 +123,24 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
             twofa_status.setChecked(false);
             disable_2fa();
         }
+
+        return root;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.send_menu,menu);
-        return super.onCreateOptionsMenu(menu);
+    public void onAttach(Activity activity) {
+        myContext = (FragmentActivity) activity;
+        super.onAttach(activity);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        NavigationUtils.goBackToHome(this);
-    }
-
-    @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        setNavigationMenuItemChecked(4);
 
-        if(getCurrentFocus()!=null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        if(getActivity().getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
     }
 
@@ -176,8 +169,8 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
                 if (qrDialog != null){
                     qrDialog = null;
                 }
-                qrDialog = TwoFAQRDialog.newInstance(daps);
-                qrDialog.show(getSupportFragmentManager(), "twofa_qr_dialog");
+                qrDialog = TwoFAQRDialog.newInstance(daps, TwoFAConfigActivity.this);
+                qrDialog.show(getFragmentManager(), "twofa_qr_dialog");
             }
             else {
                 appConf.saveTwoFA("disabled");
@@ -187,24 +180,6 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
                 disable_2fa();
             }
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-    }
-
-    private void showErrorDialog(int resStr){
-        showErrorDialog(getString(resStr));
-    }
-
-    private void showErrorDialog(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     private void enable_2fa() {
@@ -267,8 +242,8 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
         if (dialog != null){
             dialog = null;
         }
-        dialog = TwoFADialog.newInstance(daps);
-        dialog.show(getSupportFragmentManager(), "twofa_dialog");
+        dialog = TwoFADialog.newInstance(daps, TwoFAConfigActivity.this);
+        dialog.show(getFragmentManager(), "twofa_dialog");
     }
 
     public void qrdialog_rejected() {
@@ -285,15 +260,15 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
         }
 
         success_dialog = SuccessDialog.newInstance();
-        success_dialog.show(getSupportFragmentManager(), "twofa_success_dialog");
+        success_dialog.show(getFragmentManager(), "twofa_success_dialog");
     }
 
     public void dialog_rejected() {
         twofa_status.setChecked(false);
     }
 
-    public static class TwoFAQRDialog extends DialogFragment {
-
+    public static class TwoFAQRDialog extends android.app.DialogFragment {
+        private Fragment parentFragment;
         private View root;
         private DapsController rpc;
         private ImageView img_qr;
@@ -307,13 +282,16 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
             try {
                 getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 root = inflater.inflate(R.layout.twofa_qr_dialog, container);
+                //root = getActivity().getLayoutInflater().inflate(R.layout.twofa_qr_dialog, new LinearLayout(getActivity()), false);
+
                 underline_text = (TextView) root.findViewById(R.id.underline_text);
                 img_qr = (ImageView) root.findViewById(R.id.img_qr);
                 copy_data = (LinearLayout) root.findViewById(R.id.copy_data);
 
                 if (img_qr != null) {
                     int px = convertDpToPx(225);
-                    String address = (String)rpc.callRPC("getAccountAddress");
+                    //-----Test Purpose
+                    String address = PivxApplication.getInstance().getModule().getStealthAddress();//(String)rpc.callRPC("getAccountAddress");
                     address = address.replaceAll("[^A-Za-z]","");
                     URI = "otpauth://totp/dapscoin:test@test.com?secret=" + address + "&issuer=dapscoin&algorithm=SHA1&digits=6&period=30";
                     Bitmap qrBitmap = null;
@@ -337,7 +315,7 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
                     @Override
                     public void onClick(View v) {
                         dismiss();
-                        ((TwoFAConfigActivity)getActivity()).qrdialog_finished();
+                        ((TwoFAConfigActivity)parentFragment).qrdialog_finished();
                     }
                 });
 
@@ -345,7 +323,7 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
                     @Override
                     public void onClick(View v) {
                         dismiss();
-                        ((TwoFAConfigActivity)getActivity()).qrdialog_rejected();
+                        ((TwoFAConfigActivity)parentFragment).qrdialog_rejected();
                     }
                 });
 
@@ -359,7 +337,6 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
             }catch (Exception e){
                 Toast.makeText(getActivity(),R.string.error_generic,Toast.LENGTH_SHORT).show();
                 dismiss();
-                getActivity().onBackPressed();
             }
             return root;
         }
@@ -372,16 +349,21 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
             this.rpc = controller;
         }
 
-        public static TwoFAQRDialog newInstance(DapsController controller) {
+        public void setFragment(Fragment fragment) {
+            this.parentFragment = fragment;
+        }
+
+        public static TwoFAQRDialog newInstance(DapsController controller, Fragment fragment) {
             TwoFAQRDialog dlg = new TwoFAQRDialog();
             dlg.setCancelable(false);
             dlg.updateData(controller);
+            dlg.setFragment(fragment);
             return dlg;
         }
     }
 
     public static class TwoFADialog extends DialogFragment implements CutCopyPasteEditText.OnCutCopyPasteListener {
-
+        Fragment parentFragment;
         private View root;
         private DapsController rpc;
         private CutCopyPasteEditText code1, code2, code3, code4, code5, code6;
@@ -416,7 +398,7 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
                         code += code5.getText().toString();
                         code += code6.getText().toString();
 
-                        String address = (String)rpc.callRPC("getAccountAddress");
+                        String address = PivxApplication.getInstance().getModule().getStealthAddress();//(String)rpc.callRPC("getAccountAddress");
                         address = address.replaceAll("[^A-Za-z]","");
                         String checkCode = null;
                         try {
@@ -432,11 +414,11 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
                             return;
                         }
 
-                        AppConf appConf = ((TwoFAConfigActivity)getActivity()).pivxApplication.getAppConf();
+                        AppConf appConf = ((TwoFAConfigActivity)parentFragment).pivxApplication.getAppConf();
                         appConf.saveTwoFACode(code);
 
                         dismiss();
-                        ((TwoFAConfigActivity)getActivity()).dialog_finished();
+                        ((TwoFAConfigActivity)parentFragment).dialog_finished();
                     }
                 });
 
@@ -444,13 +426,12 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
                     @Override
                     public void onClick(View v) {
                         dismiss();
-                        ((TwoFAConfigActivity)getActivity()).dialog_rejected();
+                        ((TwoFAConfigActivity)parentFragment).dialog_rejected();
                     }
                 });
             }catch (Exception e){
                 Toast.makeText(getActivity(),R.string.error_generic,Toast.LENGTH_SHORT).show();
                 dismiss();
-                getActivity().onBackPressed();
             }
             return root;
         }
@@ -469,10 +450,15 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
             this.rpc = controller;
         }
 
-        public static TwoFADialog newInstance(DapsController controller) {
+        public void setFragment(android.app.Fragment fragment) {
+            this.parentFragment = fragment;
+        }
+
+        public static TwoFADialog newInstance(DapsController controller, android.app.Fragment fragment) {
             TwoFADialog dlg = new TwoFADialog();
             dlg.setCancelable(false);
             dlg.updateData(controller);
+            dlg.setFragment(fragment);
             return dlg;
         }
 
@@ -511,7 +497,6 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
     }
 
     public static class SuccessDialog extends DialogFragment{
-
         private View root;
 
         @Nullable
@@ -530,7 +515,6 @@ public class TwoFAConfigActivity extends BaseDrawerActivity implements View.OnCl
             }catch (Exception e){
                 Toast.makeText(getActivity(),R.string.error_generic,Toast.LENGTH_SHORT).show();
                 dismiss();
-                getActivity().onBackPressed();
             }
             return root;
         }
