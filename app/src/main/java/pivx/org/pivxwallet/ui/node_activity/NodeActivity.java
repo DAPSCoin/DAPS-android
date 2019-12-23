@@ -88,9 +88,12 @@ public class NodeActivity extends Fragment implements View.OnClickListener, IOnF
     }
 
     private void setupView(View root) {
-        final String []types = new String[2];
-        types[0] = "140.82.34.78";
-        types[1] = "140.82.34.79";
+        final String []types = new String[5];
+        types[0] = "35.194.2.105";
+        types[1] = "34.69.121.145";
+        types[2] = "35.225.119.166";
+        types[3] = "34.82.214.16";
+        types[4] = "34.83.218.180";
 
         Spinner nodeSpinner = (Spinner) root.findViewById(R.id.node_spinner);
         final ArrayAdapter<String> nodeSpinnerAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_spinner, types);
