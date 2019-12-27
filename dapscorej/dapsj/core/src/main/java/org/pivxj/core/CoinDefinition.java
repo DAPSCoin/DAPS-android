@@ -41,7 +41,7 @@ public class CoinDefinition {
     public static final String BLOCKEXPLORER_BLOCK_PATH = "Posblocks/";                 //blockr.io path
     public static final String BLOCKEXPLORER_BASE_URL_TEST = "http://test.explorer.dapscoin.com/";
 
-    public static final String DONATION_ADDRESS = "41jmWANwvoqJepL1gLYHUWGrVCZPhe3iX9bCpyrNk9U8b4eRo94mKqV6ktT7WaVFGeCss2VgHV7pdDa8Bsw3HaFR16PAE9v8zb2";  //Hash Engineering donation DASH address
+    public static final String DONATION_ADDRESS = "";  //Hash Engineering donation DASH address
 
     enum CoinHash {
         SHA256,
@@ -72,8 +72,8 @@ public class CoinDefinition {
 
 
     public static final long DEFAULT_MIN_TX_FEE = Coin.MINIMUM_TX_FEE.value;   // MIN_TX_FEE
-    public static final long DUST_LIMIT = 30000; //main.h CTransaction::GetMinFee        0.01 coins
-    public static final long INSTANTX_FEE = 100000; //0.001 DASH (updated for 12.1)
+    public static final long DUST_LIMIT = 10000; //main.h CTransaction::GetMinFee        0.01 coins
+    public static final long INSTANTX_FEE = 10000; //0.001 DASH (updated for 12.1)
     public static final boolean feeCanBeRaised = false;
 
     //
