@@ -132,7 +132,7 @@ public class CoinDefinition {
             "seed2.dapscoin-seeds.com",
             "seed3.dapscoin-seeds.com",
             "seed4.dapscoin-seeds.com",
-            "seed5.dapscoin-seeds.com",
+            "seed5.dapscoin-seeds.com"
     };
 
     public static int minBroadcastConnections = 3;   //0 for default; we need more peers.
