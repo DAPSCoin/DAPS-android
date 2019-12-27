@@ -35,13 +35,13 @@ public class CoinDefinition {
     };
     public static final UnspentAPIType UnspentAPI = UnspentAPIType.Cryptoid;
 
-    public static final String BLOCKEXPLORER_BASE_URL_PROD = "http://explorer.dash.org/";    //blockr.io
+    public static final String BLOCKEXPLORER_BASE_URL_PROD = "https://explorer.dapscoin.com/explorer/";    //blockr.io
     public static final String BLOCKEXPLORER_ADDRESS_PATH = "address/";             //blockr.io path
     public static final String BLOCKEXPLORER_TRANSACTION_PATH = "tx/";              //blockr.io path
-    public static final String BLOCKEXPLORER_BLOCK_PATH = "block/";                 //blockr.io path
-    public static final String BLOCKEXPLORER_BASE_URL_TEST = "http://test.explorer.dash.org/";
+    public static final String BLOCKEXPLORER_BLOCK_PATH = "Posblocks/";                 //blockr.io path
+    public static final String BLOCKEXPLORER_BASE_URL_TEST = "http://test.explorer.dapscoin.com/";
 
-    public static final String DONATION_ADDRESS = "Xdeh9YTLNtci5zSL4DDayRSVTLf299n9jv";  //Hash Engineering donation DASH address
+    public static final String DONATION_ADDRESS = "41jmWANwvoqJepL1gLYHUWGrVCZPhe3iX9bCpyrNk9U8b4eRo94mKqV6ktT7WaVFGeCss2VgHV7pdDa8Bsw3HaFR16PAE9v8zb2";  //Hash Engineering donation DASH address
 
     enum CoinHash {
         SHA256,
@@ -68,7 +68,7 @@ public class CoinDefinition {
     }
 
     public static int spendableCoinbaseDepth = 100; //main.h: static const int COINBASE_MATURITY
-    public static final long MAX_COINS = 22000000;                 //main.h:  MAX_MONEY
+    public static final long MAX_COINS = 70000000000;                 //main.h:  MAX_MONEY
 
 
     public static final long DEFAULT_MIN_TX_FEE = Coin.MINIMUM_TX_FEE.value;   // MIN_TX_FEE
@@ -93,7 +93,7 @@ public class CoinDefinition {
 
     /** Zerocoin starting block height */
     public static final long TESTNET_ZEROCOIN_STARTING_BLOCK_HEIGHT = 201564;
-    public static final long MAINNET_ZEROCOIN_STARTING_BLOCK_HEIGHT = 863787;
+    public static final long MAINNET_ZEROCOIN_STARTING_BLOCK_HEIGHT = 210000;
 
     //
     //  Production
@@ -106,10 +106,10 @@ public class CoinDefinition {
 
     //Genesis Block Information from main.cpp: LoadBlockIndex
     static public long genesisBlockDifficultyTarget = 0x1e0ffff0;         //main.cpp: LoadBlockIndex
-    static public long genesisBlockTime = 1558521974L;                       //main.cpp: LoadBlockIndex
-    static public long genesisBlockNonce = 13653769;                         //main.cpp: LoadBlockIndex
-    static public String genesisHash = "0000059f433f00d4ed1aa073e7bdd9b358676cc8e2537d371c354256390122b6";  //main.cpp: hashGenesisBlock
-    static public String genesisMerkleRoot = "03fcb696ffbce2bb8248c65f6286c9948a4927919506331f21992a7021f969ed";
+    static public long genesisBlockTime = 1569750052;                       //main.cpp: LoadBlockIndex
+    static public long genesisBlockNonce = 18289272;                         //main.cpp: LoadBlockIndex
+    static public String genesisHash = "0000039a711dba61e12c29fb86542fa059e9616aafe9b4c61e065d393f31535e";  //main.cpp: hashGenesisBlock
+    static public String genesisMerkleRoot = "4dc798fa29a037570075a87a39c9a54c210f005c4c59c72f32036a87273f4cf8";
     static public int genesisBlockValue = 250;                                                              //main.cpp: LoadBlockIndex
     //taken from the raw data of the block explorer
     static public String genesisTxInBytes = "04ffff001d01044c55552e532e204e657773202620576f726c64205265706f7274204a616e203238203230313620576974682048697320416273656e63652c205472756d7020446f6d696e6174657320416e6f7468657220446562617465";//"04ffff001d01044c5957697265642030392f4a616e2f3230313420546865204772616e64204578706572696d656e7420476f6573204c6976653a204f76657273746f636b2e636f6d204973204e6f7720416363657074696e6720426974636f696e73";   //"limecoin se convertira en una de las monedas mas segura del mercado, checa nuestros avances"
