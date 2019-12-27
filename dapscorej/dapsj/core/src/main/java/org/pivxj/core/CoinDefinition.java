@@ -12,11 +12,11 @@ import java.util.Map;
 public class CoinDefinition {
 
 
-    public static final String coinName = "Pivx";
-    public static final String coinTicker = "PIVX";
-    public static final String coinURIScheme = "pivx";
+    public static final String coinName = "DAPS";
+    public static final String coinTicker = "DAPS";
+    public static final String coinURIScheme = "DAPS";
     public static final String cryptsyMarketId = "155";
-    public static final String cryptsyMarketCurrency = "PIV";
+    public static final String cryptsyMarketCurrency = "DAPS";
     public static final String PATTERN_PRIVATE_KEY_START_UNCOMPRESSED = "[7]";
     public static final String PATTERN_PRIVATE_KEY_START_COMPRESSED = "[X]";
 
